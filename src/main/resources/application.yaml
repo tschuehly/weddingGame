@@ -1,0 +1,20 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2000MB
+  mustache:
+    suffix: .html
+    cache: false
+    prefix: file:src/main/resources/templates/
+    expose-request-attributes: true
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
+
+server:
+  port: 8254
+  tomcat:
+    max-http-form-post-size: 2000MB
