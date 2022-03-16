@@ -1,5 +1,6 @@
 package de.tschuehly.weddingGame
 
+import kotlinx.coroutines.runBlocking
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -7,5 +8,5 @@ import org.springframework.boot.runApplication
 class WeddingGameApplication
 
 fun main(args: Array<String>) {
-	runApplication<WeddingGameApplication>(*args)
+		runApplication<WeddingGameApplication>(*args)
 }

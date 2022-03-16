@@ -22,6 +22,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.github.lookfirst:sardine:5.10")
+	implementation("com.itextpdf:itextpdf:5.5.13.3")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

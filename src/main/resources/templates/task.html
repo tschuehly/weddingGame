@@ -1,6 +1,6 @@
 
 <h1>{{task.id}} Mache ein Foto {{task.title}}</h1>
-<form action="/api/image/upload/{{task.id}}" method="post" enctype="multipart/form-data" >
+<form action="/api/image/upload/{{task.uuid}}" method="post" enctype="multipart/form-data" >
     <label for="files">Select files:</label>
     <input type="file" id="files" name="images" multiple><br><br>
     <label for="fullName">Dein Vor- und Nachname:</label>
