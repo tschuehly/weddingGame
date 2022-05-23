@@ -31,7 +31,7 @@ class ImageService(
                     uploadService.channel.send(Pair(url,image.bytes))
                 }
         }
-        return "success"
+        return "<h2>Bilder erfolgreich hochgeladen</h2>"
 
     }
 

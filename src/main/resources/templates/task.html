@@ -1,9 +1,60 @@
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet"></head>
+<style>
+    body {
 
-<h1>{{task.id}} Mache ein Foto {{task.title}}</h1>
-<form action="/api/image/upload/{{task.uuid}}" method="post" enctype="multipart/form-data" >
-    <label for="files">Select files:</label>
-    <input type="file" id="files" name="images" multiple><br><br>
-    <label for="fullName">Dein Vor- und Nachname:</label>
-    <input type="text" id="fullName" name="fullName">
-    <input type="submit">
-</form>
+        text-align: center;
+    }
+    h1, h2 {
+        font-family: 'Dancing Script', cursive;
+        color: #ef808f;
+        font-weight: 600;
+        font-size: 4rem;
+        padding-top: 2rem;
+    }
+    h2 {
+        color: black!important;
+    }
+    form {
+        font-family: 'Saira Condensed', sans-serif;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    #flower {
+        z-index: -1;
+        height: 60%;
+    }
+    .htmx-indicator{
+        display:none;
+    }
+    .htmx-request #indicator{
+        display:inline;
+        height: 10rem;
+    }
+    input[type=file]::file-selector-button , input[type=submit]{
+        border: 3px solid #ef808f;
+        padding: 0.5rem 2rem;
+        border-radius: .4em;
+        background-color: #fff;
+    }
+</style>
+<body >
+    <div>
+        <h1>{{task.title}}</h1>
+        <form hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
+            <label for="files">Wähle deine Bilder aus:</label><br>
+            <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
+            <label for="fullName">Dein Vor- und Nachname:</label><br>
+            <input type="text" id="fullName" name="fullName">
+            <input type="submit">
+            <div>
+                <img  id="indicator" class="htmx-indicator" src="/hearts.svg">
+            </div>
+        </form>
+    </div>
+    <img id="flower" src="/Blumen.svg">
+</body>

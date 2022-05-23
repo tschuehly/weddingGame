@@ -15,11 +15,12 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.servlet.ModelAndView
 import java.io.FileOutputStream
 import java.util.*
+import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletResponse
 
 @Controller
 class WebController {
-    val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").file)
+    val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
     @GetMapping("/")
     fun index(model: MutableMap<String, List<Task>>): ModelAndView{
         model["tasks"] = tasks
@@ -39,7 +40,7 @@ class WebController {
     }
 
     @GetMapping("/qrcode")
-    fun qrcode(response: HttpServletResponse): ModelAndView {
+    fun qrcode(): ModelAndView {
         val document = Document(RectangleReadOnly(369F,255F))
         val pdf = PdfWriter.getInstance(document, FileOutputStream("pdf/test.pdf"))
         tasks.forEach { task ->
@@ -55,10 +56,25 @@ class WebController {
             cb.endText();
 
             val saira = BaseFont.createFont("pdf/SairaCondensed-Medium.ttf", BaseFont.WINANSI, BaseFont.EMBEDDED)
+
+            cb.setColorFill(BaseColor(179,96,107))
+            cb.setFontAndSize(saira,14F)
             val ct = ColumnText(cb);
-            val myText = Phrase("Mache ein Foto \n${task.title}");
+            val myText = Phrase(task.title);
             ct.setSimpleColumn(myText, 120F, 0F, 270F, 90F, 15F, Element.ALIGN_LEFT);
             ct.go();
+            cb.setColorFill(BaseColor(0,0,0))
+            cb.setFontAndSize(saira,10F)
+            val ct2 = ColumnText(cb);
+            ct2.setSimpleColumn(
+                Phrase("Fotoaufgabe lesen\n" +
+                        "Motiv suchen\n" +
+                        "Fotografieren\n" +
+                        "QR-Code scannen\n" +
+                        "Foto hochladen\n"),
+                200F, 120F, 300F, 200F, 15F, Element.ALIGN_CENTER
+            )
+            ct2.go();
 
 
             val imgByte = RestTemplate().getForObject("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +

@@ -6,15 +6,15 @@ spring:
   mustache:
     suffix: .html
     cache: false
-    prefix: file:src/main/resources/templates/
+#    prefix: file:src/main/resources/templates/
     expose-request-attributes: true
   web:
     resources:
-      static-locations: file:src/main/resources/static/
+#      static-locations: file:src/main/resources/static/
       cache:
         period: 0
 
 server:
-  port: 8254
+  port: 80
   tomcat:
     max-http-form-post-size: 2000MB
