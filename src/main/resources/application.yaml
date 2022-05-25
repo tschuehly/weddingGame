@@ -18,3 +18,13 @@ server:
   port: 80
   tomcat:
     max-http-form-post-size: 2000MB
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  mustache:
+    prefix: file:src/main/resources/templates/
+  web:
+    resources:
+        static-locations: file:src/main/resources/static/

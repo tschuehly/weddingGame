@@ -1,4 +1,63 @@
-<h1>Aufgaben</h1>
+<h1></h1>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet"></head>
+<style>
+    body {
+
+        text-align: center;
+    }
+    h1, h2, h3 {
+        font-family: 'Dancing Script', cursive;
+        color: #ef808f;
+        font-weight: 600;
+        font-size: 4rem;
+        margin-top: 1rem;
+    }
+    h2 {
+        font-size: 3rem;
+        color: black;
+    }
+    h3 {
+        font-size: 2.5rem;
+        color: black;
+    }
+    form {
+        font-family: 'Saira Condensed', sans-serif;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    #flower {
+        z-index: -1;
+        height: 60%;
+    }
+    .htmx-indicator{
+        display:none;
+    }
+    .htmx-request #indicator{
+        display:inline;
+        height: 10rem;
+    }
+
+</style>
+<body >
+    <h1>Fotosafari</h1>
+    <h3>Hier könnt ihr eure Bilder von unserer Hochzeit hochladen.</h3>
+    <form hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
+        <label for="files">Wähle deine Bilder aus:</label><br>
+        <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
+        <label for="fullName">Dein Vor- und Nachname:</label><br>
+        <input type="text" id="fullName" name="fullName" placeholder="optional">
+        <input type="submit" name="submit">
+        <div>
+            <img  id="indicator" class="htmx-indicator" src="/hearts.svg">
+        </div>
+    </form>
+</body>
+<h1 style="margin-top: 200rem">Aufgaben</h1>
 
 <ul>
     {{#tasks}}

@@ -1,15 +1,11 @@
 package de.tschuehly.weddingGame.service
 
 import com.github.sardine.SardineFactory
-import com.github.sardine.impl.SardineException
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.net.URLEncoder
-import java.util.*
-import javax.annotation.PreDestroy
 
 @Service
 class ImageService(
@@ -18,23 +14,20 @@ class ImageService(
     @Value("\${WEBDAV_PW}")
     lateinit var webdavPw: String
 
-    fun uploadImages(uuid: UUID, fullName: String?, images: Array<MultipartFile>?): String {
+    val storageBoxUrl = "https://u292326-sub2.your-storagebox.de"
+
+    fun uploadImages(folder: String, fullName: String?, images: Array<MultipartFile>?): String {
         val sardine = SardineFactory.begin("u292326-sub2",webdavPw)
-        println(fullName)
-        if(!sardine.exists("https://u292326-sub2.your-storagebox.de/$uuid/")){
-            sardine.createDirectory("https://u292326-sub2.your-storagebox.de/$uuid/")
+        if(!sardine.exists("$storageBoxUrl/$folder/")){
+            sardine.createDirectory("$storageBoxUrl/$folder/")
         }
 
         images?.forEach { image ->
-                val url = "https://u292326-sub2.your-storagebox.de/$uuid/${URLEncoder.encode(fullName,"UTF-8")}_${System.currentTimeMillis()}_${URLEncoder.encode(image.originalFilename,"UTF-8")}"
+                val url = "$storageBoxUrl/$folder/${URLEncoder.encode(fullName,"UTF-8")}_${System.currentTimeMillis()}_${URLEncoder.encode(image.originalFilename,"UTF-8")}"
                 runBlocking {
                     uploadService.channel.send(Pair(url,image.bytes))
                 }
         }
         return "<h2>Bilder erfolgreich hochgeladen</h2>"
-
     }
-
-
-
 }

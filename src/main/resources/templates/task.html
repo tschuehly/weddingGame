@@ -2,14 +2,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js">
+
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet"></head>
 <style>
     body {
 
         text-align: center;
     }
-    h1, h2 {
+    h1, h2, h3, h4 {
         font-family: 'Dancing Script', cursive;
         color: #ef808f;
         font-weight: 600;
@@ -17,7 +19,18 @@
         padding-top: 2rem;
     }
     h2 {
-        color: black!important;
+        font-size: 3rem;
+        color: black;
+    }
+    h3 {
+        font-size: 2.5rem;
+        color: black;
+    }
+    p {
+        font-family: 'Dancing Script', cursive;
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: black;
     }
     form {
         font-family: 'Saira Condensed', sans-serif;
@@ -31,8 +44,10 @@
     .htmx-indicator{
         display:none;
     }
-    .htmx-request #indicator{
+    .htmx-request .htmx-indicator{
         display:inline;
+    }
+    #indicator{
         height: 10rem;
     }
     input[type=file]::file-selector-button , input[type=submit]{
@@ -41,20 +56,31 @@
         border-radius: .4em;
         background-color: #fff;
     }
+    #progress{
+        accent-color: #ef808f;
+    }
 </style>
 <body >
     <div>
         <h1>{{task.title}}</h1>
-        <form hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
+        <form id="form" hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
             <label for="files">Wähle deine Bilder aus:</label><br>
             <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
             <label for="fullName">Dein Vor- und Nachname:</label><br>
             <input type="text" id="fullName" name="fullName">
-            <input type="submit">
-            <div>
-                <img  id="indicator" class="htmx-indicator" src="/hearts.svg">
+            <input type="submit" name="submit">
+            <div class="htmx-indicator" >
+                <br>
+                <img id="indicator"  src="/hearts.svg">
+                <p>Wird hochgeladen:</p>
+                <progress id='progress' value='0' max='100'></progress>
             </div>
         </form>
+        <script >
+            window.htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+                window.htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+            });
+        </script>
     </div>
     <img id="flower" src="/Blumen.svg">
 </body>
