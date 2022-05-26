@@ -21,7 +21,7 @@
   },
   {
     "id": 5,
-    "title": "Mache ein Selfie mit der Frau im roten Kleid.",
+    "title": "Mache ein Selfie mit einer Frau im roten Kleid.",
     "uuid": "53e41442-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -51,7 +51,7 @@
   },
   {
     "id": 11,
-    "title": "Mache ein Selfie mit dem Ehepaar, dass zuletzt geheiratet hat.",
+    "title": "Mache ein Selfie mit dem Ehepaar, das zuletzt geheiratet hat.",
     "uuid": "53e41b36-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -66,7 +66,7 @@
   },
   {
     "id": 14,
-    "title": "Mache ein Selfie mit der Person, die das gleiche Sternzeichen hat.",
+    "title": "Mache ein Selfie mit einer Person, die das gleiche Sternzeichen hat.",
     "uuid": "53e41fd2-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -76,7 +76,7 @@
   },
   {
     "id": 16,
-    "title": "Mache ein Selfie mit einer Person, dessen Vorname mit dem gleichen Buchstaben wie deiner beginnt.",
+    "title": "Mache ein Selfie mit einer Person, dessen Vornamen mit dem gleichen Buchstaben wie deiner beginnt.",
     "uuid": "53e42338-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -86,7 +86,7 @@
   },
   {
     "id": 18,
-    "title": "Mache ein Foto wie du mit den Trauzeugen anstößt.",
+    "title": "Mache ein Foto während du mit dem Trauzeugen anstößt.",
     "uuid": "53e424f0-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -131,18 +131,13 @@
   },
   {
     "id": 27,
-    "title": "Mache ein Selfie mit allen Personen, die in der selben Branche arbeiten, wie das Brautpaar.",
+    "title": "Mache ein Selfie mit allen Personen, die in derselben Branche arbeiten, wie das Brautpaar.",
     "uuid": "53e42de2-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 28,
     "title": "Mache ein Selfie mit so vielen Generationen, wie möglich.",
     "uuid": "53e42eb4-dac6-11ec-9d64-0242ac120002"
-  },
-  {
-    "id": 29,
-    "title": "Mache ein Selfie mit dem Paar was als nächstes heiratet.",
-    "uuid": "53e42f86-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 30,
@@ -270,11 +265,6 @@
     "uuid": "53e44dd6-dac6-11ec-9d64-0242ac120002"
   },
   {
-    "id": 55,
-    "title": "Mache ein Selfie einer Person mit dem gleichen Sternzeichen wie du.",
-    "uuid": "53e44ed0-dac6-11ec-9d64-0242ac120002"
-  },
-  {
     "id": 56,
     "title": "Mache ein Foto mit dem Brautpaar, das ein Herz formt.",
     "uuid": "53e44fd4-dac6-11ec-9d64-0242ac120002"
@@ -291,7 +281,7 @@
   },
   {
     "id": 59,
-    "title": "Mache ein Foto mit jemandem der Yoga macht und zeigt eine Yogaposition.",
+    "title": "Mache ein Foto mit jemandem, der Yoga macht und zeigt eine Yogaposition.",
     "uuid": "53e452ea-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -306,7 +296,7 @@
   },
   {
     "id": 62,
-    "title": "Mache ein Selfie mit allen Personen, die in der selben Firma wie die Braut arbeiten.",
+    "title": "Mache ein Selfie mit allen Personen, die in derselben Firma wie die Braut arbeiten.",
     "uuid": "53e45772-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -321,7 +311,7 @@
   },
   {
     "id": 65,
-    "title": "Mache ein Selfie mit Bräutigam und seinem Trauzeugen.",
+    "title": "Mache ein Selfie mit dem Bräutigam und seinem Trauzeugen.",
     "uuid": "53e45a7e-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -336,7 +326,7 @@
   },
   {
     "id": 68,
-    "title": "Mache ein Foto mit den größten 5 Personen und sortiert Euch der Größe nach.",
+    "title": "Mache ein Foto mit den 5 größten Personen und sortiert Euch der Größe nach.",
     "uuid": "53e45f10-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -346,22 +336,22 @@
   },
   {
     "id": 70,
-    "title": "Mache ein Selfie und küsse jemanden in überraschenderweise kurz vorm Foto",
+    "title": "Mache ein Selfie und küsse jemanden überraschenderweise kurz vorm Foto.",
     "uuid": "53e46118-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 71,
-    "title": "Mache ein Selfie mit dem Küchenchef",
+    "title": "Mache ein Selfie mit dem Küchenchef.",
     "uuid": "53e4621c-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 72,
-    "title": "Mache ein Foto/Selfie mit der schlecht gebundensten und der Best gebundensten Krawatte im Vergleich.",
+    "title": "Mache ein Foto/Selfie mit der schlecht gebundensten und der best gebundensten Krawatte im Vergleich.",
     "uuid": "53e46316-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 73,
-    "title": "Mache ein Foto auf dem du neben der größten Person hoch springst, sodass du größer bist.",
+    "title": "Mache ein Foto, auf dem du neben der größten Person hochspringst, sodass du größer bist.",
     "uuid": "53e46424-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -425,11 +415,6 @@
     "uuid": "53e47306-dac6-11ec-9d64-0242ac120002"
   },
   {
-    "id": 86,
-    "title": "Mache ein Selfie mit jemandem mit einem exotischen Hobby.",
-    "uuid": "53e4740a-dac6-11ec-9d64-0242ac120002"
-  },
-  {
     "id": 87,
     "title": "Mache ein Selfie mit jemanden der ein ausgefallenes Haustier hat.",
     "uuid": "53e47504-dac6-11ec-9d64-0242ac120002"
@@ -451,7 +436,7 @@
   },
   {
     "id": 91,
-    "title": "Mach ein Foto mit der Mutter des Bräutigams.",
+    "title": "Mache ein Foto mit der Mutter des Bräutigams.",
     "uuid": "53e47a40-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -526,7 +511,7 @@
   },
   {
     "id": 106,
-    "title": "Mache ein Bild mit Dir und einer Person, die du noch nicht kennst und tut so als würdet Ihr einen flotten Salsa tanzen",
+    "title": "Mache ein Bild mit Dir und einer Person, die du noch nicht kennst und tut so, als würdet Ihr einen flotten Salsa tanzen",
     "uuid": "53e48bde-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -536,12 +521,12 @@
   },
   {
     "id": 108,
-    "title": "Suche dir zwei andere sportliche Gäste und macht eine Challenge, wer den tieferen Squad schafft. Fotografiert das Spektakel selbstverständlich und kürt einen Gewinner.",
+    "title": "Suche dir zwei andere sportliche Gäste und macht eine Challenge, wer den tieferen Squat schafft und fotografiert das Spektakel.",
     "uuid": "53e48f30-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 109,
-    "title": "Mache ein Foto mit allen Personen des Tischs neben deinem.",
+    "title": "Mache ein Foto mit allen Personen des Tisches neben deinem.",
     "uuid": "53e49034-dac6-11ec-9d64-0242ac120002"
   },
   {
@@ -566,12 +551,12 @@
   },
   {
     "id": 114,
-    "title": "Finde die Person auf der Hochzeit, die die besten Grimassen schneiden kann und macht ein Selfie, auf dem Ihr beide die gleiche Grimasse schneidet.",
+    "title": "Finde die Person auf der Hochzeit, die die besten Grimassen schneiden kann und macht ein Selfie.",
     "uuid": "53e49548-dac6-11ec-9d64-0242ac120002"
   },
   {
     "id": 115,
-    "title": "Mache ein Selfie mit jemanden, den du lange nicht gesehen hast.",
+    "title": "Mache ein Selfie mit jemandem, den du lange nicht gesehen hast.",
     "uuid": "53e49796-dac6-11ec-9d64-0242ac120002"
   }
 ]

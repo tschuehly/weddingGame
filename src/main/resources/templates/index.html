@@ -1,10 +1,11 @@
-<h1></h1>
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet"></head>
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet">
+    <title>Hochzeit</title>
+</head>
 <style>
     body {
 
@@ -16,6 +17,7 @@
         font-weight: 600;
         font-size: 4rem;
         margin-top: 1rem;
+        margin-bottom: 1rem;
     }
     h2 {
         font-size: 3rem;
@@ -30,34 +32,56 @@
         font-weight: bold;
         font-size: 1.5rem;
     }
-    #flower {
-        z-index: -1;
-        height: 60%;
-    }
     .htmx-indicator{
         display:none;
     }
-    .htmx-request #indicator{
+    .htmx-request .htmx-indicator{
         display:inline;
+    }
+    #indicator{
         height: 10rem;
+    }
+    input[type=file]::file-selector-button , input[type=submit]{
+        border: 3px solid #ef808f;
+        padding: 0.5rem 2rem;
+        border-radius: .4em;
+        background-color: #fff;
+    }
+    #progress{
+        accent-color: #ef808f;
+    }
+    #bride {
+        border-radius: 50%;
+        width: 23rem;
+        max-width: 100%;
+        height: auto;
     }
 
 </style>
 <body >
     <h1>Fotosafari</h1>
     <h3>Hier könnt ihr eure Bilder von unserer Hochzeit hochladen.</h3>
-    <form hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
+    <form id="form" hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
         <label for="files">Wähle deine Bilder aus:</label><br>
         <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
         <label for="fullName">Dein Vor- und Nachname:</label><br>
         <input type="text" id="fullName" name="fullName" placeholder="optional">
         <input type="submit" name="submit">
-        <div>
-            <img  id="indicator" class="htmx-indicator" src="/hearts.svg">
+        <div class="htmx-indicator" >
+            <br>
+            <img id="indicator"  src="/hearts.svg">
+            <p>Wird hochgeladen:</p>
+            <progress id='progress' value='0' max='100'></progress>
         </div>
     </form>
+    <script >
+        window.htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+            window.htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+        });
+    </script>
+    <img id="bride" src="/AlinaxAndreas-77.webp">
 </body>
-<h1 style="margin-top: 200rem">Aufgaben</h1>
+<h1 style="margin-top: 20rem">Aufgaben</h1>
 
 <ul>
     {{#tasks}}
