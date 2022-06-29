@@ -3,6 +3,7 @@ package de.tschuehly.weddingGame.service
 import com.github.sardine.SardineFactory
 import com.github.sardine.impl.SardineException
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import org.springframework.beans.factory.annotation.Value
@@ -20,8 +21,9 @@ class UploadService() {
 
     var processedImages = 0
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val superVisorScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val superVisorScope = CoroutineScope(SupervisorJob() + Dispatchers.IO.limitedParallelism(5))
     @PostConstruct
     fun createWorkerGroup() {
         coroutineScope.launch {
