@@ -24,6 +24,7 @@ dependencies {
     implementation("com.github.lookfirst:sardine:5.10")
     implementation("com.itextpdf:itextpdf:5.5.13.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+    implementation("io.minio:minio:8.4.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

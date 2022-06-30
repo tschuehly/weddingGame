@@ -23,7 +23,7 @@ class ImageService(
         }
 
         images?.forEach { image ->
-            val url = "$storageBoxUrl/$folder/${
+            val url = "${
             URLEncoder.encode(
                 fullName,
                 "UTF-8"

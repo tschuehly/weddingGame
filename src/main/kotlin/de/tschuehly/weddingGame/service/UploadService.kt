@@ -2,6 +2,8 @@ package de.tschuehly.weddingGame.service
 
 import com.github.sardine.SardineFactory
 import com.github.sardine.impl.SardineException
+import io.minio.MinioClient
+import io.minio.PutObjectArgs
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -40,26 +42,31 @@ class UploadService() {
 
     private fun uploadImage(urlAndImage: Pair<String, ByteArray>) {
         measureTimeMillis {
-            var (url, image) = urlAndImage
+            val (url, image) = urlAndImage
             println("Uploading Image: $url")
-            val sardine = SardineFactory.begin("u292326-sub2", webdavPw)
             for (i in 0..5) {
                 try {
-                    sardine.put(url, image)
+                    minioClient().putObject(
+                        PutObjectArgs.builder().bucket("test").`object`(url).stream(image.inputStream(), image.size.toLong(), -1).build()
+                    )
                     processedImages += 1
                     println("$processedImages: Uploaded $url")
-                    image = ByteArray(0)
 
                     break
-                } catch (e: SardineException) {
-                    if (e.statusCode == 408) {
-                        println(e)
-                    }
+                } catch (e: Exception) {
+                    println(e.message)
                 }
             }
         }.let { println("Das Hochladen brauchte: $it ms") }
     }
 
+
+    private fun minioClient(): MinioClient {
+        return MinioClient.builder()
+            .endpoint("http://127.0.0.1:9000")
+            .credentials("minioadmin", "minioadmin")
+            .build()
+    }
     @PreDestroy
     fun cancelScope() {
         coroutineScope.cancel()

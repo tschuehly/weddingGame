@@ -15,9 +15,9 @@ class ImageController(
     fun uploadImages(
         @RequestParam("fullName", required = false) fullName: String?,
         @RequestParam("images", required = false) images: Array<MultipartFile>?,
-        request:HttpServletRequest
-    ): String{
-        return imageService.uploadImages("safari",fullName, images)
+        request: HttpServletRequest
+    ): String {
+        return imageService.uploadImages("safari", fullName, images)
     }
 
     @PostMapping("/upload/{uuid}", consumes = ["multipart/form-data"])
@@ -25,10 +25,8 @@ class ImageController(
         @PathVariable uuid: UUID,
         @RequestParam("fullName") fullName: String,
         @RequestParam("images", required = false) images: Array<MultipartFile>?,
-        request:HttpServletRequest
-    ): String{
+        request: HttpServletRequest
+    ): String {
         return imageService.uploadImages(uuid.toString(), fullName, images)
     }
-
-
 }
