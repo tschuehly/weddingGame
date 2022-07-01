@@ -62,7 +62,7 @@
 </style>
 <body >
     <div>
-        <h1>{{task.title}}</h1>
+        <h1>[[${task.title}]]</h1>
         <form id="form" hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
             <label for="files">Wähle deine Bilder aus:</label><br>
             <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>

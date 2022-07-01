@@ -87,6 +87,8 @@
     <div style="left: 0" class="background_flowers"></div>
     <div class="contentContainer">
         <h1>Fotosafari</h1>
+        <p>[[${email}]]</p>
+        <p>[[${userId}]]</p>
         <h3 style="">Hier könnt ihr eure Bilder von unserer Hochzeit hochladen.</h3>
         <form id="form" hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
             <label for="files">Wähle deine Bilder aus:</label><br>

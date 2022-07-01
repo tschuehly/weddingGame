@@ -6,15 +6,12 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
+  thymeleaf:
+    cache: false
   servlet:
     multipart:
       max-file-size: 2000MB
       max-request-size: 2000MB
-  mustache:
-    suffix: .html
-    cache: false
-#    prefix: file:src/main/resources/templates/
-    expose-request-attributes: true
   web:
     resources:
 #      static-locations: file:src/main/resources/static/
@@ -30,7 +27,7 @@ spring:
   config:
     activate:
       on-profile: dev
-  mustache:
+  thymeleaf:
     prefix: file:src/main/resources/templates/
   web:
     resources:

@@ -8,7 +8,10 @@ import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import org.springframework.core.io.ClassPathResource
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.client.RestTemplate
@@ -20,19 +23,21 @@ import java.util.*
 class WebController {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
     @GetMapping("/")
-    fun index(model: MutableMap<String, List<Task>>): ModelAndView {
-        model["tasks"] = tasks
-        return ModelAndView("index", model)
+
+    fun index(@AuthenticationPrincipal principal: OAuth2User, model: Model): String {
+        model.addAttribute("email", principal.attributes["email"])
+        model.addAttribute("userId", principal.name)
+        return "index"
     }
     @GetMapping("/aufgabe/{uuid}")
-    fun task(@PathVariable uuid: UUID, model: MutableMap<String, Task>): ModelAndView {
+    fun task(@PathVariable uuid: UUID, model: Model): String {
         tasks.find {
             it.uuid.toString() == uuid.toString()
         }?.let {
-            model["task"] = it
-            return ModelAndView("task", model)
+            model.addAttribute("task", it)
+            return "task"
         } ?: let {
-            return ModelAndView("404")
+            return "404"
         }
     }
 
