@@ -1,7 +1,5 @@
 package de.tschuehly.weddingGame.service
 
-import com.github.sardine.SardineFactory
-import com.github.sardine.impl.SardineException
 import io.minio.MinioClient
 import io.minio.PutObjectArgs
 import kotlinx.coroutines.*
@@ -16,8 +14,10 @@ import kotlin.system.measureTimeMillis
 
 @Service
 class UploadService() {
-    @Value("\${WEBDAV_PW}")
-    lateinit var webdavPw: String
+    @Value("\${S3_ACCESS_KEY}")
+    lateinit var s3AccessKey: String
+    @Value("\${S3_SECRET_KEY}")
+    lateinit var s3SecretKey: String
 
     val channel = Channel<Pair<String, ByteArray>>(10000)
 
@@ -60,11 +60,10 @@ class UploadService() {
         }.let { println("Das Hochladen brauchte: $it ms") }
     }
 
-
     private fun minioClient(): MinioClient {
         return MinioClient.builder()
             .endpoint("http://127.0.0.1:9000")
-            .credentials("minioadmin", "minioadmin")
+            .credentials(s3AccessKey, s3SecretKey)
             .build()
     }
     @PreDestroy

@@ -1,8 +1,6 @@
 package de.tschuehly.weddingGame.service
 
-import com.github.sardine.SardineFactory
 import kotlinx.coroutines.runBlocking
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.net.URLEncoder
@@ -11,17 +9,7 @@ import java.net.URLEncoder
 class ImageService(
     val uploadService: UploadService
 ) {
-    @Value("\${WEBDAV_PW}")
-    lateinit var webdavPw: String
-
-    val storageBoxUrl = "https://u292326-sub2.your-storagebox.de"
-
     fun uploadImages(folder: String, fullName: String?, images: Array<MultipartFile>?): String {
-        val sardine = SardineFactory.begin("u292326-sub2", webdavPw)
-        if (!sardine.exists("$storageBoxUrl/$folder/")) {
-            sardine.createDirectory("$storageBoxUrl/$folder/")
-        }
-
         images?.forEach { image ->
             val url = "${
             URLEncoder.encode(
