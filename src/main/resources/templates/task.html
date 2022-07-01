@@ -2,10 +2,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js">
-
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet"></head>
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet">
+    <title>Aufgabe</title>
+</head>
 <style>
     body {
 
@@ -61,13 +62,22 @@
     }
 </style>
 <body >
-    <div>
+    <div  x-data="{ files: null, fullName: null}">
         <h1>[[${task.title}]]</h1>
+
+        <label>
+            <input x-ref="fileSelector" style="display: none" type="file" multiple="true" x-on:change="files = Object.values($event.target.files)">
+            <button @click="$refs.fileSelector.click()">Wähle deine Bilder aus</button>
+            <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
+        </label>
+        <button  @click="await uploadImages(files, fullName)">Bilder hochladen</button>
+
+
         <form id="form" hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
             <label for="files">Wähle deine Bilder aus:</label><br>
             <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
             <label for="fullName">Dein Vor- und Nachname:</label><br>
-            <input type="text" id="fullName" name="fullName">
+            <input type="text" x-model="fullName" id="fullName" name="fullName">
             <input type="submit" name="submit">
             <div class="htmx-indicator" >
                 <br>
@@ -84,3 +94,26 @@
     </div>
     <img id="flower" src="/Blumen.svg">
 </body>
+
+<script>
+    async function uploadImages(files, fullName) {
+        for(const file of files){
+            let resp = await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName='+file.name+'&fullName=test', {
+                method: 'GET'
+            })
+            let url = await resp.text()
+
+            if (resp.ok){
+                await fetch(url, {
+                    method: 'PUT',
+                    body: file,
+                    headers: {
+                        'x-amz-meta-fullname':encodeURI(fullName)
+                    }
+                })
+                console.log("Uploaded "+ file.name)
+
+            }
+        }
+    }
+</script>

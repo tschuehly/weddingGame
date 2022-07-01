@@ -3,7 +3,12 @@ package de.tschuehly.weddingGame.controller
 import bo.Task
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.itextpdf.text.*
+import com.itextpdf.text.BaseColor
+import com.itextpdf.text.Document
+import com.itextpdf.text.Element
+import com.itextpdf.text.Image
+import com.itextpdf.text.Phrase
+import com.itextpdf.text.RectangleReadOnly
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
@@ -22,11 +27,18 @@ import java.util.*
 @Controller
 class WebController {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
-    @GetMapping("/")
 
-    fun index(@AuthenticationPrincipal principal: OAuth2User, model: Model): String {
-        model.addAttribute("email", principal.attributes["email"])
-        model.addAttribute("userId", principal.name)
+    @GetMapping("/")
+    fun index(
+        @AuthenticationPrincipal principal: OAuth2User,
+        model: Model
+    ): String {
+        model.addAllAttributes(
+            mapOf(
+                "email" to principal.attributes["email"],
+                "userId" to principal.name
+            )
+        )
         return "index"
     }
     @GetMapping("/aufgabe/{uuid}")

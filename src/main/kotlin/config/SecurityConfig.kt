@@ -10,9 +10,10 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeRequests()
-            .anyRequest().authenticated()
+            .antMatchers("/api/image/getUploadUrl").permitAll()
+            .anyRequest().permitAll()
             .and()
             .oauth2Login()
-        return http.build()
+        return http.csrf().disable().build()
     }
 }

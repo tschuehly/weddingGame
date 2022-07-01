@@ -1,8 +1,10 @@
 package de.tschuehly.weddingGame.controller
 
 import de.tschuehly.weddingGame.service.ImageService
-import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
@@ -11,22 +13,13 @@ import javax.servlet.http.HttpServletRequest
 class ImageController(
     val imageService: ImageService
 ) {
-    @PostMapping("/upload", consumes = ["multipart/form-data"])
+    @GetMapping("/getUploadUrl")
     fun uploadImages(
+        @RequestParam("uuid") uuid: UUID?,
         @RequestParam("fullName", required = false) fullName: String?,
-        @RequestParam("images", required = false) images: Array<MultipartFile>?,
+        @RequestParam("fileName") fileName: String,
         request: HttpServletRequest
     ): String {
-        return imageService.uploadImages("safari", fullName, images)
-    }
-
-    @PostMapping("/upload/{uuid}", consumes = ["multipart/form-data"])
-    fun uploadTaskImages(
-        @PathVariable uuid: UUID,
-        @RequestParam("fullName") fullName: String,
-        @RequestParam("images", required = false) images: Array<MultipartFile>?,
-        request: HttpServletRequest
-    ): String {
-        return imageService.uploadImages(uuid.toString(), fullName, images)
+        return imageService.getUploadPresignedObjectUrl(uuid, fullName, fileName)
     }
 }
