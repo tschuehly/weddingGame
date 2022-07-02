@@ -1,6 +1,6 @@
 package de.tschuehly.weddingGame.controller
 
-import bo.Task
+import de.tschuehly.weddingGame.bo.Task
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.itextpdf.text.BaseColor
@@ -12,6 +12,7 @@ import com.itextpdf.text.RectangleReadOnly
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
+import de.tschuehly.weddingGame.service.ImageService
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
@@ -23,20 +24,27 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.servlet.ModelAndView
 import java.io.FileOutputStream
 import java.util.*
+import javax.servlet.http.HttpServletRequest
 
 @Controller
-class WebController {
+class WebController(
+    private val imageService: ImageService
+) {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
 
     @GetMapping("/")
     fun index(
-        @AuthenticationPrincipal principal: OAuth2User,
-        model: Model
+        @AuthenticationPrincipal principal: OAuth2User?,
+        model: Model,
+        request: HttpServletRequest
     ): String {
+        val subdomain = request.serverName.split(".").first()
+        println("subdomain is: $subdomain")
+
         model.addAllAttributes(
             mapOf(
-                "email" to principal.attributes["email"],
-                "userId" to principal.name
+                "email" to (principal?.attributes?.get("email") ?: ""),
+                "userId" to principal?.name
             )
         )
         return "index"
@@ -51,6 +59,16 @@ class WebController {
         } ?: let {
             return "404"
         }
+    }
+
+    @GetMapping("/slideshow")
+    fun slideshow(model: Model): String{
+        model.addAllAttributes(
+            mapOf(
+                "images" to imageService.getAll().also{ println(it)},
+            )
+        )
+        return "slideshow"
     }
 
     @GetMapping("/qrcode")

@@ -1,3 +1,5 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,20 +100,38 @@
 <script>
     async function uploadImages(files, fullName) {
         for(const file of files){
-            let resp = await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName='+file.name+'&fullName=test', {
+            let imageDTO = {
+                uploadUrl: '',
+                objectName:'',
+                fullName: fullName,
+                fileName: file.name,
+            }
+            let response =
+                await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name, {
                 method: 'GET'
             })
-            let url = await resp.text()
-
-            if (resp.ok){
-                await fetch(url, {
+            let json = await response.json()
+            imageDTO.uploadUrl = json.uploadUrl
+            imageDTO.objectName = json.objectName
+            if (response.ok){
+                let uploadResponse = await fetch(imageDTO.uploadUrl, {
                     method: 'PUT',
                     body: file,
                     headers: {
                         'x-amz-meta-fullname':encodeURI(fullName)
                     }
                 })
-                console.log("Uploaded "+ file.name)
+                if(uploadResponse.ok){
+                    let createImageResponse = await fetch('/api/image/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(imageDTO),
+
+                    })
+                    console.log("Uploaded "+ file.name)
+                }
 
             }
         }

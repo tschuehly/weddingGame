@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - property:
+      name: string.type
+      value: clob
+      dbms: postgresql
+  - property:
+      name: string.type
+      value: VARCHAR
+      dbms: h2
+  - changeSet:
+      id: 1656768556896-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: hibernate_sequence
+            startValue: 1
+  - changeSet:
+      id: 1656768556896-2
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_image
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: object_name
+                  type: ${string.type}
+              - column:
+                  name: download_url
+                  type: ${string.type}
+              - column:
+                  name: download_url_expiry
+                  type: DATETIME
+            tableName: image
+  - changeSet:
+      id: 1656768556896-3
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user
+                  name: id
+                  type: BIGINT
+            tableName: user
+  - changeSet:
+      id: 1656768556896-4
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_wedding
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: subdomain
+                  type: ${string.type}
+            tableName: wedding
+  - changeSet:
+      id: 1656768556896-5
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: wedding_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: pictures_id
+                  type: BIGINT
+            tableName: wedding_pictures
+  - changeSet:
+      id: 1656768556896-6
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: pictures_id
+            constraintName: uc_wedding_pictures_pictures
+            tableName: wedding_pictures
+  - changeSet:
+      id: 1656768556896-7
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: pictures_id
+            baseTableName: wedding_pictures
+            constraintName: fk_wedpic_on_image
+            referencedColumnNames: id
+            referencedTableName: image
+  - changeSet:
+      id: 1656768556896-8
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: wedding_id
+            baseTableName: wedding_pictures
+            constraintName: fk_wedpic_on_wedding
+            referencedColumnNames: id
+            referencedTableName: wedding
+

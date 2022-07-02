@@ -1,4 +1,4 @@
-package bo
+package de.tschuehly.weddingGame.bo
 
 import java.util.*
 

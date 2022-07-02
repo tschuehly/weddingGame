@@ -1,0 +1,359 @@
+{
+  "snapshot": {
+    "created": "2022-07-02T15:28:11.466",
+    "database": {
+      "productVersion": "2021.3.2",
+      "shortName": "intellijPsiClass",
+      "majorVersion": "0",
+      "minorVersion": "0",
+      "user": "thoma",
+      "productName": "JPA Buddy Intellij",
+      "url": "jpab?generationContext=57a72b2e-87a4-417b-aca2-820373bf0819"
+    },
+    "metadata": {
+      "generationContext": {
+        "dbmsType": "postgresql"
+      }
+    },
+    "objects": {
+      "liquibase.structure.core.Catalog": [
+        {
+          "catalog": {
+            "default": true,
+            "name": "JPA_BUDDY",
+            "snapshotId": "c0fe200"
+          }
+        }]
+      ,
+      "liquibase.structure.core.Column": [
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "download_url",
+            "nullable": true,
+            "relation": "liquibase.structure.core.Table#c0fe203",
+            "snapshotId": "c0fe207",
+            "type": {
+              "typeName": "clob"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "download_url_expiry",
+            "nullable": true,
+            "relation": "liquibase.structure.core.Table#c0fe203",
+            "snapshotId": "c0fe208",
+            "type": {
+              "typeName": "DATETIME"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "id",
+            "nullable": false,
+            "relation": "liquibase.structure.core.Table#c0fe203",
+            "snapshotId": "c0fe205",
+            "type": {
+              "typeName": "BIGINT"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "id",
+            "nullable": false,
+            "relation": "liquibase.structure.core.Table#c0fe221",
+            "snapshotId": "c0fe223",
+            "type": {
+              "typeName": "BIGINT"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "id",
+            "nullable": false,
+            "relation": "liquibase.structure.core.Table#c0fe216",
+            "snapshotId": "c0fe215",
+            "type": {
+              "typeName": "BIGINT"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "object_name",
+            "nullable": true,
+            "relation": "liquibase.structure.core.Table#c0fe203",
+            "snapshotId": "c0fe206",
+            "type": {
+              "typeName": "clob"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "pictures_id",
+            "nullable": false,
+            "relation": "liquibase.structure.core.Table#c0fe210",
+            "snapshotId": "c0fe212",
+            "type": {
+              "typeName": "BIGINT"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "subdomain",
+            "nullable": true,
+            "relation": "liquibase.structure.core.Table#c0fe216",
+            "snapshotId": "c0fe218",
+            "type": {
+              "typeName": "clob"
+            }
+          }
+        },
+        {
+          "column": {
+            "certainDataType": false,
+            "name": "wedding_id",
+            "nullable": false,
+            "relation": "liquibase.structure.core.Table#c0fe210",
+            "snapshotId": "c0fe213",
+            "type": {
+              "typeName": "BIGINT"
+            }
+          }
+        }]
+      ,
+      "liquibase.structure.core.ForeignKey": [
+        {
+          "foreignKey": {
+            "foreignKeyColumns": [
+              "liquibase.structure.core.Column#c0fe212"]
+            ,
+            "foreignKeyTable": "liquibase.structure.core.Table#c0fe210",
+            "name": "fk_wedpic_on_image",
+            "primaryKeyColumns": [
+              "liquibase.structure.core.Column#c0fe205"]
+            ,
+            "primaryKeyTable": "liquibase.structure.core.Table#c0fe203",
+            "snapshotId": "c0fe220"
+          }
+        },
+        {
+          "foreignKey": {
+            "foreignKeyColumns": [
+              "liquibase.structure.core.Column#c0fe213"]
+            ,
+            "foreignKeyTable": "liquibase.structure.core.Table#c0fe210",
+            "name": "fk_wedpic_on_wedding",
+            "primaryKeyColumns": [
+              "liquibase.structure.core.Column#c0fe215"]
+            ,
+            "primaryKeyTable": "liquibase.structure.core.Table#c0fe216",
+            "snapshotId": "c0fe214"
+          }
+        }]
+      ,
+      "liquibase.structure.core.Index": [
+        {
+          "index": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe205"]
+            ,
+            "name": "IX_pk_image",
+            "snapshotId": "c0fe204",
+            "table": "liquibase.structure.core.Table#c0fe203",
+            "unique": true
+          }
+        },
+        {
+          "index": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe223"]
+            ,
+            "name": "IX_pk_user",
+            "snapshotId": "c0fe222",
+            "table": "liquibase.structure.core.Table#c0fe221",
+            "unique": true
+          }
+        },
+        {
+          "index": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe215"]
+            ,
+            "name": "IX_pk_wedding",
+            "snapshotId": "c0fe217",
+            "table": "liquibase.structure.core.Table#c0fe216",
+            "unique": true
+          }
+        }]
+      ,
+      "liquibase.structure.core.PrimaryKey": [
+        {
+          "primaryKey": {
+            "backingIndex": "liquibase.structure.core.Index#c0fe204",
+            "columns": [
+              "liquibase.structure.core.Column#c0fe205"]
+            ,
+            "name": "pk_image",
+            "snapshotId": "c0fe209",
+            "table": "liquibase.structure.core.Table#c0fe203"
+          }
+        },
+        {
+          "primaryKey": {
+            "backingIndex": "liquibase.structure.core.Index#c0fe222",
+            "columns": [
+              "liquibase.structure.core.Column#c0fe223"]
+            ,
+            "name": "pk_user",
+            "snapshotId": "c0fe224",
+            "table": "liquibase.structure.core.Table#c0fe221"
+          }
+        },
+        {
+          "primaryKey": {
+            "backingIndex": "liquibase.structure.core.Index#c0fe217",
+            "columns": [
+              "liquibase.structure.core.Column#c0fe215"]
+            ,
+            "name": "pk_wedding",
+            "snapshotId": "c0fe219",
+            "table": "liquibase.structure.core.Table#c0fe216"
+          }
+        }]
+      ,
+      "liquibase.structure.core.Schema": [
+        {
+          "schema": {
+            "catalog": "liquibase.structure.core.Catalog#c0fe200",
+            "default": true,
+            "snapshotId": "c0fe201"
+          }
+        }]
+      ,
+      "liquibase.structure.core.Sequence": [
+        {
+          "sequence": {
+            "incrementBy": "1!{java.math.BigInteger}",
+            "name": "hibernate_sequence",
+            "schema": "liquibase.structure.core.Schema#c0fe201",
+            "snapshotId": "c0fe202",
+            "startValue": "1!{java.math.BigInteger}"
+          }
+        }]
+      ,
+      "liquibase.structure.core.Table": [
+        {
+          "table": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe205",
+              "liquibase.structure.core.Column#c0fe206",
+              "liquibase.structure.core.Column#c0fe207",
+              "liquibase.structure.core.Column#c0fe208"]
+            ,
+            "indexes": [
+              "liquibase.structure.core.Index#c0fe204"]
+            ,
+            "name": "image",
+            "primaryKey": "liquibase.structure.core.PrimaryKey#c0fe209",
+            "schema": "liquibase.structure.core.Schema#c0fe201",
+            "snapshotId": "c0fe203"
+          }
+        },
+        {
+          "table": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe223"]
+            ,
+            "indexes": [
+              "liquibase.structure.core.Index#c0fe222"]
+            ,
+            "name": "user",
+            "primaryKey": "liquibase.structure.core.PrimaryKey#c0fe224",
+            "schema": "liquibase.structure.core.Schema#c0fe201",
+            "snapshotId": "c0fe221"
+          }
+        },
+        {
+          "table": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe215",
+              "liquibase.structure.core.Column#c0fe218"]
+            ,
+            "indexes": [
+              "liquibase.structure.core.Index#c0fe217"]
+            ,
+            "name": "wedding",
+            "primaryKey": "liquibase.structure.core.PrimaryKey#c0fe219",
+            "schema": "liquibase.structure.core.Schema#c0fe201",
+            "snapshotId": "c0fe216"
+          }
+        },
+        {
+          "table": {
+            "columns": [
+              "liquibase.structure.core.Column#c0fe213",
+              "liquibase.structure.core.Column#c0fe212"]
+            ,
+            "name": "wedding_pictures",
+            "outgoingForeignKeys": [
+              "liquibase.structure.core.ForeignKey#c0fe214",
+              "liquibase.structure.core.ForeignKey#c0fe220"]
+            ,
+            "schema": "liquibase.structure.core.Schema#c0fe201",
+            "snapshotId": "c0fe210",
+            "uniqueConstraints": [
+              "liquibase.structure.core.UniqueConstraint#c0fe211"]
+            
+          }
+        }]
+      ,
+      "liquibase.structure.core.UniqueConstraint": [
+        {
+          "uniqueConstraint": {
+            "clustered": false,
+            "columns": [
+              "liquibase.structure.core.Column#c0fe212"]
+            ,
+            "deferrable": false,
+            "disabled": false,
+            "initiallyDeferred": false,
+            "name": "uc_wedding_pictures_pictures",
+            "snapshotId": "c0fe211",
+            "table": "liquibase.structure.core.Table#c0fe210",
+            "validate": true
+          }
+        }]
+      
+    },
+    "snapshotControl": {
+      "snapshotControl": {
+        "includedType": [
+          "liquibase.structure.core.Catalog",
+          "liquibase.structure.core.Column",
+          "liquibase.structure.core.ForeignKey",
+          "liquibase.structure.core.Index",
+          "liquibase.structure.core.PrimaryKey",
+          "liquibase.structure.core.Schema",
+          "liquibase.structure.core.Sequence",
+          "liquibase.structure.core.Table",
+          "liquibase.structure.core.UniqueConstraint",
+          "liquibase.structure.core.View"]
+        
+      }
+    }
+  }
+}
