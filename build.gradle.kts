@@ -30,13 +30,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.liquibase:liquibase-core")
+
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0")
+
     implementation("io.minio:minio:8.4.2")
     implementation("com.itextpdf:itextpdf:5.5.13.3")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

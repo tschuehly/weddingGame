@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import de.tschuehly.weddingGame.service.ImageService
+import de.tschuehly.weddingGame.service.WebsiteUserService
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
@@ -28,7 +29,8 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 class WebController(
-    private val imageService: ImageService
+    private val imageService: ImageService,
+    private val userService: WebsiteUserService
 ) {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
 
@@ -40,14 +42,13 @@ class WebController(
     ): String {
         val subdomain = request.serverName.split(".").first()
         println("subdomain is: $subdomain")
-
-        model.addAllAttributes(
-            mapOf(
-                "email" to (principal?.attributes?.get("email") ?: ""),
-                "userId" to principal?.name
-            )
-        )
-        return "index"
+        return if (subdomain == "wedding-game"){
+//            "index"
+            "wedding"
+        }else{
+//            "wedding"
+            "index"
+        }
     }
     @GetMapping("/aufgabe/{uuid}")
     fun task(@PathVariable uuid: UUID, model: Model): String {

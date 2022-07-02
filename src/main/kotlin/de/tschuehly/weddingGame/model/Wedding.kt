@@ -1,16 +1,19 @@
 package de.tschuehly.weddingGame.model
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.OneToMany
+import java.util.*
+import javax.persistence.*
 
 @Entity
 class Wedding(
     @Id
     @GeneratedValue
-    var id: Long,
-    var subdomain: String,
-    @OneToMany()
-    var pictures: MutableList<Image> = ArrayList()
-)
+    var id: Long? = null,
+    var bucketId: String = UUID.randomUUID().toString(),
+    var subdomain: String = UUID.randomUUID().toString(),
+    @OneToMany(fetch = FetchType.EAGER)// TODO: Avoid Eager Fetching?
+    var pictures: MutableList<Image> = arrayListOf()
+){
+    override fun toString(): String {
+        return "Wedding(id=$id, bucketId='$bucketId', subdomain='$subdomain', pictures=$pictures)"
+    }
+}

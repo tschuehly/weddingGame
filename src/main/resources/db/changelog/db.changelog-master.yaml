@@ -8,7 +8,7 @@ databaseChangeLog:
       value: VARCHAR
       dbms: h2
   - changeSet:
-      id: 1656768556896-1
+      id: 1656796914717-1
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -17,7 +17,7 @@ databaseChangeLog:
             sequenceName: hibernate_sequence
             startValue: 1
   - changeSet:
-      id: 1656768556896-2
+      id: 1656796914717-2
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -41,7 +41,7 @@ databaseChangeLog:
                   type: DATETIME
             tableName: image
   - changeSet:
-      id: 1656768556896-3
+      id: 1656796914717-3
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -51,12 +51,58 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_user
+                    primaryKeyName: pk_websiteuser
                   name: id
                   type: BIGINT
-            tableName: user
+              - column:
+                  name: google_id
+                  type: ${string.type}
+              - column:
+                  name: facebook_id
+                  type: ${string.type}
+              - column:
+                  name: user_email
+                  type: ${string.type}
+              - column:
+                  name: attributes
+                  type: ${string.type}
+            tableName: website_user
   - changeSet:
-      id: 1656768556896-4
+      id: 1656796914717-4
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: website_user_id
+                  type: BIGINT
+              - column:
+                  name: authorities
+                  type: ${string.type}
+            tableName: website_user_authorities
+  - changeSet:
+      id: 1656796914717-5
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: website_user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: weddings_id
+                  type: BIGINT
+            tableName: website_user_weddings
+  - changeSet:
+      id: 1656796914717-6
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -70,11 +116,14 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  name: bucket_id
+                  type: ${string.type}
+              - column:
                   name: subdomain
                   type: ${string.type}
             tableName: wedding
   - changeSet:
-      id: 1656768556896-5
+      id: 1656796914717-7
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -92,7 +141,16 @@ databaseChangeLog:
                   type: BIGINT
             tableName: wedding_pictures
   - changeSet:
-      id: 1656768556896-6
+      id: 1656796914717-8
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: weddings_id
+            constraintName: uc_website_user_weddings_weddings
+            tableName: website_user_weddings
+  - changeSet:
+      id: 1656796914717-9
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -101,7 +159,40 @@ databaseChangeLog:
             constraintName: uc_wedding_pictures_pictures
             tableName: wedding_pictures
   - changeSet:
-      id: 1656768556896-7
+      id: 1656796914717-10
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: website_user_id
+            baseTableName: website_user_authorities
+            constraintName: fk_websiteuser_authorities_on_website_user
+            referencedColumnNames: id
+            referencedTableName: website_user
+  - changeSet:
+      id: 1656796914717-11
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: website_user_id
+            baseTableName: website_user_weddings
+            constraintName: fk_webusewed_on_website_user
+            referencedColumnNames: id
+            referencedTableName: website_user
+  - changeSet:
+      id: 1656796914717-12
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: weddings_id
+            baseTableName: website_user_weddings
+            constraintName: fk_webusewed_on_wedding
+            referencedColumnNames: id
+            referencedTableName: wedding
+  - changeSet:
+      id: 1656796914717-13
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -112,7 +203,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: image
   - changeSet:
-      id: 1656768556896-8
+      id: 1656796914717-14
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

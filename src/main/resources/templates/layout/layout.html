@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<nav class="flex flex-row justify-between mx-4">
+    <a href="/login">Login</a>
+    <a href="/logout">Logout</a>
+    <th:block th:if="${#authentication.principal != 'anonymousUser'}">
+        <span>Hallo [[${#authentication.principal.attributes['name']}]]</span>
+        <img
+                class="rounded-full"
+                th:src="${#authentication.principal.attributes['picture']}"
+                th:if="${#authentication.principal.attributes['picture']}"
+        >
+    </th:block>
+
+</nav>
+<p sec:authentication="principal"></p>
+<section layout:fragment="page-content" class="text-base text-gray-700 ml-4 mt-4"> ②
+
+</section>
+<th:block layout:fragment="page-scripts">③
+</th:block>
+</body>
+</html>
