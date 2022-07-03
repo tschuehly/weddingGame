@@ -6,7 +6,9 @@ import de.tschuehly.weddingGame.model.Wedding
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ImageRepository : JpaRepository<Image, Long>
-interface WeddingRepository : JpaRepository<Wedding, Long>
+interface WeddingRepository : JpaRepository<Wedding, Long>{
+    fun findBySubdomain(subdomain: String): Wedding?
+}
 interface WebsiteUserRepository : JpaRepository<WebsiteUser, Long>{
     fun findByGoogleId(googleId: String) : WebsiteUser?
     fun findByFacebookId(facebookId: String): WebsiteUser?

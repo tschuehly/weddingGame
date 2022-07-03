@@ -44,7 +44,9 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate.format_sql: true
-
+  liquibase:
+    contexts: dev
+    default-schema: public
 #logging:
 #  level:
 #    org.springframework.security: DEBUG

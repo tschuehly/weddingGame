@@ -8,9 +8,14 @@
     <title>Dein Hochzeitsevent</title>
 </head>
 <body>
-<section layout:fragment="page-content">
-    <div th:each="image: ${images}">
-        <img th:attr="src=${image.downloadUrl}"  style="width: 100%">
+<section layout:fragment="page-content" th:if="${#authentication.principal != 'anonymousUser'}" th:object="${#authentication.principal.weddings[0]}">
+    <div class="flex justify-center my-4">
+        <h1 class="text-3xl">Deine Hochzeit verwalten</h1>
+
+    </div>
+    <div>
+        Subdomain: [[*{subdomain}]]
+        BucketId: [[*{bucketId}]]
     </div>
 </section>
 </body>

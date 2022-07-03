@@ -74,6 +74,5 @@ tasks.withType<Test> {
 frontend{
     assembleScript.set("run build")
     nodeVersion.set("18.4.0")
-
 }
 

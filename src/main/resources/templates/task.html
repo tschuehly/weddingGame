@@ -66,6 +66,7 @@
 <body >
     <div  x-data="{ files: null, fullName: null}">
         <h1>[[${task.title}]]</h1>
+        <p>[[${wedding}]]</p>
 
         <label>
             <input x-ref="fileSelector" style="display: none" type="file" multiple="true" x-on:change="files = Object.values($event.target.files)">

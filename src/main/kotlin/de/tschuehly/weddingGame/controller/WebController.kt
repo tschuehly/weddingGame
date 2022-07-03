@@ -1,19 +1,14 @@
 package de.tschuehly.weddingGame.controller
 
-import de.tschuehly.weddingGame.bo.Task
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.itextpdf.text.BaseColor
-import com.itextpdf.text.Document
-import com.itextpdf.text.Element
-import com.itextpdf.text.Image
-import com.itextpdf.text.Phrase
-import com.itextpdf.text.RectangleReadOnly
+import com.itextpdf.text.*
 import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
+import de.tschuehly.weddingGame.bo.Task
 import de.tschuehly.weddingGame.service.ImageService
-import de.tschuehly.weddingGame.service.WebsiteUserService
+import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
@@ -30,7 +25,7 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 class WebController(
     private val imageService: ImageService,
-    private val userService: WebsiteUserService
+    private val weddingService: WeddingService
 ) {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
 
@@ -43,23 +38,44 @@ class WebController(
         val subdomain = request.serverName.split(".").first()
         println("subdomain is: $subdomain")
         return if (subdomain == "wedding-game"){
-//            "index"
-            "wedding"
-        }else{
-//            "wedding"
             "index"
+        }else{
+            model.addAllAttributes(
+                mapOf(
+                    "wedding" to weddingService.getBySubdomain(subdomain),
+                )
+            )
+            "safari"
         }
     }
     @GetMapping("/aufgabe/{uuid}")
-    fun task(@PathVariable uuid: UUID, model: Model): String {
-        tasks.find {
-            it.uuid.toString() == uuid.toString()
-        }?.let {
-            model.addAttribute("task", it)
-            return "task"
-        } ?: let {
-            return "404"
+    fun task(@PathVariable uuid: UUID,
+             model: Model,
+             request: HttpServletRequest): String {
+        val subdomain = request.serverName.split(".").first()
+        return if (subdomain == "wedding-game"){
+            "index"
+        }else{
+
+            tasks.find {
+                it.uuid.toString() == uuid.toString()
+            }?.let {
+                model.addAllAttributes(
+                    mapOf(
+                        "wedding" to weddingService.getBySubdomain(subdomain),
+                        "task" to it
+                    )
+                )
+                return "task"
+            } ?: let {
+                return "404"
+            }
         }
+    }
+
+    @GetMapping("/hochzeit")
+    fun weddingManager(model: Model): String {
+        return "weddingmanager"
     }
 
     @GetMapping("/slideshow")

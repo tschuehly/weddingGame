@@ -9,4 +9,6 @@ class WeddingService(
     val weddingRepository: WeddingRepository
 ){
     fun save(wedding: Wedding) = weddingRepository.save(wedding)
+
+    fun getBySubdomain(subdomain: String) = weddingRepository.findBySubdomain(subdomain)
 }

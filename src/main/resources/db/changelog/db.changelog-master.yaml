@@ -213,4 +213,13 @@ databaseChangeLog:
             constraintName: fk_wedpic_on_wedding
             referencedColumnNames: id
             referencedTableName: wedding
+  - changeSet:
+      id: 1656796914717-15
+      author: tschuehly
+      context: dev
+      changes:
+        - sqlFile:
+            splitStatements: true
+            path: ./testdata.sql
+            stripComments: true
 
