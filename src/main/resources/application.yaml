@@ -9,26 +9,27 @@ spring:
           facebook:
             client-id: ${FACEBOOK_CLIENT_ID}
             client-secret: ${FACEBOOK_CLIENT_SECRET}
-  thymeleaf:
-    cache: false
   servlet:
     multipart:
       max-file-size: 2000MB
       max-request-size: 2000MB
-  web:
-    resources:
-#      static-locations: file:src/main/resources/static/
-      cache:
-        period: 0
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     contexts: none
     default-schema: public
+
+  thymeleaf: # Thymeleaf
+    cache: false
+    prefix: file:src/main/resources/templates/
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
 server:
   port: 80
   tomcat:
     max-http-form-post-size: 2000MB
-
 ---
 spring:
   config:
@@ -43,11 +44,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate.format_sql: true
-  thymeleaf:
-    prefix: file:src/main/resources/templates/
-  web:
-    resources:
-        static-locations: file:src/main/resources/static/
+
 #logging:
 #  level:
 #    org.springframework.security: DEBUG

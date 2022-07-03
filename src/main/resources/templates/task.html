@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@200;300;400;500;600;700;800&family=Oswald:wght@200;300;400;500;600;700;800&family=Saira+Condensed&display=swap" rel="stylesheet">
     <title>Aufgabe</title>
 </head>
 <style>
@@ -69,14 +69,14 @@
 
         <label>
             <input x-ref="fileSelector" style="display: none" type="file" multiple="true" x-on:change="files = Object.values($event.target.files)">
-            <button @click="$refs.fileSelector.click()">Wähle deine Bilder aus</button>
+            <button @click="$refs.fileSelector.click()">Wähle deine Bilder aus now</button>
             <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
         </label>
         <button  @click="await uploadImages(files, fullName)">Bilder hochladen</button>
 
 
         <form id="form" hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
-            <label for="files">Wähle deine Bilder aus:</label><br>
+            <label for="files">Wähle deine Bilder aus :</label><br>
             <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
             <label for="fullName">Dein Vor- und Nachname:</label><br>
             <input type="text" x-model="fullName" id="fullName" name="fullName">
