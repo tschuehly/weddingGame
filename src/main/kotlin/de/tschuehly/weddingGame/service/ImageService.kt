@@ -8,6 +8,8 @@ import io.minio.http.Method
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import de.tschuehly.weddingGame.repository.ImageRepository
+import io.minio.BucketExistsArgs
+import io.minio.MakeBucketArgs
 import java.net.URLEncoder
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -21,18 +23,31 @@ class ImageService(
     lateinit var s3AccessKey: String
     @Value("\${S3_SECRET_KEY}")
     lateinit var s3SecretKey: String
+    // TODO: Use Subfolder instead of bucketId
 
-    fun getUploadUrl(uuid: UUID?, fileName: String): ImageDTO {
+    fun getUploadUrl(uuid: UUID?, fileName: String, bucketId: String): ImageDTO {
+        createBucketIfNotExists(bucketId)
         val objectName = "${uuid ?: "safari" }/${URLEncoder.encode(fileName, "UTF-8")}_${System.currentTimeMillis()}"
         val uploadUrl = minioClient().getPresignedObjectUrl(
             GetPresignedObjectUrlArgs.builder()
                 .method(Method.PUT)
-                .bucket("test") // TODO: Replace with weddingID
+                .bucket(bucketId) // TODO: Replace with weddingID
                 .`object`(objectName)
                 .expiry(10, TimeUnit.MINUTES)
                 .build()
         )
-        return ImageDTO(uploadUrl,objectName,"","")
+        return ImageDTO(uploadUrl,objectName,"","", bucketId)
+    }
+
+    private fun createBucketIfNotExists(bucketId: String){
+        if (
+            !minioClient().bucketExists(BucketExistsArgs.builder().bucket(bucketId).build())
+        ){
+            minioClient().makeBucket(
+                MakeBucketArgs.builder()
+                    .bucket(bucketId)
+                    .build());
+        }
     }
 
 
@@ -47,20 +62,23 @@ class ImageService(
         return imageRepository.findAll()
     }
 
-    fun save(imageDTO: ImageDTO){
-
-        val downloadUrl = minioClient().getPresignedObjectUrl(
+    fun getDownloadUrl(bucketId: String, objectName: String): String{
+        createBucketIfNotExists(bucketId)
+       return minioClient().getPresignedObjectUrl(
             GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
-                .bucket("test") // TODO: Replace with weddingID
-                .`object`(imageDTO.objectName)
+                .bucket(bucketId)
+                .`object`(objectName)
                 .expiry(7, TimeUnit.DAYS)
                 .build()
         )
+    }
+
+    fun save(imageDTO: ImageDTO){
         imageRepository.save(Image(
             null,
             imageDTO.objectName,
-            downloadUrl,
+            getDownloadUrl(imageDTO.bucketId,imageDTO.objectName),
             Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS))
         ))
     }

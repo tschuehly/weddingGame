@@ -4,5 +4,6 @@ data class ImageDTO(
     val uploadUrl: String,
     val objectName: String,
     val fullName: String?,
-    val fileName: String
+    val fileName: String,
+    val bucketId: String
 )

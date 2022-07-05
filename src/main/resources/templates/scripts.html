@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script th:fragment="uploadImages">
+async function uploadImages(files, fullName) {
+    for(const file of files){
+        let imageDTO = {
+            uploadUrl: '',
+            objectName:'',
+            fullName: fullName,
+            fileName: file.name,
+            bucketId: '[[${wedding.bucketId}]]'
+        }
+        let response =
+            await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name + '&bucketId=' + imageDTO.bucketId, {
+                method: 'GET'
+            })
+        let json = await response.json()
+        imageDTO.uploadUrl = json.uploadUrl
+        imageDTO.objectName = json.objectName
+        if (response.ok){
+            let uploadResponse = await fetch(imageDTO.uploadUrl, {
+                method: 'PUT',
+                body: file,
+                headers: {
+                    'x-amz-meta-fullname':encodeURI(fullName)
+                }
+            })
+            if(uploadResponse.ok){
+                let createImageResponse = await fetch('/api/image/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(imageDTO),
+
+                })
+                if(createImageResponse.ok){
+                    console.log("Uploaded "+ file.name)
+                }else {
+                    console.error(createImageResponse)
+                }
+            }else {
+                console.info(uploadResponse)
+            }
+
+        }
+    }
+}
+</script>
+</body>
+</html>

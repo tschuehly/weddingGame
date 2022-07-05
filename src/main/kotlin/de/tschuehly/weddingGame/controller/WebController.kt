@@ -36,8 +36,7 @@ class WebController(
         request: HttpServletRequest
     ): String {
         val subdomain = request.serverName.split(".").first()
-        println("subdomain is: $subdomain")
-        return if (subdomain == "wedding-game"){
+        return if (subdomain == "wedding-game" || subdomain == "localhost"){
             "index"
         }else{
             model.addAllAttributes(
@@ -53,10 +52,9 @@ class WebController(
              model: Model,
              request: HttpServletRequest): String {
         val subdomain = request.serverName.split(".").first()
-        return if (subdomain == "wedding-game"){
+        return if (subdomain == "wedding-game" || subdomain == "localhost"){
             "index"
         }else{
-
             tasks.find {
                 it.uuid.toString() == uuid.toString()
             }?.let {

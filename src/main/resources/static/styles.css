@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'dancing-script';
+    src: url("/fonts/DancingScript-VariableFont_wght.ttf") format("TrueType");
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'saira';
+    src: url("/fonts/SairaCondensed-Medium.ttf");
+}

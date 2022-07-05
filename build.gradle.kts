@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "2.7.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.siouan.frontend-jdk11") version "6.0.0"
+    id("com.github.node-gradle.node") version "3.4.0"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
@@ -76,3 +77,19 @@ frontend{
     nodeVersion.set("18.4.0")
 }
 
+tasks.register<com.github.gradle.node.npm.task.NpxTask>("tailwind"){
+    command.set("tailwindcss")
+    args.set(listOf("-i", "./src/main/resources/static/styles.css",  "-o" ,"./src/main/resources/static/tailwind.css", "--watch"))
+}
+
+tasks.register("sync"){
+    inputs.files("./src/main/resources/static","./src/main/resources/templates",)
+    doLast {
+        sync {
+            from("./src/main/resources/static")
+            into("build/resources/main/static")
+        }
+
+    }
+
+}

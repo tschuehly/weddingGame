@@ -68,8 +68,8 @@
         z-index: -1;
         opacity: 0.6;
         background:
-                url("/Blumen2.svg") 100% 0 repeat-y,
-                url("/Blumen2.svg") 100% 75px repeat-y;
+                url("/svg/Blumen2.svg") 100% 0 repeat-y,
+                url("/svg/Blumen2.svg") 100% 75px repeat-y;
         width: 60px;
         top: 0;
     }
@@ -87,6 +87,7 @@
     <div style="left: 0" class="background_flowers"></div>
     <div class="contentContainer">
         <h1>Fotosafari</h1>
+        <p class="text-3xl">[[${wedding}]]</p>
         <h3 style="">Hier könnt ihr eure Bilder von unserer Hochzeit hochladen.</h3>
         <form id="form" hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
             <label for="files">Wähle deine Bilder aus:</label><br>
@@ -96,12 +97,12 @@
             <input type="submit" name="submit">
             <div class="htmx-indicator" >
                 <br>
-                <img id="indicator"  src="/hearts.svg">
+                <img id="indicator"  src="/svg/hearts.svg">
                 <p>Wird hochgeladen:</p>
                 <progress id='progress' value='0' max='100'></progress>
             </div>
         </form>
-        <img id="bride" src="/AlinaxAndreas-2.webp">
+        <img id="bride" src="/images/AlinaxAndreas-2.webp">
     </div>
 
 </body>

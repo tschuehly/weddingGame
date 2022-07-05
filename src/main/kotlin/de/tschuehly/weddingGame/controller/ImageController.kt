@@ -14,12 +14,13 @@ class ImageController(
     @GetMapping("/getUploadUrl")
     fun uploadImage(
         @RequestParam("uuid") uuid: UUID?,
+        @RequestParam("bucketId") bucketId: String,
         @RequestParam("fullName", required = false) fullName: String?,
         @RequestParam("fileName") fileName: String,
         request: HttpServletRequest
     ): ImageDTO {
 
-        return imageService.getUploadUrl(uuid, fileName)
+        return imageService.getUploadUrl(uuid, fileName, bucketId)
     }
 
     @PostMapping("/create")

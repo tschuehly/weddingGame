@@ -5,166 +5,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       data-theme="pastel"
       lang="de">
-<head>
+<head th:fragment="head">
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <link href="/output.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet">
+    <script src="/js/htmx.js"></script>
+    <script src="/js/alpine.js" defer></script>
+    <link href="/tailwind.css" rel="stylesheet">
+    <script src="http://localhost:35729/livereload.js"></script>
 </head>
 <body>
-<div class="
-  sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100
-  text-primary-content
-  ">
-<nav class="navbar bg-base-100">
-    <div class="navbar-start">
-        <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-            </label>
-            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a>Item 1</a></li>
-                <li tabindex="0">
-                    <a class="justify-between">
-                        Parent
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
-                    </a>
-                    <ul class="p-2">
-                        <li><a>Submenu 1</a></li>
-                        <li><a>Submenu 2</a></li>
-                    </ul>
-                </li>
-                <li><a>Item 3</a></li>
-            </ul>
-        </div>
-        <a class="btn btn-ghost normal-case text-xl">WeddingGame</a>
-    </div>
-    <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal p-0">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/logout">Logout</a></li>
-            <th:block th:if="${#authentication.principal != 'anonymousUser'}">
 
-
-            </th:block>
-
-            <li tabindex="0" >
-                <a>
-                    Parent
-                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
-                </a>
-                <ul  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                </ul>
-            </li>
-            <li><a>Item 3</a></li>
-        </ul>
-    </div>
-    <div class="navbar-end">
-        <th:block th:unless="${#authentication.principal != 'anonymousUser'}">
-
-            <a class="btn">Get started</a>
-        </th:block>
-        <th:block th:if="${#authentication.principal != 'anonymousUser'}">
-            <span>Hallo [[${#authentication.principal.attributes['name']}]]</span>
-            <img
-                    class="rounded-full max-h-14 ml-2"
-                    th:src="${#authentication.principal.attributes['picture']}"
-                    th:if="${#authentication.principal.attributes['picture']}"
-            >
-        </th:block>
-    </div>
-</nav>
-</div>
 <section layout:fragment="page-content">
 
 </section>
-<div>
-    <div class="bg-base-200 text-base-content">
-        <footer class="footer mx-auto max-w-6xl px-4 py-20">
-            <div>
-                <div class="font-title inline-flex text-3xl"><span class="text-primary lowercase">daisy</span>
-                    <span class="text-base-content uppercase">UI</span></div>
-                <p class="opacity-50">Free Component library <br> For utility first CSS frameworks</p></div>
-            <div><span class="footer-title">Guides</span> <a href="/docs/install" class="link link-hover">How to
-                install</a> <a href="/docs/use" class="link link-hover">How to use components</a> <a
-                    href="/docs/customize" class="link link-hover">How to customize</a> <a href="/docs/themes"
-                                                                                           class="link link-hover">How
-                to use themes</a> <a href="/docs/colors" class="link link-hover">Color system</a> <a
-                    href="/docs/config" class="link link-hover">Config</a></div>
-            <div><span class="footer-title">Links</span> <a target="_blank" rel="noopener"
-                                                            href="https://github.com/saadeghi/daisyui"
-                                                            class="group link link-hover">Github
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a> <a href="/docs/changelog" class="group link link-hover">Changelog</a> <a target="_blank"
-                                                                                          rel="noopener"
-                                                                                          href="https://github.com/saadeghi/daisyui/blob/master/LICENSE"
-                                                                                          class="group link link-hover">License
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a> <a target="_blank" rel="noopener"
-                    href="https://github.com/saadeghi/daisyui/blob/master/.github/CONTRIBUTING.md"
-                    class="group link link-hover">Contributing
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a></div>
-            <div><span class="footer-title">Available on</span> <a target="_blank" rel="noopener"
-                                                                   href="https://www.npmjs.com/package/daisyui"
-                                                                   class="group link link-hover">NPM
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a> <a target="_blank" rel="noopener" href="https://unpkg.com/browse/daisyui/"
-                    class="group link link-hover">Unpkg CDN
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a> <a target="_blank" rel="noopener" href="https://www.jsdelivr.com/package/npm/daisyui"
-                    class="group link link-hover">JSdeliver CDN
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a></div>
-            <div><span class="footer-title">Try online</span> <a href="/tailwindplay"
-                                                                 class="group link link-hover" target="_blank"
-                                                                 rel="noopener">Tailwind Play
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a> <a target="_blank" rel="noopener" href="/codepen" class="group link link-hover">Codepen
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
-                    <path fill-rule="evenodd"
-                          d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
-                </svg>
-            </a></div>
-        </footer>
-    </div>
 
-</div>
 <th:block layout:fragment="page-scripts">
 </th:block>
 </body>

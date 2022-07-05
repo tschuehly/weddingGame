@@ -1,19 +1,15 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="de">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@200;300;400;500;600;700;800&family=Oswald:wght@200;300;400;500;600;700;800&family=Saira+Condensed&display=swap" rel="stylesheet">
-    <title>Aufgabe</title>
-</head>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <style>
     body {
 
         text-align: center;
     }
+
     h1, h2, h3, h4 {
         font-family: 'Dancing Script', cursive;
         color: #ef808f;
@@ -21,120 +17,71 @@
         font-size: 4rem;
         padding-top: 2rem;
     }
+
     h2 {
         font-size: 3rem;
         color: black;
     }
+
     h3 {
         font-size: 2.5rem;
         color: black;
     }
+
     p {
         font-family: 'Dancing Script', cursive;
         font-weight: 600;
         font-size: 1.5rem;
         color: black;
     }
+
     form {
         font-family: 'Saira Condensed', sans-serif;
         font-weight: bold;
         font-size: 1.5rem;
     }
+
     #flower {
         z-index: -1;
         height: 60%;
     }
-    .htmx-indicator{
-        display:none;
+
+    .htmx-indicator {
+        display: none;
     }
-    .htmx-request .htmx-indicator{
-        display:inline;
+
+    .htmx-request .htmx-indicator {
+        display: inline;
     }
-    #indicator{
-        height: 10rem;
-    }
-    input[type=file]::file-selector-button , input[type=submit]{
+
+    input[type=file]::file-selector-button, input[type=submit] {
         border: 3px solid #ef808f;
         padding: 0.5rem 2rem;
         border-radius: .4em;
         background-color: #fff;
     }
-    #progress{
+
+    #progress {
         accent-color: #ef808f;
     }
 </style>
-<body >
-    <div  x-data="{ files: null, fullName: null}">
-        <h1>[[${task.title}]]</h1>
-        <p>[[${wedding}]]</p>
+<body layout:fragment="page-content">
+<p>[[${wedding}]]</p>
+<div x-data="{ files: null, fullName: null}">
+    <h1 class="font-dancing-script text-6xl text-center my-20">[[${task.title}]]</h1>
 
-        <label>
-            <input x-ref="fileSelector" style="display: none" type="file" multiple="true" x-on:change="files = Object.values($event.target.files)">
-            <button @click="$refs.fileSelector.click()">Wähle deine Bilder aus now</button>
-            <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
-        </label>
-        <button  @click="await uploadImages(files, fullName)">Bilder hochladen</button>
+    <div class="">
 
-
-        <form id="form" hx-post="/api/image/upload/{{task.uuid}}" hx-encoding="multipart/form-data" hx-swap="outerswap">
-            <label for="files">Wähle deine Bilder aus :</label><br>
-            <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
-            <label for="fullName">Dein Vor- und Nachname:</label><br>
-            <input type="text" x-model="fullName" id="fullName" name="fullName">
-            <input type="submit" name="submit">
-            <div class="htmx-indicator" >
-                <br>
-                <img id="indicator"  src="/hearts.svg">
-                <p>Wird hochgeladen:</p>
-                <progress id='progress' value='0' max='100'></progress>
-            </div>
-        </form>
-        <script >
-            window.htmx.on('#form', 'htmx:xhr:progress', function(evt) {
-                window.htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
-            });
-        </script>
+        <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
+               x-on:change="files = Object.values($event.target.files)">
+        <button class="btn" @click="$refs.fileSelector.click()">Wähle deine Bilder aus</button>
+        <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
+        <button class="btn btn-primary" @click="await uploadImages(files, fullName)">Bilder hochladen</button>
     </div>
-    <img id="flower" src="/Blumen.svg">
+
+    <img style="transition: opacity 500ms ease-in;" src="/svg/hearts.svg">
+    <p>Wird hochgeladen</p>
+
+</div>
+<div th:insert="scripts :: uploadImages"></div>
 </body>
-
-<script>
-    async function uploadImages(files, fullName) {
-        for(const file of files){
-            let imageDTO = {
-                uploadUrl: '',
-                objectName:'',
-                fullName: fullName,
-                fileName: file.name,
-            }
-            let response =
-                await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name, {
-                method: 'GET'
-            })
-            let json = await response.json()
-            imageDTO.uploadUrl = json.uploadUrl
-            imageDTO.objectName = json.objectName
-            if (response.ok){
-                let uploadResponse = await fetch(imageDTO.uploadUrl, {
-                    method: 'PUT',
-                    body: file,
-                    headers: {
-                        'x-amz-meta-fullname':encodeURI(fullName)
-                    }
-                })
-                if(uploadResponse.ok){
-                    let createImageResponse = await fetch('/api/image/create', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(imageDTO),
-
-                    })
-                    console.log("Uploaded "+ file.name)
-                }
-
-            }
-        }
-    }
-</script>

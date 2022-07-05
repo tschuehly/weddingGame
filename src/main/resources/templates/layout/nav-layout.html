@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      data-theme="pastel"
+      lang="de">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/js/htmx.js"></script>
+    <script src="/js/alpine.js" defer></script>
+    <link href="/tailwind.css" rel="stylesheet">
+    <script src="http://localhost:35729/livereload.js"></script>
+</head>
+<body>
+<th:block th:insert="fragments/navbar :: navbar"></th:block>
+
+<section layout:fragment="page-content">
+
+</section>
+
+<th:block th:insert="fragments/footer :: footer"></th:block>
+<th:block layout:fragment="page-scripts">
+</th:block>
+</body>
+</html>
