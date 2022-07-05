@@ -15,7 +15,9 @@
     <script src="http://localhost:35729/livereload.js"></script>
 </head>
 <body>
+<th:block th:if="${#authentication.principal != 'anonymousUser'}" th:insert="fragments/navbar :: navbar">
 
+</th:block>
 <section layout:fragment="page-content">
 
 </section>

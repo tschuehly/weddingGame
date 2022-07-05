@@ -37,16 +37,17 @@ class WebController(
     ): String {
         val subdomain = request.serverName.split(".").first()
         return if (subdomain == "wedding-game" || subdomain == "localhost"){
-            "index"
+            "safari"
         }else{
             model.addAllAttributes(
                 mapOf(
                     "wedding" to weddingService.getBySubdomain(subdomain),
                 )
             )
-            "safari"
+            "index"
         }
     }
+
     @GetMapping("/aufgabe/{uuid}")
     fun task(@PathVariable uuid: UUID,
              model: Model,

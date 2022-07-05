@@ -4,69 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-<style>
-    body {
-
-        text-align: center;
-    }
-
-    h1, h2, h3, h4 {
-        font-family: 'Dancing Script', cursive;
-        color: #ef808f;
-        font-weight: 600;
-        font-size: 4rem;
-        padding-top: 2rem;
-    }
-
-    h2 {
-        font-size: 3rem;
-        color: black;
-    }
-
-    h3 {
-        font-size: 2.5rem;
-        color: black;
-    }
-
-    p {
-        font-family: 'Dancing Script', cursive;
-        font-weight: 600;
-        font-size: 1.5rem;
-        color: black;
-    }
-
-    form {
-        font-family: 'Saira Condensed', sans-serif;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-
-    #flower {
-        z-index: -1;
-        height: 60%;
-    }
-
-    .htmx-indicator {
-        display: none;
-    }
-
-    .htmx-request .htmx-indicator {
-        display: inline;
-    }
-
-    input[type=file]::file-selector-button, input[type=submit] {
-        border: 3px solid #ef808f;
-        padding: 0.5rem 2rem;
-        border-radius: .4em;
-        background-color: #fff;
-    }
-
-    #progress {
-        accent-color: #ef808f;
-    }
-</style>
 <body layout:fragment="page-content">
 <p>[[${wedding}]]</p>
+
 <div x-data="{ files: null, fullName: null}">
     <h1 class="font-dancing-script text-6xl text-center my-20">[[${task.title}]]</h1>
 

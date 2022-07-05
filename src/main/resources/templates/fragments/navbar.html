@@ -64,11 +64,26 @@
                     </th:block>
                     <th:block th:if="${#authentication.principal != 'anonymousUser'}">
                         <span>Hallo [[${#authentication.principal.attributes['name']}]]</span>
-                        <div class="avatar my-2"
-                             th:if="${#authentication.principal.attributes['picture']}">
-                            <div class="w-16 rounded-full mx-3">
-                                <img class="" th:src="${#authentication.principal.attributes['picture']}">
+                        <div class="avatar my-2">
+                            <div class="w-16 mx-3 dropdown">
+                                <label tabindex="0" class="">
+                                    <img  tabindex="0" src="/svg/user.svg">
+
+                                </label>
+                                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><a>Item 1</a></li>
+                                    <li><a>Item 2</a></li>
+                                </ul>
                             </div>
+                        </div>
+                        <div class="dropdown dropdown-end">
+                            <label tabindex="0" class="btn btn-outline">
+                                <img class="h-16" tabindex="0" src="/svg/user.svg">
+                            </label>
+                            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a>Item 1</a></li>
+                                <li><a>Item 2</a></li>
+                            </ul>
                         </div>
                     </th:block>
                 </div>

@@ -1,88 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="de"
+      layout:decorate="~{layout/layout}">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Oswald:wght@200;300;400;500;600;700&family=Saira+Condensed&display=swap" rel="stylesheet">
     <title>Hochzeit</title>
-
-    <script >
-        window.htmx.on('#form', 'htmx:xhr:progress', function(evt) {
-            window.htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
-        });
-    </script>
 </head>
-<style>
-    body {
-
-        text-align: center;
-    }
-    h1, h2, h3 {
-        font-family: 'Dancing Script', cursive;
-        color: #ef808f;
-        font-weight: 600;
-        font-size: 4rem;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-    h2 {
-        font-size: 3rem;
-        color: black;
-    }
-    h3 {
-        font-size: 2.5rem;
-        color: black;
-    }
-    form {
-        font-family: 'Saira Condensed', sans-serif;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-    .htmx-indicator{
-        display:none;
-    }
-    .htmx-request .htmx-indicator{
-        display:inline;
-    }
-    #indicator{
-        height: 10rem;
-    }
-    input[type=file]::file-selector-button , input[type=submit]{
-        border: 3px solid #ef808f;
-        padding: 0.5rem 2rem;
-        border-radius: .4em;
-        background-color: #fff;
-    }
-    #progress{
-        accent-color: #ef808f;
-    }
-    #bride {
-        border-radius: 50%;
-        width: 23rem;
-        max-width: 100%;
-        height: auto;
-    }
-    .background_flowers {
-        position: fixed;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.6;
-        background:
-                url("/svg/Blumen2.svg") 100% 0 repeat-y,
-                url("/svg/Blumen2.svg") 100% 75px repeat-y;
-        width: 60px;
-        top: 0;
-    }
-    .contentContainer {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        margin: 0 60px
-    }
-
-</style>
-<body>
+<body layout:fragment="page-content">
     <div style="right: 0" class="background_flowers"></div>
     <div style="left: 0" class="background_flowers"></div>
     <div class="contentContainer">
