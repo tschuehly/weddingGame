@@ -17,10 +17,10 @@ async function uploadImages(files, fullName) {
             objectName:'',
             fullName: fullName,
             fileName: file.name,
-            bucketId: '[[${wedding.bucketId}]]'
+            subfolderId: '[[${wedding.subfolderId}]]'
         }
         let response =
-            await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name + '&bucketId=' + imageDTO.bucketId, {
+            await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name + '&subfolderId=' + imageDTO.subfolderId, {
                 method: 'GET'
             })
         let json = await response.json()

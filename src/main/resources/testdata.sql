@@ -15,7 +15,7 @@ INSERT INTO "PUBLIC"."WEBSITE_USER_AUTHORITIES"("WEBSITE_USER_ID", "AUTHORITIES"
 
                                                                                       (2, 'SCOPE_https://www.googleapis.com/auth/userinfo.profile');
 
-INSERT INTO "PUBLIC"."WEDDING"("ID", "BUCKET_ID", "SUBDOMAIN") VALUES
+INSERT INTO "PUBLIC"."WEDDING"("ID", "SUBFOLDER_ID", "SUBDOMAIN") VALUES
     (2, 'c215e06f-e061-4a8a-8068-60d648cbfbd1', '7bb774f0-717f-408a-a0db-9d42a35375b8');
 INSERT INTO "PUBLIC"."WEBSITE_USER_WEDDINGS"("WEBSITE_USER_ID", "WEDDINGS_ID") VALUES
     (2, 2);
