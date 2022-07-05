@@ -4,24 +4,40 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-<body layout:fragment="page-content">
-<p>[[${wedding}]]</p>
+<body layout:fragment="page-content" class="h-screen  bg-gradient-to-br from-primary to-secondary">
 
-<div x-data="{ files: null, fullName: null}">
-    <h1 class="font-dancing-script text-6xl text-center my-20">[[${task.title}]]</h1>
+<div x-data="{ files: null, fullName: null, loading: null}" class="flex flex-col ">
+    <h1 class="font-dancing-script text-7xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
 
-    <div class="">
+    <div class="p-20 rounded-xl flex flex-col items-center gap-10 mx-auto bg-gray-100">
+            <div class="flex flex-col items-center">
+                <label class="label flex justify-center">
+                    <span class="label-text text-4xl mb-4">Wähle deine Bilder aus:</span>
+                </label>
+                <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
+                       x-on:change="files = Object.values($event.target.files)">
+                <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
+                <button class="btn" @click="$refs.fileSelector.click()">Wähle deine Bilder aus</button>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text text-4xl mb-4">Dein Vor- und Nachname:</span>
+                </label>
+                <input type="text" id="fullName" name="fullName" placeholder="Max Mustermann" class="input input-bordered"/>
+            </div>
+            <button class="btn btn-primary" @click=" loading = true; loading = await uploadImages(files, fullName);">Bilder hochladen</button>
+</div>
 
-        <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
-               x-on:change="files = Object.values($event.target.files)">
-        <button class="btn" @click="$refs.fileSelector.click()">Wähle deine Bilder aus</button>
-        <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
-        <button class="btn btn-primary" @click="await uploadImages(files, fullName)">Bilder hochladen</button>
+
+    <div x-show="loading">
+        <div class="flex justify-center">
+            <img class="h-64" style="transition: opacity 800ms ease-in;" src="/svg/hearts.svg">
+        </div>
+        <p  class="text-4xl text-center">Wird hochgeladen</p>
     </div>
+    <div class="h-80 bg-[url('/svg/Blumen_90.svg')]" >
 
-    <img style="transition: opacity 500ms ease-in;" src="/svg/hearts.svg">
-    <p>Wird hochgeladen</p>
-
+    </div>
 </div>
 <div th:insert="scripts :: uploadImages"></div>
 </body>
