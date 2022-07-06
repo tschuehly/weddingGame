@@ -16,7 +16,6 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     contexts: none
-    default-schema: public
 
   thymeleaf: # Thymeleaf
     cache: false
@@ -35,20 +34,25 @@ spring:
   config:
     activate:
       on-profile: dev
-  datasource:
-    url: jdbc:h2:mem:datarecovery
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
+        default-schema: public
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   liquibase:
     contexts: dev
+    change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
-#logging:
-#  level:
+    drop-first: true
+
+
+logging:
+  level:
+    liquibase: TRACE
 #    org.springframework.security: DEBUG
 ##log4j:
 ##  logger.org.hibernate:
