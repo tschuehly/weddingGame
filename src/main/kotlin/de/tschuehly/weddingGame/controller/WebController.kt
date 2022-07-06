@@ -37,14 +37,14 @@ class WebController(
     ): String {
         val subdomain = request.serverName.split(".").first()
         return if (subdomain == "wedding-game" || subdomain == "localhost"){
-            "safari"
+            "index"
         }else{
             model.addAllAttributes(
                 mapOf(
                     "wedding" to weddingService.getBySubdomain(subdomain),
                 )
             )
-            "index"
+            "safari"
         }
     }
 
@@ -58,14 +58,19 @@ class WebController(
         }else{
             tasks.find {
                 it.uuid.toString() == uuid.toString()
-            }?.let {
-                model.addAllAttributes(
-                    mapOf(
-                        "wedding" to weddingService.getBySubdomain(subdomain),
-                        "task" to it
+            }?.let { task ->
+                weddingService.getBySubdomain(subdomain)?.let{
+                    model.addAllAttributes(
+                        mapOf(
+                            "wedding" to it,
+                            "task" to task
+                        )
                     )
-                )
-                return "task"
+
+                    return "task"
+                } ?:let{
+                    return "404"
+                }
             } ?: let {
                 return "404"
             }
