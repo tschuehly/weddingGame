@@ -93,3 +93,6 @@ tasks.register("sync"){
     }
 
 }
+tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
+    classpath = sourceSets["test"].runtimeClasspath
+}

@@ -1,13 +1,20 @@
 package de.tschuehly.weddingGame.util
 
+import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.core.env.MapPropertySource
+import org.springframework.stereotype.Component
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
+import java.net.URI
+import java.util.*
+import javax.annotation.PreDestroy
 
-open class IntegrationTestBase {
-    companion object {
+abstract class IntegrationTestBase {
+    companion object Initializer{
         @Container
         val postgresContainer = PostgreSQLContainer<Nothing>("postgres:13.4")
             .apply {
@@ -15,12 +22,24 @@ open class IntegrationTestBase {
                 withUsername("duke")
                 withPassword("s3crEt")
             }
-        @JvmStatic
-        @DynamicPropertySource
-        fun properties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", postgresContainer::getJdbcUrl)
-            registry.add("spring.datasource.password", postgresContainer::getPassword)
-            registry.add("spring.datasource.username", postgresContainer::getUsername)
+
+        var urls =
+            mapOf(
+                "spring.datasource.url" to postgresContainer::getJdbcUrl,
+                "spring.datasource.password" to postgresContainer::getPassword,
+                "spring.datasource.username" to postgresContainer::getUsername
+            )
+        class Initializer: ApplicationContextInitializer<ConfigurableApplicationContext>{
+            override fun initialize(applicationContext: ConfigurableApplicationContext) {
+                val env = applicationContext.environment
+                env.propertySources.addFirst(
+                    MapPropertySource(
+                        "testcontainers",
+                        urls
+                    )
+                )
+            }
         }
     }
+
 }
