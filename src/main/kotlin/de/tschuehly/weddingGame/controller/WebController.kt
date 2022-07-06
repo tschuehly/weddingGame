@@ -53,19 +53,24 @@ class WebController(
              model: Model,
              request: HttpServletRequest): String {
         val subdomain = request.serverName.split(".").first()
-        return if (subdomain == "wedding-game" || subdomain !== "localhost"){
+        return if (subdomain == "wedding-game" || subdomain == "localhost"){
             "index"
         }else{
             tasks.find {
                 it.uuid.toString() == uuid.toString()
-            }?.let {
-                model.addAllAttributes(
-                    mapOf(
-                        "wedding" to weddingService.getBySubdomain(subdomain),
-                        "task" to it
+            }?.let { task ->
+                weddingService.getBySubdomain(subdomain)?.let{
+                    model.addAllAttributes(
+                        mapOf(
+                            "wedding" to it,
+                            "task" to task
+                        )
                     )
-                )
-                return "task"
+
+                    return "task"
+                } ?:let{
+                    return "404"
+                }
             } ?: let {
                 return "404"
             }

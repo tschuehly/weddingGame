@@ -52,6 +52,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
+    testCompileOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 dependencyManagement {
@@ -91,9 +92,6 @@ tasks.register("sync"){
 
     }
 
-}
-tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
-    classpath = sourceSets["test"].runtimeClasspath
 }
 tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
     classpath = sourceSets["test"].runtimeClasspath

@@ -8,7 +8,7 @@ databaseChangeLog:
       value: VARCHAR
       dbms: h2
   - changeSet:
-      id: 1657038591919-1
+      id: 1657117934644-1
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -17,7 +17,7 @@ databaseChangeLog:
             sequenceName: hibernate_sequence
             startValue: 1
   - changeSet:
-      id: 1657038591919-2
+      id: 1657117934644-2
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -41,7 +41,7 @@ databaseChangeLog:
                   type: DATETIME
             tableName: image
   - changeSet:
-      id: 1657038591919-3
+      id: 1657117934644-3
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -68,7 +68,7 @@ databaseChangeLog:
                   type: ${string.type}
             tableName: website_user
   - changeSet:
-      id: 1657038591919-4
+      id: 1657117934644-4
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -84,7 +84,7 @@ databaseChangeLog:
                   type: ${string.type}
             tableName: website_user_authorities
   - changeSet:
-      id: 1657038591919-5
+      id: 1657117934644-5
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -102,7 +102,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: website_user_weddings
   - changeSet:
-      id: 1657038591919-6
+      id: 1657117934644-6
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -123,7 +123,7 @@ databaseChangeLog:
                   type: ${string.type}
             tableName: wedding
   - changeSet:
-      id: 1657038591919-7
+      id: 1657117934644-7
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -141,7 +141,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: wedding_pictures
   - changeSet:
-      id: 1657038591919-8
+      id: 1657117934644-8
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -150,7 +150,7 @@ databaseChangeLog:
             constraintName: uc_website_user_weddings_weddings
             tableName: website_user_weddings
   - changeSet:
-      id: 1657038591919-9
+      id: 1657117934644-9
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -159,7 +159,7 @@ databaseChangeLog:
             constraintName: uc_wedding_pictures_pictures
             tableName: wedding_pictures
   - changeSet:
-      id: 1657038591919-10
+      id: 1657117934644-10
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -170,7 +170,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: website_user
   - changeSet:
-      id: 1657038591919-11
+      id: 1657117934644-11
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -181,7 +181,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: website_user
   - changeSet:
-      id: 1657038591919-12
+      id: 1657117934644-12
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -192,7 +192,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: wedding
   - changeSet:
-      id: 1657038591919-13
+      id: 1657117934644-13
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -203,7 +203,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: image
   - changeSet:
-      id: 1657038591919-14
+      id: 1657117934644-14
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -214,7 +214,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: wedding
   - changeSet:
-      id: 1656796914717-15
+      id: 1657117934644-15
       author: tschuehly
       context: dev
       changes:

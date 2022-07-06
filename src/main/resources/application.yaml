@@ -16,7 +16,6 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     contexts: none
-    default-schema: public
 
   thymeleaf: # Thymeleaf
     cache: false
@@ -37,12 +36,23 @@ spring:
       on-profile: dev
   jpa:
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
+        default-schema: public
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   liquibase:
     contexts: dev
+    change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
-#logging:
-#  level:
+    drop-first: true
+
+
+logging:
+  level:
+    liquibase: TRACE
 #    org.springframework.security: DEBUG
 ##log4j:
 ##  logger.org.hibernate:
