@@ -46,7 +46,6 @@ dependencies {
     implementation("io.minio:minio:8.4.2")
     implementation("com.itextpdf:itextpdf:5.5.13.3")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -92,6 +91,9 @@ tasks.register("sync"){
 
     }
 
+}
+tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
+    classpath = sourceSets["test"].runtimeClasspath
 }
 tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
     classpath = sourceSets["test"].runtimeClasspath
