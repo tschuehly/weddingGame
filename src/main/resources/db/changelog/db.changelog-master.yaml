@@ -7,6 +7,22 @@ databaseChangeLog:
       name: string.type
       value: VARCHAR
       dbms: h2
+  - property:
+      name: string.type
+      value: clob
+      dbms: postgresql
+  - property:
+      name: string.type
+      value: VARCHAR
+      dbms: h2
+  - property:
+      name: string.type
+      value: clob
+      dbms: postgresql
+  - property:
+      name: string.type
+      value: VARCHAR
+      dbms: h2
   - changeSet:
       id: 1657117934644-1
       author: tschuehly
@@ -214,6 +230,17 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: wedding
   - changeSet:
+      id: 1657134921708-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: theme
+                  type: ${string.type}
+            tableName: wedding
+  - changeSet:
       id: 1657117934644-15
       author: tschuehly
       context: dev
@@ -222,4 +249,55 @@ databaseChangeLog:
             splitStatements: true
             path: ./testdata.sql
             stripComments: true
-
+  - changeSet:
+      id: 1657137888415-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_customtheme
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: primary_color
+                  type: ${string.type}
+              - column:
+                  name: secondary_color
+                  type: ${string.type}
+              - column:
+                  name: accent_color
+                  type: ${string.type}
+              - column:
+                  name: neutral_color
+                  type: ${string.type}
+              - column:
+                  name: base_color
+                  type: ${string.type}
+            tableName: custom_theme
+  - changeSet:
+      id: 1657137888415-2
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: custom_theme_id
+                  type: BIGINT
+            tableName: wedding
+  - changeSet:
+      id: 1657137888415-3
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: custom_theme_id
+            baseTableName: wedding
+            constraintName: FK_WEDDING_ON_CUSTOMTHEME
+            referencedColumnNames: id
+            referencedTableName: custom_theme

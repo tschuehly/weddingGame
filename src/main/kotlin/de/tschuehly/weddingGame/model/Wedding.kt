@@ -10,6 +10,9 @@ class Wedding(
     var id: Long? = null,
     var subfolderId: String = UUID.randomUUID().toString(),
     var subdomain: String = UUID.randomUUID().toString(),
+    var theme: String = "light",
+    @OneToOne
+    var customTheme: CustomTheme? = null,
     @OneToMany(fetch = FetchType.EAGER)// TODO: Avoid Eager Fetching?
     var pictures: MutableList<Image> = arrayListOf()
 ){

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>Dein Hochzeitsevent</title>
+</head>
+<body>
+<section layout:fragment="page-content" th:object="${#authentication.principal.weddings[0]}">
+
+    <div class="flex justify-center my-4">
+        <h1 class="text-3xl">Deine Hochzeit verwalten</h1>
+
+    </div>
+    <div x-data="{ customThemeColors : {
+        primaryColor: '#ff00ff',
+        secondaryColor: '',
+        accentColor: '',
+        neutralColor: '',
+        baseColor: ''
+        }}" x-effect="await setThemeColorsInPreview(customThemeColors)">
+        <div >
+            Subdomain: [[*{subdomain}]]
+            subfolderId: [[*{subfolderId}]]
+            <div class="form-control">
+                <label class="input-group">
+                    <span>Primärfarbe</span>
+                    <input type="color" x-model="customThemeColors.primaryColor"
+                           class="input input-lg input-bordered w-24 p-2 pr-4">
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="input-group">
+                    <span>Akzentfarbe</span>
+                    <input type="color" x-model="customThemeColors.accentColor"
+                           class="input input-lg input-bordered w-24 p-2 pr-4">
+                </label>
+            </div>
+            <div class="form-control">
+                <label class="input-group">
+                    <span>Hintergrund</span>
+                    <input type="color" x-model="customThemeColors.baseColor"
+                           class="input input-lg input-bordered w-24 p-2 pr-4">
+                </label>
+            </div>
+        </div>
+        <span x-text="customThemeColors.primaryColor"></span>
+        <div id="preview-container" class="flex flex-col items-center my-12 mx-4" >
+            <h2 class="text-2xl mb-4"> Vorschau:</h2>
+            <div class="container border-2 border-black" th:insert="task :: task"></div>
+
+        </div>
+    </div>
+    [[${#authentication.principal}]]
+    <script>
+        async function setThemeColorsInPreview(customThemeColors){
+            const style = "--p : " + rgbToHsl(customThemeColors.primaryColor)
+                + "; --a: " + rgbToHsl(customThemeColors.accentColor)
+                + "; --b1: " + rgbToHsl(customThemeColors.baseColor)
+            document.getElementById("preview-container").style = style
+        }
+
+        function rgbToHsl(rgbValue) {
+            let r = parseInt(rgbValue.substring(1,3),16)
+            let g = parseInt(rgbValue.substring(3,5),16)
+            let b = parseInt(rgbValue.substring(5,7),16)
+            r /= 255, g /= 255, b /= 255;
+
+            var max = Math.max(r, g, b), min = Math.min(r, g, b);
+            var h, s, l = (max + min) / 2;
+
+            if (max == min) {
+                h = s = 0; // achromatic
+            } else {
+                var d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+
+                h /= 6;
+            }
+
+            return  (h * 360).toFixed(0).toString() +" "+
+                (s*100).toFixed(0).toString() +"% "+
+                (l*100).toFixed(0).toString()+"%"
+        }
+    </script>
+</section>
+</body>
+<th:block layout:fragment="page-scripts">
+    <script>
+    </script>
+</th:block>
+</html>

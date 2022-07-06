@@ -11,6 +11,7 @@ import de.tschuehly.weddingGame.service.ImageService
 import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -79,7 +80,12 @@ class WebController(
 
     @GetMapping("/hochzeit")
     fun weddingManager(model: Model): String {
-        return "weddingmanager"
+        return if(SecurityContextHolder.getContext().authentication.principal != "anonymousUser"){
+            model.addAttribute("task",tasks.first())
+            "wedding-manager"
+        }else{
+            "redirect:/login"
+        }
     }
 
     @GetMapping("/slideshow")

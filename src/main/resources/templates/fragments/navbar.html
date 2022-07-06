@@ -37,8 +37,6 @@
                 </div>
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal p-0">
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/logout">Logout</a></li>
                         <th:block th:if="${#authentication.principal != 'anonymousUser'}">
 
 
@@ -59,30 +57,17 @@
                 </div>
                 <div class="navbar-end">
                     <th:block th:unless="${#authentication.principal != 'anonymousUser'}">
-
-                        <a class="btn">Get started</a>
+                        <a class="btn btn-outline" href="/login">Get started</a>
                     </th:block>
                     <th:block th:if="${#authentication.principal != 'anonymousUser'}">
-                        <span>Hallo [[${#authentication.principal.attributes['name']}]]</span>
-                        <div class="avatar my-2">
-                            <div class="w-16 mx-3 dropdown">
-                                <label tabindex="0" class="">
-                                    <img  tabindex="0" src="/svg/user.svg">
-
-                                </label>
-                                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <span class="mx-2">Hallo [[${#authentication.principal.attributes['name']}]]</span>
                         <div class="dropdown dropdown-end">
-                            <label tabindex="0" class="btn btn-outline">
+                            <label tabindex="0" class="btn btn-ghost h-16">
                                 <img class="h-16" tabindex="0" src="/svg/user.svg">
                             </label>
-                            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                                 <li><a>Item 1</a></li>
-                                <li><a>Item 2</a></li>
+                                <li><a href="/logout">Logout</a></li>
                             </ul>
                         </div>
                     </th:block>
