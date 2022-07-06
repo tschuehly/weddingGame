@@ -37,14 +37,14 @@ class WebController(
     ): String {
         val subdomain = request.serverName.split(".").first()
         return if (subdomain == "wedding-game" || subdomain == "localhost"){
-            "safari"
+            "index"
         }else{
             model.addAllAttributes(
                 mapOf(
                     "wedding" to weddingService.getBySubdomain(subdomain),
                 )
             )
-            "index"
+            "safari"
         }
     }
 
@@ -53,7 +53,7 @@ class WebController(
              model: Model,
              request: HttpServletRequest): String {
         val subdomain = request.serverName.split(".").first()
-        return if (subdomain == "wedding-game" || subdomain == "localhost"){
+        return if (subdomain == "wedding-game" || subdomain !== "localhost"){
             "index"
         }else{
             tasks.find {
