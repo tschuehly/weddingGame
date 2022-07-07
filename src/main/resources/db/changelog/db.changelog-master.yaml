@@ -23,6 +23,22 @@ databaseChangeLog:
       name: string.type
       value: VARCHAR
       dbms: h2
+  - property:
+      name: string.type
+      value: clob
+      dbms: postgresql
+  - property:
+      name: string.type
+      value: VARCHAR
+      dbms: h2
+  - property:
+      name: string.type
+      value: clob
+      dbms: postgresql
+  - property:
+      name: string.type
+      value: VARCHAR
+      dbms: h2
   - changeSet:
       id: 1657117934644-1
       author: tschuehly
@@ -301,3 +317,74 @@ databaseChangeLog:
             constraintName: FK_WEDDING_ON_CUSTOMTHEME
             referencedColumnNames: id
             referencedTableName: custom_theme
+  - changeSet:
+      id: 1657220493513-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: background_gradient
+                  type: ${string.type}
+              - column:
+                  name: base100color
+                  type: ${string.type}
+              - column:
+                  name: base300color
+                  type: ${string.type}
+              - column:
+                  name: button_radius
+                  type: ${string.type}
+              - column:
+                  name: font_family
+                  type: ${string.type}
+              - column:
+                  name: image_container_fragment
+                  type: ${string.type}
+              - column:
+                  name: image_path
+                  type: ${string.type}
+              - column:
+                  name: primary_text_color
+                  type: ${string.type}
+              - column:
+                  name: secondary_text_color
+                  type: ${string.type}
+              - column:
+                  name: text_color
+                  type: ${string.type}
+            tableName: custom_theme
+  - changeSet:
+      id: 1657220493513-11
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: accent_color
+            tableName: custom_theme
+        - dropColumn:
+            columnName: base_color
+            tableName: custom_theme
+        - dropColumn:
+            columnName: neutral_color
+            tableName: custom_theme
+  - changeSet:
+      id: 1657224307715-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: folder_id
+                  type: ${string.type}
+            tableName: wedding
+  - changeSet:
+      id: 1657224307715-2
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: subfolder_id
+            tableName: wedding

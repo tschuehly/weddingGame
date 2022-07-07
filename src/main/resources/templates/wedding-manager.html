@@ -36,7 +36,10 @@
                                 secondaryTextColor : getProp('--sc'),
                                 buttonRadius : getProp('--rounded-btn'),
                                 fontFamily : getComputedStyle(previewContainer).fontFamily,
-                                backgroundGradient : 0
+                                backgroundGradient : 0,
+                                imageContainerFragment: 'default',
+                                imagePath: undefined
+
                             }
                             previewContainer.style = ''
                         }else{
@@ -679,7 +682,7 @@
                     </div>
                     <div class="form-control">
                         <label class="input-group">
-                            <span class="w-full">Akzentfarbe</span>
+                            <span class="w-full">Sekundärfarbe</span>
                             <input type="color" x-model="customThemeProperties.secondaryColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
@@ -725,9 +728,9 @@
                             <input type="range" min="0" max="2" step="0.01" class="range range-lg" x-model="customThemeProperties.buttonRadius"/>
                         </label>
                     </div>
-                    <div class="form-control">
-                        <label class="">
-                            <span class="text-xl w-full">Variabler Hintergrund</span>
+                    <div class="form-control ">
+                        <label class="flex justify-evenly">
+                            <span class="text-xl">Variabler Hintergrund</span>
                             <input type="checkbox" class="toggle toggle-lg " x-model="gradientBackgroundBool" />
                         </label>
                     </div>
@@ -764,6 +767,8 @@
 </section>
 </body>
 <th:block layout:fragment="page-scripts">
+
+    <div th:insert="scripts :: uploadImages"></div>
     <script>
 
         function getProp(variable){

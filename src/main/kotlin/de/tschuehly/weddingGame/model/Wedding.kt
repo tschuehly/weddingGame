@@ -8,7 +8,7 @@ class Wedding(
     @Id
     @GeneratedValue
     var id: Long? = null,
-    var subfolderId: String = UUID.randomUUID().toString(),
+    var folderId: String = UUID.randomUUID().toString(),
     var subdomain: String = UUID.randomUUID().toString(),
     var theme: String = "light",
     @OneToOne
@@ -17,6 +17,6 @@ class Wedding(
     var pictures: MutableList<Image> = arrayListOf()
 ){
     override fun toString(): String {
-        return "Wedding(id=$id, subfolderId='$subfolderId', subdomain='$subdomain', pictures=$pictures)"
+        return "Wedding(id=$id, folderId='$folderId', subdomain='$subdomain', pictures=$pictures)"
     }
 }

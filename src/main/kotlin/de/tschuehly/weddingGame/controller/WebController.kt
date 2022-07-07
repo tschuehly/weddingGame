@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import de.tschuehly.weddingGame.bo.Task
+import de.tschuehly.weddingGame.model.WebsiteUser
 import de.tschuehly.weddingGame.service.ImageService
 import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.core.io.ClassPathResource
@@ -80,10 +81,16 @@ class WebController(
 
     @GetMapping("/hochzeit")
     fun weddingManager(model: Model): String {
-        return if(SecurityContextHolder.getContext().authentication.principal != "anonymousUser"){
-            model.addAttribute("task",tasks.first())
+        return getCurrentUser()?.let {
+            model.addAllAttributes(
+                mapOf(
+                    "wedding" to weddingService.getBySubdomain(it.weddings.first().subdomain),
+                    "task" to tasks.first()
+                )
+            )
+
             "wedding-manager"
-        }else{
+        }?: let{
             "redirect:/login"
         }
     }
@@ -96,6 +103,15 @@ class WebController(
             )
         )
         return "slideshow"
+    }
+
+    private fun getCurrentUser(): WebsiteUser?{
+        return try{
+            SecurityContextHolder.getContext().authentication.principal as WebsiteUser
+        }catch (e: Exception){
+            println(e)
+            null
+        }
     }
 
     @GetMapping("/qrcode")
@@ -165,4 +181,5 @@ class WebController(
         println("Done")
         return ModelAndView("index")
     }
+
 }

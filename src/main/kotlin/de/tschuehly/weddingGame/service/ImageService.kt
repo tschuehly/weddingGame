@@ -31,8 +31,8 @@ class ImageService(
     @Value("\${s3.host}")
     lateinit var s3Host: String
 
-    fun getUploadUrl(uuid: UUID?, fileName: String, subfolderId: String): ImageDTO {
-        val objectName = "$subfolderId/${uuid ?: "safari" }/${URLEncoder.encode(fileName, "UTF-8")}_${System.currentTimeMillis()}"
+    fun getUploadUrl(folderId: String, subfolderId: String?,fileName: String): ImageDTO {
+        val objectName = "$folderId/${subfolderId ?: "safari" }/${URLEncoder.encode(fileName, "UTF-8")}_${System.currentTimeMillis()}"
         val uploadUrl = minioClient().getPresignedObjectUrl(
             GetPresignedObjectUrlArgs.builder()
                 .method(Method.PUT)
@@ -41,12 +41,12 @@ class ImageService(
                 .expiry(10, TimeUnit.MINUTES)
                 .build()
         )
-        return ImageDTO(uploadUrl,objectName,"","", s3BucketKey)
+        return ImageDTO(uploadUrl,objectName,"","")
     }
 
 
 
-    fun getAll(): List<Image> {
+    fun getAll(): MutableIterable<Image> {
         return imageRepository.findAll()
     }
 

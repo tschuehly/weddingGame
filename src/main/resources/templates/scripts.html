@@ -10,17 +10,20 @@
 </head>
 <body>
 <script th:fragment="uploadImages">
-async function uploadImages(files, fullName) {
+async function uploadImages(files,folderId,subfolderId, fullName) {
     for(const file of files){
         let imageDTO = {
             uploadUrl: '',
             objectName:'',
             fullName: fullName,
             fileName: file.name,
-            subfolderId: '[[${wedding.subfolderId}]]'
+        }
+        let uploadUrl = '/api/image/getUploadUrl?folderId='+folderId + '&fileName=' + file.name + '&subfolderId=' + subfolderId
+        if(fullName){
+            uploadUrl = uploadUrl + '&fullName=' + fullName
         }
         let response =
-            await fetch('/api/image/getUploadUrl?uuid=[[${task.uuid}]]&fileName=' + file.name + '&subfolderId=' + imageDTO.subfolderId, {
+            await fetch(uploadUrl, {
                 method: 'GET'
             })
         let json = await response.json()
@@ -29,10 +32,7 @@ async function uploadImages(files, fullName) {
         if (response.ok){
             let uploadResponse = await fetch(imageDTO.uploadUrl, {
                 method: 'PUT',
-                body: file,
-                headers: {
-                    'x-amz-meta-fullname':encodeURI(fullName)
-                }
+                body: file
             })
             if(uploadResponse.ok){
                 let createImageResponse = await fetch('/api/image/create', {

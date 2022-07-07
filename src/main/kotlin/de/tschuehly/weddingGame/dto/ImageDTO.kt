@@ -5,5 +5,4 @@ data class ImageDTO(
     val objectName: String,
     val fullName: String?,
     val fileName: String,
-    val subfolderId: String
 )
