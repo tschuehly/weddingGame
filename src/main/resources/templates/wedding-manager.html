@@ -20,36 +20,41 @@
                 Alpine.data('data', () => ({
                     customTheme: false,
                     theme:'light',
-                    customThemeColors : undefined,
+                    gradientBackgroundBool:false,
+                    customThemeProperties : undefined,
                     setThemeColorsInPreview() {
                         const previewContainer = document.getElementById('preview-container')
                         if(!this.customTheme){
                             previewContainer.dataset.theme = this.theme
-                            this.customThemeColors = {
+                            this.customThemeProperties = {
                                 primaryColor : getProp('--p'),
-                                accentColor : getProp('--a'),
+                                secondaryColor : getProp('--s'),
                                 base100Color : getProp('--b1'),
                                 base300Color : getProp('--b3'),
                                 textColor : getProp('--bc'),
                                 primaryTextColor : getProp('--pc'),
-                                accentTextColor : getProp('--ac'),
+                                secondaryTextColor : getProp('--sc'),
                                 buttonRadius : getProp('--rounded-btn'),
-                                fontFamily : getComputedStyle(previewContainer).fontFamily
+                                fontFamily : getComputedStyle(previewContainer).fontFamily,
+                                backgroundGradient : 0
                             }
                             previewContainer.style = ''
                         }else{
-                            style = "--p : " + rgbToHsl(this.customThemeColors.primaryColor)
-                                + "; --a: " +  rgbToHsl(this.customThemeColors.accentColor)
-                                + "; --b1: " + rgbToHsl(this.customThemeColors.base100Color)
-                                + "; --b3: " + rgbToHsl(this.customThemeColors.base300Color)
-                                + "; --bc: " + rgbToHsl(this.customThemeColors.textColor)
-                                + "; --pc: " + rgbToHsl(this.customThemeColors.primaryTextColor)
-                                + "; --ac: " + rgbToHsl(this.customThemeColors.accentTextColor)
-                                + "; --rounded-btn: " + this.customThemeColors.buttonRadius + "rem"
-                                + "; font-family: "+ this.customThemeColors.fontFamily
+                            style = "--p : " + rgbToHsl(this.customThemeProperties.primaryColor)
+                                + "; --s: " +  rgbToHsl(this.customThemeProperties.secondaryColor)
+                                + "; --b1: " + rgbToHsl(this.customThemeProperties.base100Color)
+                                + "; --b3: " + rgbToHsl(this.customThemeProperties.base300Color)
+                                + "; --bc: " + rgbToHsl(this.customThemeProperties.textColor)
+                                + "; --pc: " + rgbToHsl(this.customThemeProperties.primaryTextColor)
+                                + "; --sc: " + rgbToHsl(this.customThemeProperties.secondaryTextColor)
+                                + "; --rounded-btn: " + this.customThemeProperties.buttonRadius + "rem"
+                                + "; font-family: "+ this.customThemeProperties.fontFamily
+                            if(this.gradientBackgroundBool){
+                                style = style + ";background-image: linear-gradient("+ this.customThemeProperties.backgroundGradient + "deg,"+this.customThemeProperties.primaryColor+"," + this.customThemeProperties.secondaryColor + ")"
+                            }
+
                             previewContainer.dataset.theme = 'custom'
                             previewContainer.style = style
-                            previewContainer.classList.add("bg-gradient-to-b")
                         }
 
                     }
@@ -59,7 +64,7 @@
         <div class="flex justify-center mb-2 md:order-1">
                 <div class="form-control">
                     <label class="label cursor-pointer">
-                        <span class="text-2xl label-text">Eigenes Theme erstellen</span>
+                        <span class="text-2xl label-text">Theme anpassen</span>
                         <input type="checkbox"  class="toggle toggle-primary toggle-lg ml-4" x-model="customTheme"/>
                     </label>
                 </div>
@@ -84,12 +89,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -110,12 +109,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,12 +128,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -163,12 +150,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -188,12 +169,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -216,12 +191,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -243,12 +212,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -268,12 +231,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -296,12 +253,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -322,12 +273,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -350,12 +295,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -375,12 +314,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -402,12 +335,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -427,12 +354,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -454,12 +375,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -480,12 +395,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -505,12 +414,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -533,12 +436,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -558,12 +455,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -585,12 +476,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -610,12 +495,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -637,12 +516,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -662,12 +535,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -690,12 +557,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -715,12 +576,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -743,12 +598,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -768,12 +617,6 @@
                                             </div>
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
                                             </div>
                                         </div>
                                     </div>
@@ -795,12 +638,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -821,12 +658,6 @@
                                             <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
                                                 <div class="text-secondary-content text-sm font-bold">A</div>
                                             </div>
-                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-accent-content text-sm font-bold">A</div>
-                                            </div>
-                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                                <div class="text-neutral-content text-sm font-bold">A</div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -842,60 +673,73 @@
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">Primärfarbe</span>
-                            <input type="color" x-model="customThemeColors.primaryColor"
+                            <input type="color" x-model="customThemeProperties.primaryColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">Akzentfarbe</span>
-                            <input type="color" x-model="customThemeColors.accentColor"
+                            <input type="color" x-model="customThemeProperties.secondaryColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">Hintergrund</span>
-                            <input type="color" x-model="customThemeColors.base100Color"
+                            <input type="color" x-model="customThemeProperties.base100Color"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">Hochladefeld</span>
-                            <input type="color" x-model="customThemeColors.base300Color"
+                            <input type="color" x-model="customThemeProperties.base300Color"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">textColor</span>
-                            <input type="color" x-model="customThemeColors.textColor"
+                            <input type="color" x-model="customThemeProperties.textColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
                             <span class="w-full">primaryTextColor</span>
-                            <input type="color" x-model="customThemeColors.primaryTextColor"
+                            <input type="color" x-model="customThemeProperties.primaryTextColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
                         <label class="input-group">
-                            <span class="w-full">accentTextColor</span>
-                            <input type="color" x-model="customThemeColors.accentTextColor"
+                            <span class="w-full">secondaryTextColor</span>
+                            <input type="color" x-model="customThemeProperties.secondaryTextColor"
                                    class="input input-lg input-bordered w-full p-2 pr-4">
                         </label>
                     </div>
                     <div class="form-control">
-                        <label class="input-group">
+                        <label class="">
                             <span class="w-full" >Buttonradius</span>
-                            <input type="range" min="0" max="2" step="0.1" class="range range-lg" x-model="customThemeColors.buttonRadius"/>
+                            <input type="range" min="0" max="2" step="0.01" class="range range-lg" x-model="customThemeProperties.buttonRadius"/>
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="">
+                            <span class="text-xl w-full">Variabler Hintergrund</span>
+                            <input type="checkbox" class="toggle toggle-lg " x-model="gradientBackgroundBool" />
+                        </label>
+                    </div>
+
+                    <div class="form-control" x-show="gradientBackgroundBool">
+                        <label>
+                            <span class="w-full" >Hintergrund Grad</span>
+                            <input type="range" min="0" max="360" step="0.1" class="range range-lg" x-model="customThemeProperties.backgroundGradient"/>
                         </label>
                     </div>
                 </div>
-                <select class="shrink h-full select max-w-xs text-4xl rounded-none m-auto my-4" size=5 x-model="customThemeColors.fontFamily" >
+                <select class="shrink h-full select max-w-xs text-4xl rounded-none m-auto my-4" size=5 x-model="customThemeProperties.fontFamily" >
                     <option value="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
                         Sans
                     </option>

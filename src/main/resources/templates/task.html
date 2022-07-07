@@ -9,7 +9,7 @@
     <title>[[${task.title}]]</title>
 </head>
 <body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen">
-    <div  class="bg-base-100" th:fragment="task">
+    <div  class="" th:fragment="task">
     <!-- style="--p : 126 100% 72%;"  bg-gradient-to-b from-primary to-secondary TODO: Different backgrounds -> gradients base color customizing-->
         <div x-data="{ files: null, fullName: null, loading: null}" class="flex flex-col ">
             <h1 class=" text-7xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
@@ -22,7 +22,7 @@
                     <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
                            x-on:change="files = Object.values($event.target.files)">
                     <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
-                    <button class="btn btn-accent btn-lg" @click="$refs.fileSelector.click()">Bilder auswählen</button>
+                    <button class="btn btn-secondary btn-lg" @click="$refs.fileSelector.click()">Bilder auswählen</button>
                 </div>
                 <div class="form-control">
                     <label class="label">

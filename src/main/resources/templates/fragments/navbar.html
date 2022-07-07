@@ -33,30 +33,27 @@
                             <li><a>Item 3</a></li>
                         </ul>
                     </div>
-                    <a class="btn btn-ghost normal-case text-xl">WeddingGame</a>
+                    <a class="btn btn-ghost normal-case text-xl" href="/">WeddingGame</a>
                 </div>
                 <div class="navbar-center hidden lg:flex">
                     <ul class="menu menu-horizontal p-0">
                         <th:block th:if="${#authentication.principal != 'anonymousUser'}">
-
-                            <li><a href="/hochzeit">Verwaltung</a></li>
-                            <li><a href="/hochzeit">Verwaltung</a></li>
+                            <li><a th:href="'//'+${#authentication.principal.weddings[0].subdomain} + '.wedding-game.com/'" >Safari</a></li>
+                            <li><a th:href="'//'+${#authentication.principal.weddings[0].subdomain} + '.wedding-game.com/aufgabe/53e47f54-dac6-11ec-9d64-0242ac120002'">Aufgabe</a></li>
                             <li><a href="/hochzeit">Verwaltung</a></li>
 
                         </th:block>
 
                         <li tabindex="0" >
                             <a>
-                                Parent
+                                Dropdown
                                 <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                             </a>
-                            <ul  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                            <ul  class="menu menu-compact dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><a>Submenu 1</a></li>
                                 <li><a>Submenu 2</a></li>
                             </ul>
                         </li>
-                        <li><a>Item 3</a></li>
-                        <li><a>Item 3</a></li>
                     </ul>
                 </div>
                 <div class="navbar-end">
@@ -77,6 +74,8 @@
                     </th:block>
                 </div>
             </nav>
+
+<!--        [[${#authentication.principal}]]-->
         </th:block>
 </body>
 </html>
