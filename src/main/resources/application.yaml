@@ -48,8 +48,12 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
     drop-first: true
-
-
+s3:
+  host: localhost
+  port: 55786
+  access-key: ${S3_ACCESS_KEY:minioadmin}
+  secret-key: ${S3_SECRET_KEY:minioadmin}
+  bucket-key: wedding-game
 logging:
   level:
     liquibase: TRACE

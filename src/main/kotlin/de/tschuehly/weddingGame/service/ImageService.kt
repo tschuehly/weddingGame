@@ -20,12 +20,16 @@ import javax.annotation.PostConstruct
 class ImageService(
     private val imageRepository: ImageRepository
 ) {
-    @Value("\${S3_ACCESS_KEY}")
+    @Value("\${s3.access-key}")
     lateinit var s3AccessKey: String
-    @Value("\${S3_SECRET_KEY}")
+    @Value("\${s3.secret-key}")
     lateinit var s3SecretKey: String
-    @Value("\${S3_BUCKET_KEY}")
+    @Value("\${s3.bucket-key}")
     lateinit var s3BucketKey: String
+    @Value("\${s3.port}")
+    lateinit var s3Port: String
+    @Value("\${s3.host}")
+    lateinit var s3Host: String
 
     fun getUploadUrl(uuid: UUID?, fileName: String, subfolderId: String): ImageDTO {
         val objectName = "$subfolderId/${uuid ?: "safari" }/${URLEncoder.encode(fileName, "UTF-8")}_${System.currentTimeMillis()}"
@@ -68,7 +72,7 @@ class ImageService(
 
     private fun minioClient(): MinioClient {
         return MinioClient.builder()
-            .endpoint("http://127.0.0.1:9000")
+            .endpoint("http://${s3Host}:$s3Port")
             .credentials(s3AccessKey, s3SecretKey)
             .build()
     }
