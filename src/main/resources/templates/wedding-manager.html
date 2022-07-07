@@ -14,7 +14,7 @@
         <h1 class="text-4xl">Deine Hochzeit verwalten</h1>
 
     </div>
-    <div x-data="data" x-effect="setThemeColorsInPreview">
+    <div x-data="data" x-effect="setThemeColorsInPreview" class="flex grid grid-cols-1 md:grid-cols-2 auto-rows-min">
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('data', () => ({
@@ -33,7 +33,8 @@
                                 textColor : getProp('--bc'),
                                 primaryTextColor : getProp('--pc'),
                                 accentTextColor : getProp('--ac'),
-                                buttonRadius : getProp('--rounded-btn')
+                                buttonRadius : getProp('--rounded-btn'),
+                                fontFamily : getComputedStyle(previewContainer).fontFamily
                             }
                             previewContainer.style = ''
                         }else{
@@ -45,7 +46,7 @@
                                 + "; --pc: " + rgbToHsl(this.customThemeColors.primaryTextColor)
                                 + "; --ac: " + rgbToHsl(this.customThemeColors.accentTextColor)
                                 + "; --rounded-btn: " + this.customThemeColors.buttonRadius + "rem"
-                                + "; "
+                                + "; font-family: "+ this.customThemeColors.fontFamily
                             previewContainer.dataset.theme = 'custom'
                             previewContainer.style = style
                             previewContainer.classList.add("bg-gradient-to-b")
@@ -55,778 +56,777 @@
                 }))
             })
         </script>
-        <div class="flex justify-center mb-2">
-            <div class="form-control">
-                <label class="label cursor-pointer">
-                    <span class="text-2xl label-text">Eigenes Theme erstellen</span>
-                    <input type="checkbox"  class="toggle toggle-primary toggle-lg ml-4" x-model="customTheme"/>
-                </label>
+        <div class="flex justify-center mb-2 md:order-1">
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="text-2xl label-text">Eigenes Theme erstellen</span>
+                        <input type="checkbox"  class="toggle toggle-primary toggle-lg ml-4" x-model="customTheme"/>
+                    </label>
+                </div>
             </div>
-        </div>
+        <div class="md:order-3">
+            <div class="mx-auto container" x-show="!customTheme">
+                <div class="h-60 md:h-full overflow-scroll overflow-x-hidden  mx-2 outline outline-1 outline-gray-600">
 
-
-        <div class="mx-auto container" x-show="!customTheme">
-            <div class="h-60 md:h-60 overflow-scroll overflow-x-hidden mx-2 outline outline-1 outline-gray-600">
-
-                <div class="rounded-box grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-2 mx-2">
-
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'light'" :class="{'outline' : theme === 'light'}">
-                        <div data-theme="light" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">light</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                    <div class="rounded-box grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 p-2 mx-2">
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2 min-w-20"
+                             @click="theme = 'light'" :class="{'outline' : theme === 'light'}">
+                            <div data-theme="light" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">light</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="customTheme = false; theme = 'dark'" :class="{'outline' : theme === 'dark'}">
-                        <div data-theme="dark" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">dark</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'cupcake'" :class="{'outline' : theme === 'cupcake'}">
-                        <div data-theme="cupcake" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">cupcake</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="customTheme = false; theme = 'dark'" :class="{'outline' : theme === 'dark'}">
+                            <div data-theme="dark" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">dark</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'bumblebee'" :class="{'outline' : theme === 'bumblebee'}">
-                        <div data-theme="bumblebee"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">bumblebee</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'emerald'" :class="{'outline' : theme === 'emerald'}">
-                        <div data-theme="emerald" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">emerald</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'cupcake'" :class="{'outline' : theme === 'cupcake'}">
+                            <div data-theme="cupcake" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">cupcake</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'corporate'" :class="{'outline' : theme === 'corporate'}">
-                        <div data-theme="corporate"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">corporate</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'synthwave'" :class="{'outline' : theme === 'synthwave'}">
-                        <div data-theme="synthwave"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">synthwave</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'bumblebee'" :class="{'outline' : theme === 'bumblebee'}">
+                            <div data-theme="bumblebee"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">bumblebee</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'retro'" :class="{'outline' : theme === 'retro'}">
-                        <div data-theme="retro" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">retro</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'cyberpunk'" :class="{'outline' : theme === 'cyberpunk'}">
-                        <div data-theme="cyberpunk"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">cyberpunk</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'emerald'" :class="{'outline' : theme === 'emerald'}">
+                            <div data-theme="emerald" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">emerald</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'valentine'" :class="{'outline' : theme === 'valentine'}">
-                        <div data-theme="valentine"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">valentine</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'halloween'" :class="{'outline' : theme === 'halloween'}">
-                        <div data-theme="halloween"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">halloween</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'corporate'" :class="{'outline' : theme === 'corporate'}">
+                            <div data-theme="corporate"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">corporate</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'garden'" :class="{'outline' : theme === 'garden'}">
-                        <div data-theme="garden" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">garden</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'forest'" :class="{'outline' : theme === 'forest'}">
-                        <div data-theme="forest" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">forest</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'synthwave'" :class="{'outline' : theme === 'synthwave'}">
+                            <div data-theme="synthwave"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">synthwave</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'aqua'" :class="{'outline' : theme === 'aqua'}">
-                        <div data-theme="aqua" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">aqua</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'lofi'" :class="{'outline' : theme === 'lofi'}">
-                        <div data-theme="lofi" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">lofi</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'retro'" :class="{'outline' : theme === 'retro'}">
+                            <div data-theme="retro" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">retro</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'pastel'" :class="{'outline' : theme === 'pastel'}">
-                        <div data-theme="pastel" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">pastel</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'fantasy'" :class="{'outline' : theme === 'fantasy'}">
-                        <div data-theme="fantasy" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">fantasy</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'cyberpunk'" :class="{'outline' : theme === 'cyberpunk'}">
+                            <div data-theme="cyberpunk"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">cyberpunk</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'wireframe'" :class="{'outline' : theme === 'wireframe'}">
-                        <div data-theme="wireframe"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">wireframe</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'black'" :class="{'outline' : theme === 'black'}">
-                        <div data-theme="black" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">black</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'valentine'" :class="{'outline' : theme === 'valentine'}">
+                            <div data-theme="valentine"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">valentine</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'luxury'" :class="{'outline' : theme === 'luxury'}">
-                        <div data-theme="luxury" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">luxury</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'dracula'" :class="{'outline' : theme === 'dracula'}">
-                        <div data-theme="dracula" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">dracula</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'halloween'" :class="{'outline' : theme === 'halloween'}">
+                            <div data-theme="halloween"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">halloween</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'cmyk'" :class="{'outline' : theme === 'cmyk'}">
-                        <div data-theme="cmyk" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">cmyk</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'autumn'" :class="{'outline' : theme === 'autumn'}">
-                        <div data-theme="autumn" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">autumn</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'garden'" :class="{'outline' : theme === 'garden'}">
+                            <div data-theme="garden" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">garden</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'business'" :class="{'outline' : theme === 'business'}">
-                        <div data-theme="business"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">business</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'acid'" :class="{'outline' : theme === 'acid'}">
-                        <div data-theme="acid" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">acid</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'forest'" :class="{'outline' : theme === 'forest'}">
+                            <div data-theme="forest" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">forest</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'lemonade'" :class="{'outline' : theme === 'lemonade'}">
-                        <div data-theme="lemonade"
-                             class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">lemonade</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'night'" :class="{'outline' : theme === 'night'}">
-                        <div data-theme="night" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">night</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'aqua'" :class="{'outline' : theme === 'aqua'}">
+                            <div data-theme="aqua" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">aqua</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'coffee'" :class="{'outline' : theme === 'coffee'}">
-                        <div data-theme="coffee" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">coffee</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
-                                        </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'lofi'" :class="{'outline' : theme === 'lofi'}">
+                            <div data-theme="lofi" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">lofi</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
-                         @click="theme = 'winter'" :class="{'outline' : theme === 'winter'}">
-                        <div data-theme="winter" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
-                            <div class="grid grid-cols-5 grid-rows-3">
-                                <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
-                                <div class="bg-base-300 col-start-1 row-start-3"></div>
-                                <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
-                                    <div class="font-bold">winter</div>
-                                    <div class="flex flex-wrap gap-1">
-                                        <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-primary-content text-sm font-bold">A</div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'pastel'" :class="{'outline' : theme === 'pastel'}">
+                            <div data-theme="pastel" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">pastel</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
-                                        <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-secondary-content text-sm font-bold">A</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'fantasy'" :class="{'outline' : theme === 'fantasy'}">
+                            <div data-theme="fantasy" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">fantasy</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
-                                        <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-accent-content text-sm font-bold">A</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'wireframe'" :class="{'outline' : theme === 'wireframe'}">
+                            <div data-theme="wireframe"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">wireframe</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
-                                        <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
-                                            <div class="text-neutral-content text-sm font-bold">A</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'black'" :class="{'outline' : theme === 'black'}">
+                            <div data-theme="black" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">black</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'luxury'" :class="{'outline' : theme === 'luxury'}">
+                            <div data-theme="luxury" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">luxury</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'dracula'" :class="{'outline' : theme === 'dracula'}">
+                            <div data-theme="dracula" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">dracula</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'cmyk'" :class="{'outline' : theme === 'cmyk'}">
+                            <div data-theme="cmyk" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">cmyk</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'autumn'" :class="{'outline' : theme === 'autumn'}">
+                            <div data-theme="autumn" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">autumn</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'business'" :class="{'outline' : theme === 'business'}">
+                            <div data-theme="business"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">business</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'acid'" :class="{'outline' : theme === 'acid'}">
+                            <div data-theme="acid" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">acid</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'lemonade'" :class="{'outline' : theme === 'lemonade'}">
+                            <div data-theme="lemonade"
+                                 class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">lemonade</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'night'" :class="{'outline' : theme === 'night'}">
+                            <div data-theme="night" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">night</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'coffee'" :class="{'outline' : theme === 'coffee'}">
+                            <div data-theme="coffee" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">coffee</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
+                             @click="theme = 'winter'" :class="{'outline' : theme === 'winter'}">
+                            <div data-theme="winter" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
+                                <div class="grid grid-cols-5 grid-rows-3">
+                                    <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
+                                    <div class="bg-base-300 col-start-1 row-start-3"></div>
+                                    <div class="bg-base-100 col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 p-2">
+                                        <div class="font-bold">winter</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <div class="bg-primary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-primary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-secondary flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-secondary-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-accent flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-accent-content text-sm font-bold">A</div>
+                                            </div>
+                                            <div class="bg-neutral flex aspect-square w-5 items-center justify-center rounded lg:w-6">
+                                                <div class="text-neutral-content text-sm font-bold">A</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -834,75 +834,86 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="flex flex-col  container mx-auto" x-show="customTheme">
+                <div class="grow flex grid grid-cols-1 lg:grid-cols-2 gap-4 mx-6">
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">Primärfarbe</span>
+                            <input type="color" x-model="customThemeColors.primaryColor"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">Akzentfarbe</span>
+                            <input type="color" x-model="customThemeColors.accentColor"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">Hintergrund</span>
+                            <input type="color" x-model="customThemeColors.base100Color"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">Hochladefeld</span>
+                            <input type="color" x-model="customThemeColors.base300Color"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">textColor</span>
+                            <input type="color" x-model="customThemeColors.textColor"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">primaryTextColor</span>
+                            <input type="color" x-model="customThemeColors.primaryTextColor"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full">accentTextColor</span>
+                            <input type="color" x-model="customThemeColors.accentTextColor"
+                                   class="input input-lg input-bordered w-full p-2 pr-4">
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="input-group">
+                            <span class="w-full" >Buttonradius</span>
+                            <input type="range" min="0" max="2" step="0.1" class="range range-lg" x-model="customThemeColors.buttonRadius"/>
+                        </label>
+                    </div>
+                </div>
+                <select class="shrink h-full select max-w-xs text-4xl rounded-none m-auto my-4" size=5 x-model="customThemeColors.fontFamily" >
+                    <option value="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
+                        Sans
+                    </option>
+                    <option class="font-dancing-script " value="dancing-script">Dancing Script</option>
+                    <option value="ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;" style="">Serif</option>
+                    <option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">Monospace</option>
+                </select>
             </div>
 
         </div>
 
-        <div class=" flex container justify-evenly mx-auto h-60 flex-wrap gap-4" x-show="customTheme">
-            <div class="form-control">
-                <label class="input-group">
-                    <span>Primärfarbe</span>
-                    <input type="color" x-model="customThemeColors.primaryColor"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>Akzentfarbe</span>
-                    <input type="color" x-model="customThemeColors.accentColor"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>Hintergrund</span>
-                    <input type="color" x-model="customThemeColors.base100Color"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>Hochladefeld</span>
-                    <input type="color" x-model="customThemeColors.base300Color"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>textColor</span>
-                    <input type="color" x-model="customThemeColors.textColor"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>primaryTextColor</span>
-                    <input type="color" x-model="customThemeColors.primaryTextColor"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>accentTextColor</span>
-                    <input type="color" x-model="customThemeColors.accentTextColor"
-                           class="input input-lg input-bordered w-24 p-2 pr-4">
-                </label>
-            </div>
-            <div class="form-control">
-                <label class="input-group">
-                    <span>Buttonradius</span>
-                    <input type="range" min="0" max="2" step="0.1" class="range  input-lg" x-model="customThemeColors.buttonRadius"/>
-                </label>
-            </div>
-        </div>
-        <h2 class="text-2xl mb-2 mt-8 text-center"> Vorschau:</h2>
-        <div  class="flex flex-col items-center mx-2">
+        <h2 class="text-2xl mb-2 mt-8 text-center md:order-2"> Vorschau:</h2>
+        <div  class="flex flex-col items-center mx-2 md:order-3">
             <div id="preview-container">
                 <div class="container border-2 border-black !min-h-80" th:insert="task :: task"></div>
-
             </div>
-
         </div>
+
 
 
     </div>
