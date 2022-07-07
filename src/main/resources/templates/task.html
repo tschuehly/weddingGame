@@ -8,16 +8,16 @@
 <head>
     <title>[[${task.title}]]</title>
 </head>
-<body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}">
-    <div  class="min-h-screen bg-base-100"  th:fragment="task">
+<body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen">
+    <div  class="bg-base-100" th:fragment="task">
     <!-- style="--p : 126 100% 72%;"  bg-gradient-to-b from-primary to-secondary TODO: Different backgrounds -> gradients base color customizing-->
         <div x-data="{ files: null, fullName: null, loading: null}" class="flex flex-col ">
             <h1 class="font-dancing-script text-7xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
 
-            <div class="p-10 rounded-xl flex flex-col items-center gap-10 mx-auto bg-white">
+            <div class="p-10 rounded-xl flex flex-col items-center gap-10 mx-auto bg-base-300">
                 <div class="flex flex-col items-center">
                     <label class="label flex justify-center">
-                        <span class="text-4xl mb-4 text-gray-900">Mache das Foto und lade es hoch!</span>
+                        <span class="text-4xl mb-4">Mache das Foto und lade es hoch!</span>
                     </label>
                     <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
                            x-on:change="files = Object.values($event.target.files)">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-control">
                     <label class="label">
-                        <span class="text-gray-900 text-4xl mb-4">Dein Vor- und Nachname:</span>
+                        <span class="text-4xl mb-4">Dein Vor- und Nachname:</span>
                     </label>
                     <input type="text" id="fullName" name="fullName" placeholder="Max Mustermann" class="input input-bordered"/>
                 </div>
