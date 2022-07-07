@@ -7,17 +7,17 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.core.env.MapPropertySource
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
+import org.testcontainers.containers.FixedHostPortGenericContainer
 import org.testcontainers.containers.GenericContainer
-import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.lifecycle.Startables
 import org.testcontainers.utility.DockerImageName
 import javax.annotation.PreDestroy
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = [AbstractIntegrationTest.Initializer::class])
+@ContextConfiguration(initializers = [DevelopmentInitializer.Initializer::class])
 
-abstract class AbstractIntegrationTest {
+abstract class DevelopmentInitializer {
     class Initializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
         override fun initialize(context: ConfigurableApplicationContext) {
             val env = context.environment
@@ -29,14 +29,17 @@ abstract class AbstractIntegrationTest {
         }
 
         companion object {
-            private val postgresContainer = PostgreSQLContainer("postgres:14.4")
-                .withUsername("postgres")
-                .withPassword("password")
-                .withDatabaseName("postgres")
-                .withExposedPorts(5432)
+            val postgresContainer = FixedHostPortGenericContainer("postgres:14.4")
+                .withEnv("POSTGRES_USER","postgres")
+                .withEnv("POSTGRES_PASSWORD","password")
+                .withEnv("POSTGRES_DB","postgres")
+                .withFixedExposedPort(5432,5432)
                 .withReuse(true)
-            private val minioContainer = GenericContainer(DockerImageName.parse("minio/minio"))
-                .withExposedPorts(9000,9001)
+
+
+            private val minioContainer = FixedHostPortGenericContainer("minio/minio")
+                .withFixedExposedPort(9000,9000)
+                .withFixedExposedPort(9001,9001)
                 .withReuse(true)
                 .withCommand("server /data --console-address :9001")
 
@@ -44,10 +47,11 @@ abstract class AbstractIntegrationTest {
                 get(){
                     Startables.deepStart(postgresContainer, minioContainer).join()
                     return mapOf(
-                        "spring.datasource.url" to postgresContainer.jdbcUrl,
-                        "spring.datasource.password" to postgresContainer.password,
-                        "spring.datasource.username" to postgresContainer.username,
-                        "s3.port" to minioContainer.firstMappedPort.toString(),
+                        "spring.datasource.url" to
+                                "jdbc:postgresql://" + postgresContainer.host + ":5432/postgres",
+                        "spring.datasource.password" to "password",
+                        "spring.datasource.username" to "postgres",
+                        "s3.port" to "9000",
                         "s3.host" to minioContainer.host.toString()
                     )
                 }
