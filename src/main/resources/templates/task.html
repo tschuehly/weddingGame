@@ -9,10 +9,9 @@
     <title>[[${task.title}]]</title>
 </head>
 <body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen">
-    <div  class="" th:fragment="task">
-    <!-- style="--p : 126 100% 72%;"  bg-gradient-to-b from-primary to-secondary TODO: Different backgrounds -> gradients base color customizing-->
+    <div  th:fragment="task">
         <div x-data="{ files: null, fullName: null, loading: false}" class="flex flex-col ">
-            <h1 class=" text-7xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
+            <h1 class=" text-5xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
 
             <div class="p-10 sm:rounded-xl flex flex-col items-center gap-10 mx-auto bg-base-300">
                 <div class="flex flex-col items-center">
@@ -43,9 +42,15 @@
                 </div>
                 <p  class="text-4xl text-center">Wird hochgeladen</p>
             </div>
-            <div class="h-80 bg-[url('/svg/Blumen_90.svg')]" >
+
+<!--            <div id="imageContainer" class="my-10 h-80 bg-[url('/svg/Blumen_90.svg')] justify-center" >-->
+
+<!--            </div>-->
+            <div id="imageContainer"
+                 class="w-full max-w-4xl my-10 mx-auto h-80 md:h-[30rem]  bg-[url('/images/AlinaxAndreas-2.webp')] shadow-black shadow-2xl justify-center bg-center bg-no-repeat bg-cover" >
 
             </div>
+
         </div>
 
     </div>
