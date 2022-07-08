@@ -3,6 +3,7 @@ package de.tschuehly.weddingGame.model
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToOne
 
 @Entity
 class CustomTheme(
@@ -19,6 +20,6 @@ class CustomTheme(
     var buttonRadius: String?,
     var fontFamily: String?,
     var backgroundGradient: String?,
-    var imageContainerFragment: String?,
-    var imagePath: String?
+    @OneToOne
+    var coverImage: String?
 )

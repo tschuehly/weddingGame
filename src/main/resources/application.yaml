@@ -40,7 +40,7 @@ spring:
         format_sql: true
         default-schema: public
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   liquibase:
@@ -48,6 +48,9 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
     drop-first: true
+  sql:
+    init:
+      mode: always
 s3:
   host: localhost
   port: 55786

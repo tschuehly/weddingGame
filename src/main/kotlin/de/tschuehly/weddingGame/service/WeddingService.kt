@@ -17,6 +17,8 @@ class WeddingService(
 
     fun getBySubdomain(subdomain: String) = weddingRepository.findBySubdomain(subdomain)
 
+    fun findById(id: Long) = weddingRepository.findByIdOrNull(id)
+
     fun setCustomTheme(weddingId: Long, customTheme: CustomTheme){
         weddingRepository.findByIdOrNull(weddingId)?.let {
             wedding -> wedding.customTheme = customThemeRepository.save(customTheme)

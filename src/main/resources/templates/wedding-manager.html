@@ -760,7 +760,6 @@
                     <div class="form-control self-center">
                         <label class="flex justify-evenly">
                             <span class="text-xl">Eigenes Bild einfügen</span>
-
                             <input x-ref="fileSelector" class="hidden" type="file" accept="image/*"
                                    @change="fileChosen($event)">
                             <input type="checkbox" class="toggle toggle-lg " @change="if($event.target.checked){$refs.fileSelector.click()}else{
@@ -785,6 +784,14 @@
                         <option value="ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;" style="">Serif</option>
                         <option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">Monospace</option>
                     </select>
+                    <div class="form-control col-span-2">
+                        <label class="flex justify-evenly">
+                            <button class="btn btn-primary btn-lg"
+                                    @click="loading = true; loading = await callUploadImages(customImageFile)">
+                                Theme speichern
+                            </button>
+                        </label>
+                    </div>
                 </div>
 
 
@@ -805,10 +812,11 @@
 </section>
 </body>
 <th:block layout:fragment="page-scripts">
-
     <div th:insert="scripts :: uploadImages"></div>
     <script>
-
+        async function callUploadImages(file) {
+            return await uploadImage([file], '[[${wedding.folderId}]]', 'static', null, 'coverImage')
+        }
         function getProp(variable){
             let prop = getComputedStyle(document.getElementById('preview-container')).getPropertyValue(variable)
             if(variable === "--rounded-btn"){

@@ -81,10 +81,10 @@ class WebController(
 
     @GetMapping("/hochzeit")
     fun weddingManager(model: Model): String {
-        return getCurrentUser()?.let {
+        return getCurrentUser()?.weddings?.first()?.id?.let {
             model.addAllAttributes(
                 mapOf(
-                    "wedding" to weddingService.getBySubdomain(it.weddings.first().subdomain),
+                    "wedding" to weddingService.findById(it),
                     "task" to tasks.first()
                 )
             )

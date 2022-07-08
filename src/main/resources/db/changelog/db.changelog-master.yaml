@@ -15,32 +15,8 @@ databaseChangeLog:
       name: string.type
       value: VARCHAR
       dbms: h2
-  - property:
-      name: string.type
-      value: clob
-      dbms: postgresql
-  - property:
-      name: string.type
-      value: VARCHAR
-      dbms: h2
-  - property:
-      name: string.type
-      value: clob
-      dbms: postgresql
-  - property:
-      name: string.type
-      value: VARCHAR
-      dbms: h2
-  - property:
-      name: string.type
-      value: clob
-      dbms: postgresql
-  - property:
-      name: string.type
-      value: VARCHAR
-      dbms: h2
   - changeSet:
-      id: 1657117934644-1
+      id: 1657308647959-1
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -49,7 +25,52 @@ databaseChangeLog:
             sequenceName: hibernate_sequence
             startValue: 1
   - changeSet:
-      id: 1657117934644-2
+      id: 1657308647959-2
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_customtheme
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: primary_color
+                  type: ${string.type}
+              - column:
+                  name: secondary_color
+                  type: ${string.type}
+              - column:
+                  name: base100color
+                  type: ${string.type}
+              - column:
+                  name: base300color
+                  type: ${string.type}
+              - column:
+                  name: text_color
+                  type: ${string.type}
+              - column:
+                  name: primary_text_color
+                  type: ${string.type}
+              - column:
+                  name: secondary_text_color
+                  type: ${string.type}
+              - column:
+                  name: button_radius
+                  type: ${string.type}
+              - column:
+                  name: font_family
+                  type: ${string.type}
+              - column:
+                  name: background_gradient
+                  type: ${string.type}
+            tableName: custom_theme
+  - changeSet:
+      id: 1657308647959-3
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -73,7 +94,7 @@ databaseChangeLog:
                   type: DATETIME
             tableName: image
   - changeSet:
-      id: 1657117934644-3
+      id: 1657308647959-4
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -100,7 +121,7 @@ databaseChangeLog:
                   type: ${string.type}
             tableName: website_user
   - changeSet:
-      id: 1657117934644-4
+      id: 1657308647959-5
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -116,7 +137,7 @@ databaseChangeLog:
                   type: ${string.type}
             tableName: website_user_authorities
   - changeSet:
-      id: 1657117934644-5
+      id: 1657308647959-6
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -134,7 +155,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: website_user_weddings
   - changeSet:
-      id: 1657117934644-6
+      id: 1657308647959-7
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -148,14 +169,20 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  name: subfolder_id
+                  name: folder_id
                   type: ${string.type}
               - column:
                   name: subdomain
                   type: ${string.type}
+              - column:
+                  name: theme
+                  type: ${string.type}
+              - column:
+                  name: custom_theme_id
+                  type: BIGINT
             tableName: wedding
   - changeSet:
-      id: 1657117934644-7
+      id: 1657308647959-8
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -173,7 +200,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: wedding_pictures
   - changeSet:
-      id: 1657117934644-8
+      id: 1657308647959-9
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -182,7 +209,7 @@ databaseChangeLog:
             constraintName: uc_website_user_weddings_weddings
             tableName: website_user_weddings
   - changeSet:
-      id: 1657117934644-9
+      id: 1657308647959-10
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -191,123 +218,7 @@ databaseChangeLog:
             constraintName: uc_wedding_pictures_pictures
             tableName: wedding_pictures
   - changeSet:
-      id: 1657117934644-10
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: website_user_id
-            baseTableName: website_user_authorities
-            constraintName: fk_websiteuser_authorities_on_website_user
-            referencedColumnNames: id
-            referencedTableName: website_user
-  - changeSet:
-      id: 1657117934644-11
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: website_user_id
-            baseTableName: website_user_weddings
-            constraintName: fk_webusewed_on_website_user
-            referencedColumnNames: id
-            referencedTableName: website_user
-  - changeSet:
-      id: 1657117934644-12
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: weddings_id
-            baseTableName: website_user_weddings
-            constraintName: fk_webusewed_on_wedding
-            referencedColumnNames: id
-            referencedTableName: wedding
-  - changeSet:
-      id: 1657117934644-13
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: pictures_id
-            baseTableName: wedding_pictures
-            constraintName: fk_wedpic_on_image
-            referencedColumnNames: id
-            referencedTableName: image
-  - changeSet:
-      id: 1657117934644-14
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: wedding_id
-            baseTableName: wedding_pictures
-            constraintName: fk_wedpic_on_wedding
-            referencedColumnNames: id
-            referencedTableName: wedding
-  - changeSet:
-      id: 1657134921708-1
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addColumn:
-            columns:
-              - column:
-                  name: theme
-                  type: ${string.type}
-            tableName: wedding
-  - changeSet:
-      id: 1657117934644-15
-      author: tschuehly
-      context: dev
-      changes:
-        - sqlFile:
-            splitStatements: true
-            path: ./testdata.sql
-            stripComments: true
-  - changeSet:
-      id: 1657137888415-1
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_customtheme
-                  name: id
-                  type: BIGINT
-              - column:
-                  name: primary_color
-                  type: ${string.type}
-              - column:
-                  name: secondary_color
-                  type: ${string.type}
-              - column:
-                  name: accent_color
-                  type: ${string.type}
-              - column:
-                  name: neutral_color
-                  type: ${string.type}
-              - column:
-                  name: base_color
-                  type: ${string.type}
-            tableName: custom_theme
-  - changeSet:
-      id: 1657137888415-2
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addColumn:
-            columns:
-              - column:
-                  name: custom_theme_id
-                  type: BIGINT
-            tableName: wedding
-  - changeSet:
-      id: 1657137888415-3
+      id: 1657308647959-11
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -318,73 +229,69 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: custom_theme
   - changeSet:
-      id: 1657220493513-1
+      id: 1657308647959-12
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: website_user_id
+            baseTableName: website_user_authorities
+            constraintName: fk_websiteuser_authorities_on_website_user
+            referencedColumnNames: id
+            referencedTableName: website_user
+  - changeSet:
+      id: 1657308647959-13
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: website_user_id
+            baseTableName: website_user_weddings
+            constraintName: fk_webusewed_on_website_user
+            referencedColumnNames: id
+            referencedTableName: website_user
+  - changeSet:
+      id: 1657308647959-14
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: weddings_id
+            baseTableName: website_user_weddings
+            constraintName: fk_webusewed_on_wedding
+            referencedColumnNames: id
+            referencedTableName: wedding
+  - changeSet:
+      id: 1657308647959-15
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: pictures_id
+            baseTableName: wedding_pictures
+            constraintName: fk_wedpic_on_image
+            referencedColumnNames: id
+            referencedTableName: image
+  - changeSet:
+      id: 1657308647959-16
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: wedding_id
+            baseTableName: wedding_pictures
+            constraintName: fk_wedpic_on_wedding
+            referencedColumnNames: id
+            referencedTableName: wedding
+  - changeSet:
+      id: 1657309977064-1
       author: tschuehly
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addColumn:
             columns:
               - column:
-                  name: background_gradient
-                  type: ${string.type}
-              - column:
-                  name: base100color
-                  type: ${string.type}
-              - column:
-                  name: base300color
-                  type: ${string.type}
-              - column:
-                  name: button_radius
-                  type: ${string.type}
-              - column:
-                  name: font_family
-                  type: ${string.type}
-              - column:
-                  name: image_container_fragment
-                  type: ${string.type}
-              - column:
-                  name: image_path
-                  type: ${string.type}
-              - column:
-                  name: primary_text_color
-                  type: ${string.type}
-              - column:
-                  name: secondary_text_color
-                  type: ${string.type}
-              - column:
-                  name: text_color
+                  name: cover_image
                   type: ${string.type}
             tableName: custom_theme
-  - changeSet:
-      id: 1657220493513-11
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - dropColumn:
-            columnName: accent_color
-            tableName: custom_theme
-        - dropColumn:
-            columnName: base_color
-            tableName: custom_theme
-        - dropColumn:
-            columnName: neutral_color
-            tableName: custom_theme
-  - changeSet:
-      id: 1657224307715-1
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addColumn:
-            columns:
-              - column:
-                  name: folder_id
-                  type: ${string.type}
-            tableName: wedding
-  - changeSet:
-      id: 1657224307715-2
-      author: tschuehly
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - dropColumn:
-            columnName: subfolder_id
-            tableName: wedding
+

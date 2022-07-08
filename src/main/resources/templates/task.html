@@ -56,7 +56,10 @@
     </div>
     <script>
         async function callUploadImages(files, fullName) {
-            return await uploadImages(files, '[[${wedding.folderId}]]', '[[${task.uuid}]]', fullName)
+            for(const file of files){
+                await uploadImage(file, '[[${wedding.folderId}]]', '[[${task.uuid}]]', fullName, file.name)
+            }
+            return false
         }
     </script>
 <div th:insert="scripts :: uploadImages"></div>
