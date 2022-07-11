@@ -1,6 +1,7 @@
 package de.tschuehly.weddingGame.controller
 
 import de.tschuehly.weddingGame.dto.ImageDTO
+import de.tschuehly.weddingGame.model.Image
 import de.tschuehly.weddingGame.service.ImageService
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -18,14 +19,13 @@ class ImageController(
         @RequestParam("fileName") fileName: String,
         request: HttpServletRequest
     ): ImageDTO {
-
         return imageService.getUploadUrl(folderId, subfolderId ,fileName)
     }
 
     @PostMapping("/create")
     fun create(
         @RequestBody imageDTO: ImageDTO
-    ){
-        imageService.save(imageDTO)
+    ): Image {
+        return imageService.save(imageDTO)
     }
 }

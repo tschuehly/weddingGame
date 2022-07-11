@@ -294,4 +294,34 @@ databaseChangeLog:
                   name: cover_image
                   type: ${string.type}
             tableName: custom_theme
+  - changeSet:
+      id: 1657473021286-1
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: cover_image_id
+                  type: BIGINT
+            tableName: custom_theme
+  - changeSet:
+      id: 1657473021286-2
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: cover_image_id
+            baseTableName: custom_theme
+            constraintName: FK_CUSTOMTHEME_ON_COVERIMAGE
+            referencedColumnNames: id
+            referencedTableName: image
+  - changeSet:
+      id: 1657473021286-3
+      author: tschuehly
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropColumn:
+            columnName: cover_image
+            tableName: custom_theme
 

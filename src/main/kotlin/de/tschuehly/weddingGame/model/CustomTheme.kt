@@ -21,5 +21,5 @@ class CustomTheme(
     var fontFamily: String?,
     var backgroundGradient: String?,
     @OneToOne
-    var coverImage: String?
+    var coverImage: Image?
 )

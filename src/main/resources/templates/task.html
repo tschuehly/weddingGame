@@ -46,8 +46,11 @@
 <!--            <div id="imageContainer" class="my-10 h-80 bg-[url('/svg/Blumen_90.svg')] justify-center" >-->
 
 <!--            </div>-->
+
             <div id="imageContainer"
-                 class="w-full max-w-4xl my-10 mx-auto h-80 md:h-[30rem]  bg-[url('/images/AlinaxAndreas-2.webp')] shadow-black shadow-2xl justify-center bg-center bg-no-repeat bg-cover" >
+                 class="w-full max-w-4xl my-10 mx-auto  shadow-black shadow-2xl justify-center bg-center object-cover" >
+                <img id="coverImage" class="object-cover h-80 md:h-[30rem] w-full"
+                     th:src="${wedding.customTheme != null}? ${wedding.customTheme?.coverImage?.downloadUrl} : '/images/AlinaxAndreas-2.webp'">
 
             </div>
 

@@ -15,18 +15,26 @@
 
     </div>
     <div x-data="data" x-effect="setThemeColorsInPreview" class="flex grid grid-cols-1 md:grid-cols-2 auto-rows-min">
-        <script>
+        <script th:inline="javascript">
             document.addEventListener('alpine:init', () => {
                 Alpine.data('data', () => ({
-                    customTheme: false,
+                    customTheme: undefined,
                     theme:'light',
                     showGradientBackground:false,
                     showCustomImage: false,
                     customImageFile: null,
-                    customThemeProperties : undefined,
+                    customThemeProperties : [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
                     customImageDataUrl: null,
+                    init(){
+                        if (this.customThemeProperties == null){
+                            this.customTheme = false
+                        }else{
+                            this.customTheme = true
+                        }
+                    },
                     setThemeColorsInPreview() {
                         const previewContainer = document.getElementById('preview-container')
+
                         if(!this.customTheme){
                             previewContainer.dataset.theme = this.theme
                             this.customThemeProperties = {
@@ -65,10 +73,21 @@
                         this.customImageFile = event.target.files[0]
                         this.fileToDataUrl(event, src => {
                             this.customImageDataUrl = src
-                            document.getElementById('imageContainer').style = "background-image: url("+src+");"
+                            document.getElementById('coverImage').src = src
                         })
                     },
+                    async saveCustomTheme(){
+                        let fileData = new FormData
+                        fileData.append('customThemeString', JSON.stringify(this.customThemeProperties))
+                        fileData.append('coverImageFile', this.customImageFile)
+                        //TODO: Cut Image to size
+                        const savedTheme = await fetch('/api/wedding/saveCustomTheme?weddingId=[[${wedding.id}]]', {
+                            method: 'PUT',
+                            body: fileData
 
+                        })
+                        console.log(savedTheme.json())
+                    },
                     fileToDataUrl(event, callback) {
 
                         let file = event.target.files[0],
@@ -89,7 +108,7 @@
                 </div>
             </div>
         <div class="md:order-3">
-            <div class="mx-auto container" x-show="!customTheme">
+            <div class="mx-auto container" x-show="customTheme == false">
                 <div class="h-60 md:h-full overflow-scroll overflow-x-hidden  mx-2 outline outline-1 outline-gray-600">
 
                     <div class="rounded-box grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 p-2 mx-2">
@@ -115,6 +134,7 @@
                         </div>
                         <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2"
                              @click="customTheme = false; theme = 'dark'" :class="{'outline' : theme === 'dark'}">
+<!--                            TODO: on change set customTheme to false -->
                             <div data-theme="dark" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
                                 <div class="grid grid-cols-5 grid-rows-3">
                                     <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
@@ -687,7 +707,7 @@
 
             </div>
 
-            <div class="flex flex-col  container mx-auto" x-show="customTheme">
+            <div class="flex flex-col  container mx-auto" x-show="customTheme == true">
                 <div class="grow flex grid grid-cols-1 lg:grid-cols-2 gap-4 mx-6">
                     <div class="form-control">
                         <label class="input-group">
@@ -787,8 +807,7 @@
                     <div class="form-control col-span-2">
                         <label class="flex justify-evenly">
                             <button class="btn btn-primary btn-lg"
-                                    @click="loading = true; loading = await callUploadImages(customImageFile)">
-                                Theme speichern
+                                    @click="await saveCustomTheme()">                                Theme speichern
                             </button>
                         </label>
                     </div>
@@ -814,9 +833,6 @@
 <th:block layout:fragment="page-scripts">
     <div th:insert="scripts :: uploadImages"></div>
     <script>
-        async function callUploadImages(file) {
-            return await uploadImage([file], '[[${wedding.folderId}]]', 'static', null, 'coverImage')
-        }
         function getProp(variable){
             let prop = getComputedStyle(document.getElementById('preview-container')).getPropertyValue(variable)
             if(variable === "--rounded-btn"){

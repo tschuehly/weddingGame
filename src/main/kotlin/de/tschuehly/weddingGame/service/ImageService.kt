@@ -2,14 +2,12 @@ package de.tschuehly.weddingGame.service
 
 import de.tschuehly.weddingGame.dto.ImageDTO
 import de.tschuehly.weddingGame.model.Image
-import io.minio.GetPresignedObjectUrlArgs
-import io.minio.MinioClient
 import io.minio.http.Method
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import de.tschuehly.weddingGame.repository.ImageRepository
-import io.minio.BucketExistsArgs
-import io.minio.MakeBucketArgs
+import io.minio.*
+import org.springframework.web.multipart.MultipartFile
 import java.net.URLEncoder
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -32,7 +30,7 @@ class ImageService(
     lateinit var s3Host: String
 
     fun getUploadUrl(folderId: String, subfolderId: String?,fileName: String): ImageDTO {
-        val objectName = "$folderId/${subfolderId ?: "safari" }/${URLEncoder.encode(fileName, "UTF-8")}_${System.currentTimeMillis()}"
+        val objectName = "$folderId/${subfolderId ?: "safari" }/${System.currentTimeMillis()}_${URLEncoder.encode(fileName, "UTF-8")}"
         val uploadUrl = minioClient().getPresignedObjectUrl(
             GetPresignedObjectUrlArgs.builder()
                 .method(Method.PUT)
@@ -44,7 +42,18 @@ class ImageService(
         return ImageDTO(uploadUrl,objectName,"","")
     }
 
+    fun uploadImage(objectName: String, imageFile: MultipartFile): Image {
 
+        minioClient().putObject(
+            PutObjectArgs.builder()
+                .bucket(s3BucketKey)
+                .`object`(objectName)
+                .stream(imageFile.inputStream,imageFile.size,-1)
+                .contentType(imageFile.contentType)
+                .build()
+        )
+        return save(ImageDTO(objectName = objectName))
+    }
 
     fun getAll(): MutableIterable<Image> {
         return imageRepository.findAll()
@@ -61,8 +70,8 @@ class ImageService(
         )
     }
 
-    fun save(imageDTO: ImageDTO){
-        imageRepository.save(Image(
+    fun save(imageDTO: ImageDTO): Image {
+        return imageRepository.save(Image(
             null,
             imageDTO.objectName,
             getDownloadUrl(imageDTO.objectName),
@@ -76,6 +85,7 @@ class ImageService(
             .credentials(s3AccessKey, s3SecretKey)
             .build()
     }
+
     @PostConstruct
     private fun createBucketIfNotExists(){
         if (

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       lang="de">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +15,7 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
             fullName: fullName,
             fileName: fileName,
         }
+        //TODO: Create Thumbnails to decrease traffic
         let uploadUrl = '/api/image/getUploadUrl?folderId='+folderId + '&fileName=' + fileName + '&subfolderId=' + subfolderId
         if(fullName){
             uploadUrl = uploadUrl + '&fullName=' + fullName
@@ -29,9 +28,12 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
         imageDTO.uploadUrl = json.uploadUrl
         imageDTO.objectName = json.objectName
         if (response.ok){
+            let formData = new FormData()
+            formData.append('Content-Type', file.type)
+            formData.append('file', file)
             let uploadResponse = await fetch(imageDTO.uploadUrl, {
                 method: 'PUT',
-                body: file
+                body: formData
             })
             if(uploadResponse.ok){
                 let createImageResponse = await fetch('/api/image/create', {
@@ -42,8 +44,13 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
                     body: JSON.stringify(imageDTO),
 
                 })
+
                 if(createImageResponse.ok){
                     console.log("Uploaded "+ fileName)
+                    return await createImageResponse.json().then(image => {
+                        console.log(typeof image)
+                        return image
+                    })
                 }else {
                     console.error(createImageResponse)
                 }
@@ -52,9 +59,6 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
             }
 
         }
-
-
-    return false
 }
 </script>
 </body>
