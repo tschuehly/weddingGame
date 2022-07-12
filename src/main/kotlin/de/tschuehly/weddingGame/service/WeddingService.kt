@@ -23,13 +23,15 @@ class WeddingService(
 
     fun findById(id: Long) = weddingRepository.findByIdOrNull(id)
 
-    fun setCustomTheme(weddingId: Long, customThemeString: String, coverImageFile: MultipartFile): Wedding {
+    fun setCustomTheme(weddingId: Long, customThemeString: String, coverImageFile: MultipartFile?): Wedding {
         val customTheme : CustomTheme = jacksonObjectMapper().readValue(customThemeString)
         val wedding = weddingRepository.findByIdOrNull(weddingId)
             ?: throw NoSuchElementException("No wedding with Id: $weddingId found")
         wedding.theme = "custom"
         val objectName = "${wedding.folderId}/static/coverImage"
-        customTheme.coverImage = imageService.uploadImage(objectName,coverImageFile)
+        coverImageFile?.let {
+            customTheme.coverImage = imageService.uploadImage(objectName,it)
+        }
         wedding.customTheme = customThemeRepository.save(customTheme)
         return weddingRepository.save(wedding)
     }

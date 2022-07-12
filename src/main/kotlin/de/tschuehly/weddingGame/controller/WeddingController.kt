@@ -16,7 +16,7 @@ class WeddingController(
     fun setCustomTheme(
         @RequestParam("weddingId") weddingId: Long,
         @RequestParam customThemeString: String,
-        @RequestParam coverImageFile: MultipartFile
+        @RequestParam coverImageFile: MultipartFile?
     ) = weddingService.setCustomTheme(weddingId, customThemeString, coverImageFile)
 
 

@@ -20,7 +20,7 @@
                 Alpine.data('data', () => ({
                     customTheme: undefined,
                     theme:'light',
-                    showGradientBackground:false,
+                    showGradientBackground: undefined,
                     showCustomImage: false,
                     customImageFile: null,
                     customThemeProperties : [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
@@ -29,6 +29,9 @@
                         if (this.customThemeProperties === null){
                             this.customTheme = false
                         }else{
+                            if(this.customThemeProperties.backgroundGradient !== null){
+                                this.showGradientBackground = true
+                            }
                             this.customTheme = true
                         }
                     },
@@ -48,25 +51,15 @@
                                 secondaryTextColor : getProp('--sc'),
                                 buttonRadius : getProp('--rounded-btn'),
                                 fontFamily : getComputedStyle(previewContainer).fontFamily,
-                                backgroundGradient : 0,
+                                backgroundGradient : null,
                             }
                             previewContainer.style = ''
                         }else{
-                            style = "--p : " + rgbToHsl(this.customThemeProperties.primaryColor)
-                                + "; --s: " +  rgbToHsl(this.customThemeProperties.secondaryColor)
-                                + "; --b1: " + rgbToHsl(this.customThemeProperties.base100Color)
-                                + "; --b3: " + rgbToHsl(this.customThemeProperties.base300Color)
-                                + "; --bc: " + rgbToHsl(this.customThemeProperties.textColor)
-                                + "; --pc: " + rgbToHsl(this.customThemeProperties.primaryTextColor)
-                                + "; --sc: " + rgbToHsl(this.customThemeProperties.secondaryTextColor)
-                                + "; --rounded-btn: " + this.customThemeProperties.buttonRadius + "rem"
-                                + "; font-family: "+ this.customThemeProperties.fontFamily
-                            if(this.showGradientBackground){
-                                style = style + ";background-image: linear-gradient("+ this.customThemeProperties.backgroundGradient + "deg,"+this.customThemeProperties.primaryColor+"," + this.customThemeProperties.secondaryColor + ")"
+                            if(!this.showGradientBackground){
+                                this.customThemeProperties.backgroundGradient = null
                             }
-
                             previewContainer.dataset.theme = 'custom'
-                            previewContainer.style = style
+                            previewContainer.style = getCustomThemeStyle(this.customThemeProperties)
                         }
                     },
                     fileChosen(event) {
@@ -841,6 +834,7 @@
 </body>
 <th:block layout:fragment="page-scripts">
     <div th:insert="scripts :: uploadImages"></div>
+    <div th:insert="scripts :: themeHelpers"></div>
     <script>
         function getProp(variable){
             let prop = getComputedStyle(document.getElementById('preview-container')).getPropertyValue(variable)
@@ -848,43 +842,6 @@
                 return prop.replace('rem','')
             }
             return HSLToRGB(prop)
-        }
-        function rgbToHsl(rgbValue) {
-            if(rgbValue === undefined){
-                return null
-            }
-            let r = parseInt(rgbValue.substring(1, 3), 16)
-            let g = parseInt(rgbValue.substring(3, 5), 16)
-            let b = parseInt(rgbValue.substring(5, 7), 16)
-            r /= 255, g /= 255, b /= 255;
-
-            var max = Math.max(r, g, b), min = Math.min(r, g, b);
-            var h, s, l = (max + min) / 2;
-
-            if (max === min) {
-                h = s = 0; // achromatic
-            } else {
-                var d = max - min;
-                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-                switch (max) {
-                    case r:
-                        h = (g - b) / d + (g < b ? 6 : 0);
-                        break;
-                    case g:
-                        h = (b - r) / d + 2;
-                        break;
-                    case b:
-                        h = (r - g) / d + 4;
-                        break;
-                }
-
-                h /= 6;
-            }
-
-            return (h * 360).toFixed(0).toString() + " " +
-                (s * 100).toFixed(0).toString() + "% " +
-                (l * 100).toFixed(0).toString() + "%"
         }
         const HSLToRGB = (hsl) => {
             let [h,s,l] = hsl.replaceAll('%','').trim().split(' ').map(Number)

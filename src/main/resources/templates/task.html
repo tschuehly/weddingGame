@@ -8,10 +8,24 @@
 <head>
     <title>[[${task.title}]]</title>
 </head>
-<body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen">
-    <div  th:fragment="task">
-        <div x-data="{ files: null, fullName: null, loading: false}" class="flex flex-col ">
-            <h1 class=" text-5xl font-semibold text-center py-20 mx-8">[[${task.title}]]</h1>
+<body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen" x-data="data">
+
+    <script th:inline="javascript">
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('data', () => ({
+                customThemeProperties: [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
+                init(){
+                    console.log(this.customThemeProperties)
+                    if(this.customThemeProperties != null){
+                     document.body.style = getCustomThemeStyle(this.customThemeProperties)
+                    }
+                }
+            }))
+        })
+    </script>
+    <div th:fragment="task" id="taskDiv" >
+        <div th:inline="javascript" x-data="{ files: null, fullName: null, loading: false}" class="flex flex-col ">
+            <h1 class=" text-5xl font-semibold text-center pt-5 pb-10 mx-8">[[${task.title}]]</h1>
 
             <div class="p-10 sm:rounded-xl flex flex-col items-center gap-10 mx-auto bg-base-300">
                 <div class="flex flex-col items-center">
@@ -50,7 +64,7 @@
             <div id="imageContainer"
                  class="w-full max-w-4xl my-10 mx-auto  shadow-black shadow-2xl justify-center bg-center object-cover" >
                 <img id="coverImage" class="object-cover h-80 md:h-[30rem] w-full"
-                     th:src="${wedding.customTheme != null}? ${wedding.customTheme?.coverImage?.downloadUrl} : '/images/AlinaxAndreas-2.webp'">
+                     th:src="${wedding.customTheme != null && wedding.customTheme.coverImage != null}? ${wedding.customTheme?.coverImage?.downloadUrl} : '/images/AlinaxAndreas-2.webp'">
 
             </div>
 
@@ -66,4 +80,5 @@
         }
     </script>
 <div th:insert="scripts :: uploadImages"></div>
+<div th:insert="scripts :: themeHelpers"></div>
 </body>
