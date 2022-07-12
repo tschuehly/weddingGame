@@ -29,8 +29,14 @@ class WeddingService(
             ?: throw NoSuchElementException("No wedding with Id: $weddingId found")
         wedding.theme = "custom"
         val objectName = "${wedding.folderId}/static/coverImage"
+
+        wedding.customTheme?.coverImage?.let {
+            wedding.customTheme?.coverImage = null
+            weddingRepository.save(wedding)
+            imageService.deleteImage(it)
+        }
         coverImageFile?.let {
-            customTheme.coverImage = imageService.uploadImage(objectName,it)
+            customTheme.coverImage = imageService.uploadImageAndSave(objectName,it)
         }
         wedding.customTheme = customThemeRepository.save(customTheme)
         return weddingRepository.save(wedding)
@@ -40,6 +46,13 @@ class WeddingService(
         val wedding = weddingRepository.findByIdOrNull(weddingId)
             ?: throw NoSuchElementException("No wedding with ID: $weddingId found")
         wedding.theme = theme
+        wedding.customTheme?.let {customTheme ->
+            customTheme.coverImage?.let {
+                imageService.deleteImage(it)
+            }
+            wedding.customTheme = null
+            customThemeRepository.delete(customTheme)
+        }
         return weddingRepository.save(wedding)
     }
 }

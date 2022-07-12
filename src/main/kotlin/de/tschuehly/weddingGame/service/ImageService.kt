@@ -42,8 +42,7 @@ class ImageService(
         return ImageDTO(uploadUrl,objectName,"","")
     }
 
-    fun uploadImage(objectName: String, imageFile: MultipartFile): Image {
-
+    fun uploadImageAndSave(objectName: String, imageFile: MultipartFile): Image {
         minioClient().putObject(
             PutObjectArgs.builder()
                 .bucket(s3BucketKey)
@@ -52,9 +51,18 @@ class ImageService(
                 .contentType(imageFile.contentType)
                 .build()
         )
-        return save(ImageDTO(objectName = objectName))
+        return save(objectName)
     }
 
+    fun deleteImage(image: Image){
+        imageRepository.delete(image)
+        minioClient().removeObject(
+            RemoveObjectArgs.builder()
+                .bucket(s3BucketKey)
+                .`object`(image.objectName)
+                .build()
+        )
+    }
     fun getAll(): MutableIterable<Image> {
         return imageRepository.findAll()
     }
@@ -70,11 +78,11 @@ class ImageService(
         )
     }
 
-    fun save(imageDTO: ImageDTO): Image {
+    fun save(objectName: String): Image {
         return imageRepository.save(Image(
             null,
-            imageDTO.objectName,
-            getDownloadUrl(imageDTO.objectName),
+            objectName,
+            getDownloadUrl(objectName),
             Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS))
         ))
     }

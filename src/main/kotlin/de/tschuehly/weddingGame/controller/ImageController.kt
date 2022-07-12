@@ -26,6 +26,6 @@ class ImageController(
     fun create(
         @RequestBody imageDTO: ImageDTO
     ): Image {
-        return imageService.save(imageDTO)
+        return imageService.save(imageDTO.objectName)
     }
 }
