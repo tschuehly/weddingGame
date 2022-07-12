@@ -26,7 +26,7 @@
                     customThemeProperties : [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
                     customImageDataUrl: null,
                     init(){
-                        if (this.customThemeProperties == null){
+                        if (this.customThemeProperties === null){
                             this.customTheme = false
                         }else{
                             this.customTheme = true
@@ -37,6 +37,7 @@
 
                         if(!this.customTheme){
                             previewContainer.dataset.theme = this.theme
+                            this.saveTheme(this.theme)
                             this.customThemeProperties = {
                                 primaryColor : getProp('--p'),
                                 secondaryColor : getProp('--s'),
@@ -81,12 +82,20 @@
                         fileData.append('customThemeString', JSON.stringify(this.customThemeProperties))
                         fileData.append('coverImageFile', this.customImageFile)
                         //TODO: Cut Image to size
-                        const savedTheme = await fetch('/api/wedding/saveCustomTheme?weddingId=[[${wedding.id}]]', {
+                        const savedTheme = await fetch('/api/wedding/customTheme?weddingId=[[${wedding.id}]]', {
                             method: 'PUT',
                             body: fileData
 
                         })
-                        console.log(savedTheme.json())
+                    },
+                    saveTheme(theme){
+                        this.theme = theme
+                      fetch('/api/wedding/theme?'+ new URLSearchParams({
+                          weddingId: [[${wedding.id}]],
+                          theme: theme
+                      }),{
+                          method: 'PUT'
+                      })
                     },
                     fileToDataUrl(event, callback) {
 
@@ -108,12 +117,12 @@
                 </div>
             </div>
         <div class="md:order-3">
-            <div class="mx-auto container" x-show="customTheme == false">
+            <div class="mx-auto container" x-show="customTheme === false">
                 <div class="h-60 md:h-full overflow-scroll overflow-x-hidden  mx-2 outline outline-1 outline-gray-600">
 
                     <div class="rounded-box grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 p-2 mx-2">
                         <div class="border-base-content/20 hover:border-base-content/40 outline-base-content overflow-hidden rounded-lg border outline-2 outline-offset-2 min-w-20"
-                             @click="theme = 'light'" :class="{'outline' : theme === 'light'}">
+                             @click="theme='light'" :class="{'outline' : theme === 'light'}">
                             <div data-theme="light" class="bg-base-100 text-base-content w-full cursor-pointer font-sans">
                                 <div class="grid grid-cols-5 grid-rows-3">
                                     <div class="bg-base-200 col-start-1 row-span-2 row-start-1"></div>
@@ -707,7 +716,7 @@
 
             </div>
 
-            <div class="flex flex-col  container mx-auto" x-show="customTheme == true">
+            <div class="flex flex-col  container mx-auto" x-show="customTheme === true">
                 <div class="grow flex grid grid-cols-1 lg:grid-cols-2 gap-4 mx-6">
                     <div class="form-control">
                         <label class="input-group">
@@ -852,7 +861,7 @@
             var max = Math.max(r, g, b), min = Math.min(r, g, b);
             var h, s, l = (max + min) / 2;
 
-            if (max == min) {
+            if (max === min) {
                 h = s = 0; // achromatic
             } else {
                 var d = max - min;

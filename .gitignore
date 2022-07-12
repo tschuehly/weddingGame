@@ -42,3 +42,5 @@ out/
 /node_modules/
 /node/
 src/main/resources/static/tailwind.css
+/.bashrc
+/package-lock.json

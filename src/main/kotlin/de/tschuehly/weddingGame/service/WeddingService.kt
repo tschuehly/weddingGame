@@ -33,4 +33,11 @@ class WeddingService(
         wedding.customTheme = customThemeRepository.save(customTheme)
         return weddingRepository.save(wedding)
     }
+
+    fun setTheme(weddingId: Long, theme: String): Wedding {
+        val wedding = weddingRepository.findByIdOrNull(weddingId)
+            ?: throw NoSuchElementException("No wedding with ID: $weddingId found")
+        wedding.theme = theme
+        return weddingRepository.save(wedding)
+    }
 }

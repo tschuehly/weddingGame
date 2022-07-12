@@ -12,12 +12,17 @@ import org.springframework.web.multipart.MultipartFile
 class WeddingController(
     val weddingService: WeddingService
 ){
-    @PutMapping("/saveCustomTheme", consumes = ["multipart/form-data"])
-    fun saveCustomTheme(
+    @PutMapping("/customTheme", consumes = ["multipart/form-data"])
+    fun setCustomTheme(
         @RequestParam("weddingId") weddingId: Long,
         @RequestParam customThemeString: String,
         @RequestParam coverImageFile: MultipartFile
-    ){
-        weddingService.setCustomTheme(weddingId, customThemeString, coverImageFile)
-    }
+    ) = weddingService.setCustomTheme(weddingId, customThemeString, coverImageFile)
+
+
+    @PutMapping("/theme")
+    fun setTheme(
+        @RequestParam("weddingId") weddingId: Long,
+        @RequestParam("theme") theme: String
+    ) = weddingService.setTheme(weddingId,theme)
 }
