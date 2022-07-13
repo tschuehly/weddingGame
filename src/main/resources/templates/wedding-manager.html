@@ -6,10 +6,10 @@
       layout:decorate="~{layout/layout}">
 <head>
     <title>Dein Hochzeitsevent</title>
+    <script src="/js/skaler.js"></script>
 </head>
 <body>
 <section layout:fragment="page-content" th:object="${#authentication.principal.weddings[0]}">
-
     <div class="flex justify-center my-4">
         <h1 class="text-4xl">Deine Hochzeit verwalten</h1>
 
@@ -62,24 +62,28 @@
                             previewContainer.style = getCustomThemeStyle(this.customThemeProperties)
                         }
                     },
-                    fileChosen(event) {
+                    async scaleImageDownSetPreview(event) {
                         if (! event.target.files.length) return
-                        this.customImageFile = event.target.files[0]
-                        this.fileToDataUrl(event, src => {
-                            this.customImageDataUrl = src
-                            document.getElementById('coverImage').src = src
-                        })
+                        if (event.target.files && event.target.files[0]) {
+                            this.customImageFile = await skaler(event.target.files[0], { width: 1920 })
+                            const reader = new FileReader()
+                            reader.readAsDataURL(this.customImageFile)
+                            reader.onload = e => {
+                                document.getElementById('coverImage').src = e.target.result
+                            }
+                        }
+
                     },
                     async saveCustomTheme(){
                         let fileData = new FormData
                         fileData.append('customThemeString', JSON.stringify(this.customThemeProperties))
                         fileData.append('coverImageFile', this.customImageFile)
-                        //TODO: Cut Image to size
                         const savedTheme = await fetch('/api/wedding/customTheme?weddingId=[[${wedding.id}]]', {
                             method: 'PUT',
                             body: fileData
 
                         })
+                        // TODO: Success Message
                     },
                     saveTheme(theme){
                         this.theme = theme
@@ -91,9 +95,8 @@
                       })
                     },
                     fileToDataUrl(event, callback) {
-
-                        let file = event.target.files[0],
-                            reader = new FileReader()
+                        let file = event.target.files[0]
+                        var reader = new FileReader()
 
                         reader.readAsDataURL(file)
                         reader.onload = e => callback(e.target.result)
@@ -102,13 +105,14 @@
             })
         </script>
         <div class="flex justify-center mb-2 md:order-1">
-                <div class="form-control">
-                    <label class="label cursor-pointer">
-                        <span class="text-2xl label-text">Theme anpassen</span>
-                        <input type="checkbox"  class="toggle toggle-primary toggle-lg ml-4" x-model="customTheme"/>
-                    </label>
-                </div>
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="text-2xl label-text">Theme anpassen</span>
+                    <input type="checkbox"  class="toggle toggle-primary toggle-lg ml-4" x-model="customTheme"/>
+                </label>
             </div>
+        </div>
+        <!-- TODO: Mobile Layout-->
         <div class="md:order-3">
             <div class="mx-auto container" x-show="customTheme === false">
                 <div class="h-60 md:h-full overflow-scroll overflow-x-hidden  mx-2 outline outline-1 outline-gray-600">
@@ -783,9 +787,9 @@
                         <label class="flex justify-evenly">
                             <span class="text-xl">Eigenes Bild einfügen</span>
                             <input x-ref="fileSelector" class="hidden" type="file" accept="image/*"
-                                   @change="fileChosen($event)">
+                                   @change="scaleImageDownSetPreview($event)">
                             <input type="checkbox" class="toggle toggle-lg " @change="if($event.target.checked){$refs.fileSelector.click()}else{
-                            document.getElementById('imageContainer').style = ''}" x-model="showCustomImage" />
+                            document.getElementById('coverImage').src = '/images/AlinaxAndreas-2.webp'; customImageFile = null}" x-model="showCustomImage" />
                         </label>
                     </div>
 
