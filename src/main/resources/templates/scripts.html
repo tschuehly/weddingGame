@@ -28,12 +28,9 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
         imageDTO.uploadUrl = json.uploadUrl
         imageDTO.objectName = json.objectName
         if (response.ok){
-            let formData = new FormData()
-            formData.append('Content-Type', file.type)
-            formData.append('file', file)
             let uploadResponse = await fetch(imageDTO.uploadUrl, {
                 method: 'PUT',
-                body: formData
+                body: file
             })
             if(uploadResponse.ok){
                 let createImageResponse = await fetch('/api/image/create', {

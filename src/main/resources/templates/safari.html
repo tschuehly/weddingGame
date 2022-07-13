@@ -8,27 +8,78 @@
 <head>
     <title>Hochzeit</title>
 </head>
-<body layout:fragment="page-content">
-    <div style="right: 0" class="background_flowers"></div>
-    <div style="left: 0" class="background_flowers"></div>
-    <div class="contentContainer">
-        <h1>Fotosafari</h1>
-        <p class="text-3xl">[[${wedding}]]</p>
-        <h3 style="">Hier könnt ihr eure Bilder von unserer Hochzeit hochladen.</h3>
-        <form id="form" hx-post="/api/image/upload" hx-encoding="multipart/form-data" hx-swap="outerswap">
-            <label for="files">Wähle deine Bilder aus:</label><br>
-            <input type="file" id="files" name="images" placeholder="Keine Bilder ausgewählt" multiple><br><br>
-            <label for="fullName">Dein Vor- und Nachname:</label><br>
-            <input style="margin-bottom: 10px" type="text" id="fullName" name="fullName" placeholder="optional">
-            <input type="submit" name="submit">
-            <div class="htmx-indicator" >
-                <br>
-                <img id="indicator"  src="/svg/hearts.svg">
-                <p>Wird hochgeladen:</p>
-                <progress id='progress' value='0' max='100'></progress>
+<body layout:fragment="page-content" th:attr="data-theme=${wedding.theme}" class="min-h-screen" x-data="data">
+
+<script th:inline="javascript">
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('data', () => ({
+            customThemeProperties: [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
+            init(){
+                console.log(this.customThemeProperties)
+                if(this.customThemeProperties != null){
+                    document.body.style = getCustomThemeStyle(this.customThemeProperties)
+                }
+            }
+        }))
+    })
+</script>
+<div th:fragment="task" id="taskDiv" >
+    <div th:inline="javascript" x-data="{ files: null, fullName: null, loading: false}" class="flex flex-col ">
+        <h1 class=" text-5xl font-semibold text-center pt-5 pb-10 mx-8">Fotosafari</h1>
+
+        <div class="p-10 sm:rounded-xl flex flex-col items-center gap-10 mx-auto bg-base-300" x-show="!loading">
+            <div class="flex flex-col items-center">
+                <label class="label flex justify-center">
+                    <span class="text-4xl mb-4">Ladet hier eure Fotos von unserer Hochzeit hoch</span>
+                </label>
+                <input x-ref="fileSelector" style="display: none" type="file" multiple="true" accept="image/*"
+                       x-on:change="files = Object.values($event.target.files)">
+                <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
+                <button class="btn btn-secondary btn-lg" @click="$refs.fileSelector.click()">Bilder auswählen</button>
             </div>
-        </form>
-        <img id="bride" src="/images/AlinaxAndreas-2.webp">
+            <div class="form-control">
+                <label class="label">
+                    <span class="text-4xl mb-4">Dein Vor- und Nachname:</span>
+                </label>
+                <input type="text" id="fullName" name="fullName" placeholder="Max Mustermann" class="input input-bordered"/>
+            </div>
+            <button class="btn btn-primary btn-lg"
+                    @click="loading = true; loading = await callUploadImages(files,fullName)">
+                Bilder hochladen
+            </button>
+        </div>
+
+
+        <div x-show="loading">
+            <div class="flex justify-center">
+                <img class="h-64" style="transition: opacity 800ms ease-in;" src="/svg/hearts.svg">
+            </div>
+            <p  class="text-4xl text-center">Wird hochgeladen</p>
+        </div>
+
+        <!--            <div id="imageContainer" class="my-10 h-80 bg-[url('/svg/Blumen_90.svg')] justify-center" >-->
+
+        <!--            </div>-->
+
+        <div id="imageContainer"
+             class="w-full max-w-4xl my-10 mx-auto  shadow-black shadow-2xl justify-center bg-center object-cover" >
+            <img id="coverImage" class="object-cover h-80 md:h-[30rem] w-full"
+                 th:src="${wedding.customTheme != null && wedding.customTheme.coverImage != null}? ${wedding.customTheme?.coverImage?.downloadUrl} : '/images/AlinaxAndreas-2.webp'">
+
+        </div>
+
     </div>
 
+</div>
+<script>
+    async function callUploadImages(files, fullName) {
+        // TODO: Thumbnail creation
+        for(const file of files){
+            await uploadImage(file, '[[${wedding.folderId}]]', 'safari', fullName, file.name)
+        }
+        return false
+    }
+</script>
+<div th:insert="scripts :: uploadImages"></div>
+<div th:insert="scripts :: themeHelpers"></div>
 </body>

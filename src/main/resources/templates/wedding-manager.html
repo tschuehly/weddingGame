@@ -37,7 +37,6 @@
                     },
                     setThemeColorsInPreview() {
                         const previewContainer = document.getElementById('preview-container')
-
                         if(!this.customTheme){
                             previewContainer.dataset.theme = this.theme
                             this.saveTheme(this.theme)
@@ -83,7 +82,7 @@
                             body: fileData
 
                         })
-                        // TODO: Success Message
+                        // TODO: Success Message 
                     },
                     saveTheme(theme){
                         this.theme = theme

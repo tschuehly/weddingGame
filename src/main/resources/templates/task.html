@@ -32,7 +32,7 @@
                     <label class="label flex justify-center">
                         <span class="text-4xl mb-4">Mache das Foto und lade es hoch!</span>
                     </label>
-                    <input x-ref="fileSelector" style="display: none" type="file" multiple="true"
+                    <input x-ref="fileSelector" style="display: none" type="file" multiple="true" accept="image/*"
                            x-on:change="files = Object.values($event.target.files)">
                     <span x-text="files ? files.map(file => file.name).join(', ') : ''"></span>
                     <button class="btn btn-secondary btn-lg" @click="$refs.fileSelector.click()">Bilder auswählen</button>
@@ -73,7 +73,9 @@
     </div>
     <script>
         async function callUploadImages(files, fullName) {
+            // TODO: Thumbnail creation
             for(const file of files){
+                console.log(file)
                 await uploadImage(file, '[[${wedding.folderId}]]', '[[${task.uuid}]]', fullName, file.name)
             }
             return false
