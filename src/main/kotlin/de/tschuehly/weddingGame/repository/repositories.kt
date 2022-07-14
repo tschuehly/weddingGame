@@ -8,6 +8,8 @@ import org.springframework.data.repository.CrudRepository
 
 interface ImageRepository : CrudRepository<Image, Long>
 interface WeddingRepository : CrudRepository<Wedding, Long>{
+
+    fun findByFolderId(folderId: String): Wedding
     fun findBySubdomain(subdomain: String): Wedding?
 }
 interface WebsiteUserRepository : CrudRepository<WebsiteUser, Long>{

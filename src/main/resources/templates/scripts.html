@@ -14,9 +14,10 @@ async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
             objectName:'',
             fullName: fullName,
             fileName: fileName,
+            folderId: folderId
         }
         //TODO: Create Thumbnails to decrease traffic
-        let uploadUrl = '/api/image/getUploadUrl?folderId='+folderId + '&fileName=' + fileName + '&subfolderId=' + subfolderId
+        let uploadUrl = '/api/image/getUploadUrl?folderId='+ folderId + '&fileName=' + fileName + '&subfolderId=' + subfolderId
         if(fullName){
             uploadUrl = uploadUrl + '&fullName=' + fullName
         }

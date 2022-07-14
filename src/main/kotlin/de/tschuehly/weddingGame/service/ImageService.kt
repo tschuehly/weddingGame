@@ -39,19 +39,19 @@ class ImageService(
                 .expiry(10, TimeUnit.MINUTES)
                 .build()
         )
-        return ImageDTO(uploadUrl,objectName,"","")
+        return ImageDTO(objectName,folderId,uploadUrl,folderId,fileName)
     }
 
-    fun uploadImageAndSave(objectName: String, imageFile: MultipartFile): Image {
+    fun uploadImageAndSave(imageDTO: ImageDTO, imageFile: MultipartFile): Image {
         minioClient().putObject(
             PutObjectArgs.builder()
                 .bucket(s3BucketKey)
-                .`object`(objectName)
+                .`object`(imageDTO.objectName)
                 .stream(imageFile.inputStream,imageFile.size,-1)
                 .contentType(imageFile.contentType)
                 .build()
         )
-        return save(objectName)
+        return save(imageDTO)
     }
 
     fun deleteImage(image: Image){
@@ -78,13 +78,16 @@ class ImageService(
         )
     }
 
-    fun save(objectName: String): Image {
-        return imageRepository.save(Image(
-            null,
-            objectName,
-            getDownloadUrl(objectName),
-            Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS))
-        ))
+    fun save(imageDTO: ImageDTO): Image {
+
+        return imageRepository.save(
+            Image(
+                null,
+                imageDTO.objectName,
+                getDownloadUrl(imageDTO.objectName),
+                Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS))
+            )
+        )
     }
 
     private fun minioClient(): MinioClient {

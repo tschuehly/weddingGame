@@ -2,7 +2,9 @@ package de.tschuehly.weddingGame.service
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import de.tschuehly.weddingGame.dto.ImageDTO
 import de.tschuehly.weddingGame.model.CustomTheme
+import de.tschuehly.weddingGame.model.Image
 import de.tschuehly.weddingGame.model.Wedding
 import de.tschuehly.weddingGame.repository.CustomThemeRepository
 import de.tschuehly.weddingGame.repository.WeddingRepository
@@ -36,7 +38,7 @@ class WeddingService(
             imageService.deleteImage(it)
         }
         coverImageFile?.let {
-            customTheme.coverImage = imageService.uploadImageAndSave(objectName,it)
+            customTheme.coverImage = imageService.uploadImageAndSave(ImageDTO(objectName,wedding.folderId),it)
         }
         wedding.customTheme = customThemeRepository.save(customTheme)
         return weddingRepository.save(wedding)
@@ -54,5 +56,20 @@ class WeddingService(
             customThemeRepository.delete(customTheme)
         }
         return weddingRepository.save(wedding)
+    }
+
+    fun getAllImagesBySubdomain(subdomain: String): MutableIterable<Image> {
+        return weddingRepository.findBySubdomain(subdomain)?.also { println(it) }?.pictures.also { println(it) } ?:
+            throw java.util.NoSuchElementException("No wedding with subdomain: $subdomain found")
+    }
+
+
+    fun saveImage(imageDTO: ImageDTO): Image {
+        val wedding = weddingRepository.findByFolderId(imageDTO.folderId)
+        val savedImage = imageService.save(imageDTO)
+        wedding.pictures.add(savedImage)
+        save(wedding)
+        return savedImage
+
     }
 }

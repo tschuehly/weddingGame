@@ -3,14 +3,16 @@ package de.tschuehly.weddingGame.controller
 import de.tschuehly.weddingGame.dto.ImageDTO
 import de.tschuehly.weddingGame.model.Image
 import de.tschuehly.weddingGame.service.ImageService
+import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.servlet.http.HttpServletRequest
+
 
 @RestController
 @RequestMapping("api/image")
 class ImageController(
-    val imageService: ImageService
+    val imageService: ImageService,
+    val weddingService: WeddingService
 ) {
     @GetMapping("/getUploadUrl")
     fun uploadImage(
@@ -26,6 +28,6 @@ class ImageController(
     fun create(
         @RequestBody imageDTO: ImageDTO
     ): Image {
-        return imageService.save(imageDTO.objectName)
+        return weddingService.saveImage(imageDTO)
     }
 }

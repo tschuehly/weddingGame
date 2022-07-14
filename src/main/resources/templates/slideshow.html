@@ -8,9 +8,66 @@
     <title>Dein Hochzeitsevent</title>
 </head>
 <body>
-<section layout:fragment="page-content">
-    <div th:each="image: ${images}">
-        <img th:attr="src=${image.downloadUrl}"  style="width: 100%">
+<section layout:fragment="page-content" >
+    <script th:inline="javascript">
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('data', () => ({
+                index: 0,
+                images: [[${images != null}? ${images} : null]],
+                touchStart: 0,
+                autoplay: null,
+                init(){
+                    const evtSource = new EventSource("/api/wedding/images-sse");
+                    evtSource.addEventListener("periodic-event", function(alpineContext){
+                        return function (event) {
+                            alpineContext.images = JSON.parse(event.data)
+                        };
+                    }(this))
+                },
+                startAutoplay(){
+                    this.autoplay = window.setInterval(function(alpineContext){
+                        return function(){
+                            alpineContext.nextImage()
+                        };
+                    }(this),5000) // TODO: Customize Autoplay duration
+                },
+                handleSwipe(e){
+                    const touchEnd = e.changedTouches[0].screenX
+                    if(touchEnd < this.touchStart && this.touchStart - touchEnd > 100){
+                        this.previousImage()
+                    }
+                    if(touchEnd > this.touchStart && touchEnd - this.touchStart > 100) {
+                        this.nextImage()
+                    }
+                },
+                nextImage(){
+                    this.index === this.images.length-1 ? this.index = 0 : this.index++
+                },
+                previousImage(){
+                    this.index === 0 ? this.index = this.images.length - 1 : this.index--
+                }
+
+            }))
+        })
+    </script>
+    <div x-data="data" class="flex items-center w-screen h-screen bg-gray-900" x-effect="console.log(images)">
+        <button class="hidden lg:block fixed left-2 top-1/2 bg-primary p-1 rounded-full" @click="previousImage()">
+            <img src="/svg/arrow-left-circle.svg">
+        </button>
+        <img x-on:touchstart="touchStart = $event.changedTouches[0].screenX"
+             x-on:touchend="handleSwipe($event)" class="object-contain w-full h-full" x-bind:src="images[index].downloadUrl">
+        <button class="hidden lg:block fixed right-2 top-1/2 bg-primary p-1 rounded-full" @click="nextImage()">
+            <img src="/svg/arrow-right-circle.svg">
+        </button>
+
+        <div class="fixed right-2 bottom-2">
+            <button x-show="!autoplay" @click="startAutoplay()" class="btn-primary rounded-full">
+                <img class="w-12" src="/svg/play-circle.svg">
+            </button>
+            <button x-show="autoplay" @click="window.clearInterval(autoplay); autoplay = null" class="btn-primary rounded-full">
+                <img  class="w-12" src="/svg/pause-circle.svg">
+            </button>
+        </div>
     </div>
 </section>
 </body>
