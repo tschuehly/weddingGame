@@ -79,12 +79,22 @@ class ImageService(
     }
 
     fun save(imageDTO: ImageDTO): Image {
+        val thumb = imageDTO.thumbnailObjectName?.let {
+            imageRepository.save(
+                Image(
+                null,
+                it,
+                getDownloadUrl(it),
+                Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS)),
+            ))
+        }
         return imageRepository.save(
             Image(
                 null,
                 imageDTO.objectName,
                 getDownloadUrl(imageDTO.objectName),
-                Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS))
+                Date.from(Date().toInstant().plus(7, ChronoUnit.DAYS)),
+                thumb
             )
         )
     }

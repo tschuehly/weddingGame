@@ -33,7 +33,11 @@ async function uploadImage(imageData) {
 
 async function createAndUploadImageAndThumbnail(imageData) {
     imageData = await uploadImage(imageData)
-    console.log(imageData)
+    let thumbnailData = {... imageData}
+    thumbnailData.file = await  skaler(thumbnailData.file, { width: 300 })
+    thumbnailData.fileName = "thumb_"+imageData.fileName
+    thumbnailData = await uploadImage(thumbnailData)
+
     // TODO: Create Thumbnails to decrease traffic
     let createImageResponse = await fetch('/api/image/create', {
         method: 'POST',
@@ -42,7 +46,8 @@ async function createAndUploadImageAndThumbnail(imageData) {
         },
         body: JSON.stringify({
             objectName: imageData.objectName,
-            folderId: imageData.folderId
+            folderId: imageData.folderId,
+            thumbnailObjectName: thumbnailData.objectName
         }),
 
     })

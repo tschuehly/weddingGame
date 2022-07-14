@@ -94,14 +94,22 @@ class WebController(
             "redirect:/login"
         }
     }
-
     @GetMapping("/slideshow")
-    fun slideshow(model: Model): String{
-        model.addAllAttributes(
-            mapOf(
-                "images" to imageService.getAll().also{ println(it)},
+    fun slideshow(model: Model,
+                  request: HttpServletRequest): String {
+        val subdomain = request.serverName.split(".").first()
+        weddingService.getBySubdomain(subdomain)?.let{
+            model.addAllAttributes(
+                mapOf(
+                    "images" to it.pictures,
+                )
             )
-        )
+
+            return "slideshow"
+        } ?:let{
+            return "404"
+        }
+
         return "slideshow"
     }
 

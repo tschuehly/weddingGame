@@ -324,4 +324,26 @@ databaseChangeLog:
         - dropColumn:
             columnName: cover_image
             tableName: custom_theme
+  - changeSet:
+      id: 1657821817339-1
+      author: root (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: thumbnail_id
+                  type: BIGINT
+            tableName: image
+  - changeSet:
+      id: 1657821817339-2
+      author: root (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: thumbnail_id
+            baseTableName: image
+            constraintName: FK_IMAGE_ON_THUMBNAIL
+            referencedColumnNames: id
+            referencedTableName: image
 

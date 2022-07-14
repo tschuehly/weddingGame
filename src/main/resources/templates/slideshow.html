@@ -69,6 +69,14 @@
             </button>
         </div>
     </div>
+
+    <div>
+
+    </div>
+    <div class="flex flex-wrap gap-4 m-4">
+        <img class="object-cover h-60 w-80" th:each="image: ${images}"
+             th:attr="src=${image.thumbnail.downloadUrl}">
+    </div>
 </section>
 </body>
 <th:block layout:fragment="page-scripts">
