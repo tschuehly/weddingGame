@@ -8,55 +8,51 @@
 </head>
 <body>
 <script th:fragment="uploadImages">
-async function uploadImage(file, folderId, subfolderId, fullName, fileName) {
-        let imageDTO = {
-            uploadUrl: '',
-            objectName:'',
-            fullName: fullName,
-            fileName: fileName,
-            folderId: folderId
+async function uploadImage(imageData) {
+    let getUploadUrl = '/api/image/getUploadUrl?folderId=' + imageData.folderId +
+        '&fileName=' + imageData.fileName + '&subfolderId=' + imageData.subfolderId
+    if (imageData.fullName) {
+        getUploadUrl = getUploadUrl + '&fullName=' + imageData.fullName
+    }
+    let urlResponse = await fetch(getUploadUrl, {
+        method: 'GET'
+    })
+    if (urlResponse.ok) {
+        let json = await urlResponse.json()
+        let uploadResponse = await fetch(json.uploadUrl, {
+            method: 'PUT',
+            body: imageData.file
+        })
+        if (uploadResponse.ok) {
+            imageData.uploadUrl = json.uploadUrl
+            imageData.objectName = json.objectName
+            return imageData
         }
-        //TODO: Create Thumbnails to decrease traffic
-        let uploadUrl = '/api/image/getUploadUrl?folderId='+ folderId + '&fileName=' + fileName + '&subfolderId=' + subfolderId
-        if(fullName){
-            uploadUrl = uploadUrl + '&fullName=' + fullName
-        }
-        let response =
-            await fetch(uploadUrl, {
-                method: 'GET'
-            })
-        let json = await response.json()
-        imageDTO.uploadUrl = json.uploadUrl
-        imageDTO.objectName = json.objectName
-        if (response.ok){
-            let uploadResponse = await fetch(imageDTO.uploadUrl, {
-                method: 'PUT',
-                body: file
-            })
-            if(uploadResponse.ok){
-                let createImageResponse = await fetch('/api/image/create', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(imageDTO),
+    }
+}
 
-                })
+async function createAndUploadImageAndThumbnail(imageData) {
+    imageData = await uploadImage(imageData)
+    console.log(imageData)
+    // TODO: Create Thumbnails to decrease traffic
+    let createImageResponse = await fetch('/api/image/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            objectName: imageData.objectName,
+            folderId: imageData.folderId
+        }),
 
-                if(createImageResponse.ok){
-                    console.log("Uploaded "+ fileName)
-                    return await createImageResponse.json().then(image => {
-                        console.log(typeof image)
-                        return image
-                    })
-                }else {
-                    console.error(createImageResponse)
-                }
-            }else {
-                console.info(uploadResponse)
-            }
+    })
 
-        }
+    if(createImageResponse.ok){
+        console.log("Uploaded "+ imageData.fileName)
+        return await createImageResponse.json()
+    }else {
+        console.error(createImageResponse)
+    }
 }
 </script>
 <script th:fragment="themeHelpers">

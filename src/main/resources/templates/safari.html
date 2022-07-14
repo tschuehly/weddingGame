@@ -75,7 +75,14 @@
     async function callUploadImages(files, fullName) {
         // TODO: Thumbnail creation
         for(const file of files){
-            await uploadImage(file, '[[${wedding.folderId}]]', 'safari', fullName, file.name)
+            let imageData = {
+                file: file,
+                folderId: '[[${wedding.folderId}]]',
+                subfolderId: 'safari',
+                fullName: fullName,
+                fileName: file.name
+            }
+            await createAndUploadImageAndThumbnail(imageData)
         }
         return false
     }

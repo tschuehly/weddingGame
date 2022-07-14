@@ -39,7 +39,7 @@ class ImageService(
                 .expiry(10, TimeUnit.MINUTES)
                 .build()
         )
-        return ImageDTO(objectName,folderId,uploadUrl,folderId,fileName)
+        return ImageDTO(objectName,folderId,uploadUrl)
     }
 
     fun uploadImageAndSave(imageDTO: ImageDTO, imageFile: MultipartFile): Image {
@@ -79,7 +79,6 @@ class ImageService(
     }
 
     fun save(imageDTO: ImageDTO): Image {
-
         return imageRepository.save(
             Image(
                 null,
