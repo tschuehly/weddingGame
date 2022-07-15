@@ -3,17 +3,13 @@ package de.tschuehly.weddingGame.controller
 import de.tschuehly.weddingGame.model.Image
 import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.http.codec.ServerSentEvent
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import reactor.core.publisher.Flux
 import java.time.Duration
 import javax.servlet.http.HttpServletRequest
 
-@Controller
+@RestController
 @RequestMapping("/api/wedding")
 class WeddingController(
     val weddingService: WeddingService

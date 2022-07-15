@@ -8,7 +8,6 @@ import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import de.tschuehly.weddingGame.bo.Task
 import de.tschuehly.weddingGame.model.WebsiteUser
-import de.tschuehly.weddingGame.service.ImageService
 import de.tschuehly.weddingGame.service.WeddingService
 import org.springframework.core.io.ClassPathResource
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 class WebController(
-    private val imageService: ImageService,
     private val weddingService: WeddingService
 ) {
     val tasks: List<Task> = jacksonObjectMapper().readValue(ClassPathResource("data.json").inputStream)
@@ -101,16 +99,30 @@ class WebController(
         weddingService.getBySubdomain(subdomain)?.let{
             model.addAllAttributes(
                 mapOf(
+                    "wedding" to it,
                     "images" to it.pictures,
                 )
             )
-
             return "slideshow"
         } ?:let{
             return "404"
         }
+    }
 
-        return "slideshow"
+    @GetMapping("/galerie")
+    fun gallery(model: Model, request: HttpServletRequest): String{
+        val subdomain = request.serverName.split(".").first()
+        weddingService.getBySubdomain(subdomain)?.let{
+            model.addAllAttributes(
+                mapOf(
+                    "wedding" to it,
+                    "images" to it.pictures,
+                )
+            )
+            return "gallery"
+        } ?:let{
+            return "404"
+        }
     }
 
     private fun getCurrentUser(): WebsiteUser?{

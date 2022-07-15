@@ -50,7 +50,7 @@
             }))
         })
     </script>
-    <div x-data="data" class="flex items-center w-screen h-screen bg-gray-900" x-effect="console.log(images)">
+    <div x-data="data" class="flex items-center w-screen h-screen bg-gray-900">
         <button class="hidden lg:block fixed left-2 top-1/2 bg-primary p-1 rounded-full" @click="previousImage()">
             <img src="/svg/arrow-left-circle.svg">
         </button>
@@ -68,14 +68,6 @@
                 <img  class="w-12" src="/svg/pause-circle.svg">
             </button>
         </div>
-    </div>
-
-    <div>
-
-    </div>
-    <div class="flex flex-wrap gap-4 m-4">
-        <img class="object-cover h-60 w-80" th:each="image: ${images}"
-             th:attr="src=${image.thumbnail.downloadUrl}">
     </div>
 </section>
 </body>

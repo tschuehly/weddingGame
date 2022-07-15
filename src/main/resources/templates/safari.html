@@ -15,7 +15,6 @@
         Alpine.data('data', () => ({
             customThemeProperties: [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
             init(){
-                console.log(this.customThemeProperties)
                 if(this.customThemeProperties != null){
                     document.body.style = getCustomThemeStyle(this.customThemeProperties)
                 }

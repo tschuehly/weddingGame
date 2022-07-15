@@ -8,23 +8,47 @@
   <title>Dein Hochzeitsevent</title>
 </head>
 <body>
-<section layout:fragment="page-content" >
+<section layout:fragment="page-content" x-data="data" th:attr="data-theme=${wedding.theme}">
   <script th:inline="javascript">
     document.addEventListener('alpine:init', () => {
       Alpine.data('data', () => ({
-        images: [[${images != null}? ${images} : null]],
+        images: [[${images != null} ? ${images} : null]],
+        currentImage: null,
+        showImage(image){
+          this.currentImage = image
+        },
+
+        customThemeProperties: [[${wedding.customTheme != null}? ${wedding.customTheme} : null]],
+        init(){
+          if(this.customThemeProperties != null){
+            document.body.style = getCustomThemeStyle(this.customThemeProperties)
+          }
+        }
       }))
     })
   </script>
-  <section layout:fragment="page-content" >
-    <div th:each="image: ${images}">
-      <img th:attr="src=${image.downloadUrl}"  style="width: 100%">
+  <div class="h-screen">
+    <div x-show="currentImage != null" @click="currentImage = null"
+         class="p-2 md:p-12 w-screen h-screen flex">
+      <img class="w-8 h-8 fixed top-4 right-4 bg-white rounded-full" src="/svg/x-circle.svg">
+      <img class="w-full h-full object-contain" x-bind:src="currentImage.downloadUrl">
     </div>
-  </section>
+    <div x-show="!currentImage">
+      <div class="flex justify-center py-4 ">
+        <h1 class="text-4xl  p-4 btn-primary">Bildergalerie</h1>
+      </div>
+      <div class="place-content-center flex flex-wrap gap-4 p-4" >
+        <template x-for="image in images">
+          <img class="object-cover h-60 w-80" @click="showImage(image)"
+               x-bind:src="image.thumbnail.downloadUrl" >
+        </template>
+      </div>
+    </div>
+  </div>
 </section>
 </body>
 <th:block layout:fragment="page-scripts">
-  <script>
-  </script>
+
+  <div th:insert="scripts :: themeHelpers"></div>
 </th:block>
 </html>
